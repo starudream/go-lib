@@ -3,15 +3,12 @@ VERSION ?= $(shell git describe --tags 2>/dev/null)
 
 GO      ?= go
 MODULE  ?= github.com/starudream/go-lib
-MODDIRS := core cobra resty example
 BITTAGS :=
 LDFLAGS := -s -w
 LDFLAGS += -X "$(MODULE)/core/v2/config/version.gitVersion=$(VERSION)"
 
 .PHONY: init
 init:
-	@if [ ! -f "go.work" ]; then $(GO) work init $(MODDIRS); fi
-	$(GO) work sync
 
 .PHONY: test-%
 test-%: init
