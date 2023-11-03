@@ -39,7 +39,6 @@ func Files() []string {
 		if osutil.ArgTest() {
 			_files = append(_files,
 				filepath.Join(osutil.GoListRoot(), "app.yaml"),
-				filepath.Join(osutil.GoListRoot(), "../core.yaml"),
 				filepath.Join(osutil.GoListRoot(), "../app.yaml"),
 				filepath.Join(osutil.GoListRoot(), "../bin/app.yaml"),
 			)
