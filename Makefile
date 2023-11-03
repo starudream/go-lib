@@ -2,10 +2,9 @@ PROJECT ?= $(shell basename $(CURDIR))
 VERSION ?= $(shell git describe --tags 2>/dev/null)
 
 GO      ?= go
-MODULE  ?= github.com/starudream/go-lib
 BITTAGS :=
 LDFLAGS := -s -w
-LDFLAGS += -X "$(MODULE)/core/v2/config/version.gitVersion=$(VERSION)"
+LDFLAGS += -X "github.com/starudream/go-lib/core/v2/config/version.gitVersion=$(VERSION)"
 
 .PHONY: init
 init:
@@ -19,7 +18,7 @@ test-%: init
 
 .PHONY: bin-%
 bin-%: init
-	CGO_ENABLED=0 $(GO) build -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' -o bin/example-$* $(MODULE)/v2/example/$*
+	cd example && CGO_ENABLED=0 $(GO) build -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' -o ../bin/example-$* github.com/starudream/go-lib/example/v2/$*
 
 .PHONY: run-%
 run-%: bin-%
