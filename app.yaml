@@ -1,0 +1,10 @@
+log:
+  console:
+    format: text
+    level: debug
+  file:
+    enabled: true
+    format: json
+    level: fatal
+    max_backups: 10
+    daily_rotate: true
