@@ -15,7 +15,7 @@ var (
 		c.Run = func(cmd *Command, args []string) {
 			slog.Info("root", slog.Any("args", args))
 		}
-		AddConfigFlag(c, "", "")
+		AddConfigFlag(c)
 	})
 
 	echoCmd = NewCommand(func(c *Command) {

@@ -30,9 +30,9 @@ func NewRootCommand(f ...func(c *Command)) *Command {
 	})
 }
 
-func AddConfigFlag(c *Command, value string, usage string) {
-	if usage == "" {
-		usage = "path to config file"
+func AddConfigFlag(c *Command, usage ...string) {
+	if len(usage) == 0 || usage[0] == "" {
+		usage = []string{"path to config file"}
 	}
-	c.PersistentFlags().StringP("config", "c", value, usage)
+	c.PersistentFlags().StringP("config", "c", "", usage[0])
 }
