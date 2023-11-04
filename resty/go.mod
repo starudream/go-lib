@@ -2,7 +2,7 @@ module github.com/starudream/go-lib/resty/v2
 
 go 1.21
 
-require github.com/starudream/go-lib/core/v2 v2.0.0-rc.2
+require github.com/starudream/go-lib/core/v2 v2.0.0-rc.3
 
 require github.com/go-resty/resty/v2 v2.10.0
 
