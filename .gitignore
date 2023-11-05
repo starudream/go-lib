@@ -9,3 +9,6 @@
 /cover
 *.exe
 *.log
+
+# Dev files
+app.yaml

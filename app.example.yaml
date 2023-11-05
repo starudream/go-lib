@@ -8,3 +8,11 @@ log:
     level: fatal
     max_backups: 10
     daily_rotate: true
+
+ntfy:
+  telegram:
+    token:
+    chat_id:
+  dingtalk:
+    token:
+    secret:
