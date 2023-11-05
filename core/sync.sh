@@ -10,6 +10,7 @@ wget -qO config/internal/providers/confmap/confmap.go https://github.com/knadh/k
 wget -qO config/internal/providers/env/env.go https://raw.githubusercontent.com/knadh/koanf/master/providers/env/env.go
 wget -qO config/internal/providers/file/file.go https://raw.githubusercontent.com/knadh/koanf/master/providers/file/file.go
 wget -qO config/internal/providers/posflag/posflag.go https://raw.githubusercontent.com/knadh/koanf/master/providers/posflag/posflag.go
+wget -qO config/internal/providers/structs/structs.go https://raw.githubusercontent.com/knadh/koanf/master/providers/structs/structs.go
 
 # slog
 
