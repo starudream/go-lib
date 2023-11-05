@@ -3,7 +3,6 @@ package global
 import (
 	"path/filepath"
 
-	"github.com/starudream/go-lib/core/v2/codec/json"
 	"github.com/starudream/go-lib/core/v2/config"
 	"github.com/starudream/go-lib/core/v2/slog/level"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
@@ -45,7 +44,7 @@ var _c = Config{
 
 func init() {
 	_ = config.Unmarshal("", &_c)
-	config.LoadMap(json.MustUnmarshalTo[map[string]any](json.MustMarshal(_c)))
+	config.LoadStruct(_c)
 }
 
 func C() Config {
