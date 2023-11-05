@@ -50,12 +50,18 @@ func init() {
 	logs.D(json.MustMarshalString(_k.All()))
 }
 
-func All() map[string]any {
-	return _k.All()
+func All(path ...string) map[string]any {
+	if len(path) == 0 {
+		return _k.All()
+	}
+	return _k.Cut(path[0]).All()
 }
 
-func Raw() map[string]any {
-	return _k.Raw()
+func Raw(path ...string) map[string]any {
+	if len(path) == 0 {
+		return _k.Raw()
+	}
+	return _k.Cut(path[0]).Raw()
 }
 
 func Get(path string) Value {
