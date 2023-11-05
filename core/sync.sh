@@ -13,7 +13,13 @@ wget -qO config/internal/providers/posflag/posflag.go https://raw.githubusercont
 
 # slog
 
-wget -qO slog/internal/handler/lumberjack.go https://raw.githubusercontent.com/natefinch/lumberjack/v2.0/lumberjack.go
+wget -qO slog/filewriter/lumberjack.go https://raw.githubusercontent.com/natefinch/lumberjack/v2.0/lumberjack.go
 
-wget -qO slog/internal/handler/chown.go https://github.com/natefinch/lumberjack/raw/v2.0/chown.go
-wget -qO slog/internal/handler/chown_linux.go https://github.com/natefinch/lumberjack/raw/v2.0/chown_linux.go
+wget -qO slog/filewriter/chown.go https://github.com/natefinch/lumberjack/raw/v2.0/chown.go
+wget -qO slog/filewriter/chown_linux.go https://github.com/natefinch/lumberjack/raw/v2.0/chown_linux.go
+
+# struct
+
+wget -qO utils/structuril/tags.go https://raw.githubusercontent.com/fatih/structs/master/tags.go
+wget -qO utils/structuril/field.go https://raw.githubusercontent.com/fatih/structs/master/field.go
+wget -qO utils/structuril/structs.go https://raw.githubusercontent.com/fatih/structs/master/structs.go
