@@ -4,9 +4,9 @@ go 1.21
 
 //replace github.com/starudream/go-lib/core/v2 => ../core
 
-require github.com/starudream/go-lib/core/v2 v2.0.0-rc.3
+require github.com/starudream/go-lib/core/v2 v2.0.0-rc.4
 
-require github.com/spf13/cobra v1.7.0
+require github.com/spf13/cobra v1.8.0
 
 require (
 	github.com/fatih/color v1.15.0 // indirect
@@ -28,6 +28,6 @@ require (
 	github.com/spf13/cast v1.5.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
-	golang.org/x/sys v0.13.0 // indirect
+	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
 )
