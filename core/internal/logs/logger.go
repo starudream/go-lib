@@ -5,11 +5,13 @@ import (
 	"log/slog"
 
 	"github.com/starudream/go-lib/core/v2/slog/level"
+	"github.com/starudream/go-lib/core/v2/utils/loutil"
+	"github.com/starudream/go-lib/core/v2/utils/osutil"
 )
 
 const TimeFormat = "2006-01-02T15:04:05.000Z07:00"
 
-var _logger = setDefault(New(NewColorableStdoutHandler(level.Debug)))
+var _logger = setDefault(New(NewColorableStdoutHandler(loutil.Ternary(osutil.DOT(), level.Debug, level.Info))))
 
 var D = _logger.Debug
 
