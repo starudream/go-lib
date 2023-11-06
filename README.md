@@ -17,6 +17,5 @@ go get -u github.com/starudream/go-lib/${MODULE_NAME}/v2
 
 ## License
 
-![license](https://img.shields.io/github/license/starudream/go-lib?style=for-the-badge)
-
-![fossa](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fstarudream%2Fgo-lib.svg?type=large&issueType=license)
+![license](https://img.shields.io/github/license/starudream/go-lib)
+![fossa](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fstarudream%2Fgo-lib.svg?type=shield&issueType=license)
