@@ -79,6 +79,9 @@ func render(prefix, indent, sep string, rows [][2]string) string {
 		}
 		buf.WriteString(prefix)
 		buf.WriteString(ks[i])
+		if vs[i] == "" {
+			continue
+		}
 		buf.WriteString(strings.Repeat(" ", ma-len(ks[i])))
 		buf.WriteString(sep)
 		ss := strings.Split(vs[i], "\n")

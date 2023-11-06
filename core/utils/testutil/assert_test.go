@@ -37,4 +37,8 @@ func TestEqual(t *testing.T) {
 		mt := new(MockT)
 		Equal(t, false, NotEqual(mt, testdata.V1, testdata.V3))
 	})
+	t.Run("error3", func(t *testing.T) {
+		mt := new(MockT)
+		Equal(t, false, Equal(mt, "a", "b"))
+	})
 }
