@@ -8,9 +8,7 @@ LDFLAGS += -X "github.com/starudream/go-lib/core/v2/config/version.gitVersion=$(
 
 .PHONY: init
 init:
-	git fetch -v --all --prune
-	git pull -v --rebase --autostash
-	git gc --auto
+	git status -b -s
 
 .PHONY: test-%
 test-%: init
