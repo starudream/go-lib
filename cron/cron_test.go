@@ -1,10 +1,10 @@
 package cron
 
 import (
-	"context"
 	"fmt"
 	"testing"
 
+	"github.com/starudream/go-lib/core/v2/utils/signalutil"
 	"github.com/starudream/go-lib/core/v2/utils/testutil"
 )
 
@@ -19,7 +19,6 @@ func Test(t *testing.T) {
 }
 
 func RunJob(t *testing.T, spec, name string, job func(), count int) {
-	ctx, cancel := context.WithCancel(context.Background())
 	err := AddJob(spec, name, func() {
 		if count <= 0 {
 			return
@@ -28,11 +27,11 @@ func RunJob(t *testing.T, spec, name string, job func(), count int) {
 			count--
 			if count <= 0 {
 				Remove(name)
-				cancel()
+				signalutil.Cancel()
 			}
 		}()
 		job()
 	})
 	testutil.Nil(t, err)
-	Run(ctx)
+	Run()
 }

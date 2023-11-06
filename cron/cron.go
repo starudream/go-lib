@@ -1,7 +1,6 @@
 package cron
 
 import (
-	"context"
 	"fmt"
 	"sync"
 	"time"
@@ -87,8 +86,8 @@ func Remove(name string) {
 	})
 }
 
-func Run(ctx ...context.Context) {
+func Run() {
 	C().Start()
-	<-signalutil.NewContext(ctx...).Done()
+	<-signalutil.Done()
 	C().Stop()
 }
