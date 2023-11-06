@@ -10,3 +10,7 @@ func TestFiles(t *testing.T) {
 		t.Log(files[i])
 	}
 }
+
+func TestLoadedFile(t *testing.T) {
+	t.Log(LoadedFile())
+}
