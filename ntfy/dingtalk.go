@@ -26,6 +26,9 @@ func (DingtalkConfig) Name() string {
 }
 
 func (c DingtalkConfig) Notify(_ context.Context, text string) error {
+	if c.Token == nil || *c.Token == "" {
+		return ErrNoConfig
+	}
 	req := &dingtalkReq{MsgType: "text", Text: &dingtalkText{Content: text}}
 	addr := "https://oapi.dingtalk.com/robot/send?access_token=" + *c.Token
 	if c.Secret != "" {

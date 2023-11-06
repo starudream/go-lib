@@ -21,6 +21,9 @@ func (TelegramConfig) Name() string {
 }
 
 func (c TelegramConfig) Notify(_ context.Context, text string) error {
+	if c.Token == nil || *c.Token == "" {
+		return ErrNoConfig
+	}
 	req := &telegramReq{ChatId: c.ChatId, Text: text}
 	addr := "https://api.telegram.org/bot" + *c.Token + "/sendMessage"
 	_, err := resty.ParseResp[*telegramResp, *telegramResp](

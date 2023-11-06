@@ -8,8 +8,8 @@ go 1.21
 //)
 
 require (
-	github.com/starudream/go-lib/core/v2 v2.0.0-rc.4
-	github.com/starudream/go-lib/resty/v2 v2.0.0-rc.4
+	github.com/starudream/go-lib/core/v2 v2.0.0-rc.8
+	github.com/starudream/go-lib/resty/v2 v2.0.0-rc.5
 )
 
 require (
