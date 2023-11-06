@@ -20,7 +20,9 @@ func NewRootCommand(f ...func(c *Command)) *Command {
 	return NewCommand(func(c *Command) {
 		// hidden help command
 		c.SetHelpCommand(&Command{Hidden: true})
-		// version template
+		// hidden completion command
+		c.CompletionOptions.HiddenDefaultCmd = true
+		// set version template
 		c.SetVersionTemplate("{{ print .Version }}")
 		c.Version = version.GetVersionInfo().String()
 
