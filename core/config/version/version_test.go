@@ -5,5 +5,5 @@ import (
 )
 
 func TestGetVersionInfo(t *testing.T) {
-	t.Log(GetVersionInfo().String())
+	t.Log("\n" + GetVersionInfo().String())
 }

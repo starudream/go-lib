@@ -137,15 +137,15 @@ func GetVersionInfo() Info {
 
 // String returns the string representation of the version info
 func (i Info) String() string {
-	b := strings.Builder{}
-	w := tabwriter.NewWriter(&b, 0, 0, 2, ' ', 0)
-	_, _ = fmt.Fprintf(w, "GitVersion:\t%s\n", i.GitVersion)
-	_, _ = fmt.Fprintf(w, "GitCommit:\t%s\n", i.GitCommit)
-	_, _ = fmt.Fprintf(w, "GitTreeState:\t%s\n", i.GitTreeState)
-	_, _ = fmt.Fprintf(w, "BuildDate:\t%s\n", i.BuildDate)
-	_, _ = fmt.Fprintf(w, "GoVersion:\t%s\n", i.GoVersion)
-	_, _ = fmt.Fprintf(w, "Compiler:\t%s\n", i.Compiler)
-	_, _ = fmt.Fprintf(w, "Platform:\t%s\n", i.Platform)
+	b := &strings.Builder{}
+	w := tabwriter.NewWriter(b, 0, 0, 2, ' ', 0)
+	_, _ = w.Write([]byte("GitVersion:\t" + i.GitVersion + "\n"))
+	_, _ = w.Write([]byte("GitCommit:\t" + i.GitCommit + "\n"))
+	_, _ = w.Write([]byte("GitTreeState:\t" + i.GitTreeState + "\n"))
+	_, _ = w.Write([]byte("BuildDate:\t" + i.BuildDate + "\n"))
+	_, _ = w.Write([]byte("GoVersion:\t" + i.GoVersion + "\n"))
+	_, _ = w.Write([]byte("Compiler:\t" + i.Compiler + "\n"))
+	_, _ = w.Write([]byte("Platform:\t" + i.Platform + "\n"))
 	_ = w.Flush()
-	return b.String()
+	return strings.TrimSuffix(b.String(), "\n")
 }
