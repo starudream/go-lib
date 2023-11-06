@@ -37,29 +37,17 @@ func Files() []string {
 		_files[3] = os.Getenv("APP_CONFIG_FILE")
 
 		// test config file
-		if osutil.ArgTest() {
-			_files = append(_files,
-				filepath.Join(osutil.GoListRoot(), "app.yaml"),
-				filepath.Join(osutil.GoListRoot(), "../app.yaml"),
-			)
+		if root := osutil.GoListRoot(); root != "" && osutil.ArgTest() {
+			_files = append(_files, filepathJoinDir(root, "app")...)
+			_files = append(_files, filepathJoinDir(root, filepath.Base(root))...)
 		}
 
 		if name := os.Getenv("APP_NAME"); name != "" {
-			_files = append(_files,
-				filepath.Join(osutil.WorkDir(), name+".yaml"),
-				filepath.Join(osutil.WorkDir(), name+".yml"),
-				filepath.Join(osutil.ExeDir(), name+".yaml"),
-				filepath.Join(osutil.ExeDir(), name+".yml"),
-			)
+			_files = append(_files, filepathJoin(name)...)
 		}
 
 		// default config file
-		_files = append(_files,
-			filepath.Join(osutil.WorkDir(), osutil.ExeName()+".yaml"),
-			filepath.Join(osutil.WorkDir(), osutil.ExeName()+".yml"),
-			filepath.Join(osutil.ExeDir(), osutil.ExeName()+".yaml"),
-			filepath.Join(osutil.ExeDir(), osutil.ExeName()+".yml"),
-		)
+		_files = append(_files, filepathJoin(osutil.ExeName())...)
 	})
 	return _files
 }
@@ -76,4 +64,20 @@ func fileFromFlags() (name string) {
 		name, _ = filepath.Abs(name)
 	}
 	return
+}
+
+func filepathJoinDir(dir, base string) []string {
+	return []string{
+		filepath.Join(dir, base+".yaml"),
+		filepath.Join(dir, base+".yml"),
+	}
+}
+
+func filepathJoin(base string) []string {
+	return []string{
+		filepath.Join(osutil.WorkDir(), base+".yaml"),
+		filepath.Join(osutil.WorkDir(), base+".yml"),
+		filepath.Join(osutil.ExeDir(), base+".yaml"),
+		filepath.Join(osutil.ExeDir(), base+".yml"),
+	}
 }
