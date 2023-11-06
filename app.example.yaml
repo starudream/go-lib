@@ -10,6 +10,7 @@ log:
     daily_rotate: true
 
 ntfy:
+  timeout: 3s
   telegram:
     token:
     chat_id:

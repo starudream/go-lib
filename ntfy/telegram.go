@@ -27,7 +27,7 @@ func (c TelegramConfig) Notify(_ context.Context, text string) error {
 	req := &telegramReq{ChatId: c.ChatId, Text: text}
 	addr := "https://api.telegram.org/bot" + *c.Token + "/sendMessage"
 	_, err := resty.ParseResp[*telegramResp, *telegramResp](
-		resty.R().SetBody(req).SetError(&telegramResp{}).SetResult(&telegramResp{}).Post(addr),
+		R().SetBody(req).SetError(&telegramResp{}).SetResult(&telegramResp{}).Post(addr),
 	)
 	if err != nil {
 		return fmt.Errorf("[ntfy/telegram] %w", err)
