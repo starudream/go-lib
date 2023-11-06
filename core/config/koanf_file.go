@@ -38,8 +38,11 @@ func Files() []string {
 
 		// test config file
 		if root := osutil.GoListRoot(); root != "" && osutil.ArgTest() {
+			base := filepath.Base(root)
+			_files = append(_files, filepathJoinDir(root, base)...)
 			_files = append(_files, filepathJoinDir(root, "app")...)
-			_files = append(_files, filepathJoinDir(root, filepath.Base(root))...)
+			_files = append(_files, filepathJoinDir(root, "../"+base)...)
+			_files = append(_files, filepathJoinDir(root, "../app")...)
 		}
 
 		if name := os.Getenv("APP_NAME"); name != "" {
