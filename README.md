@@ -8,12 +8,12 @@
 go get -u github.com/starudream/go-lib/${MODULE_NAME}/v2
 ```
 
-| Name    | Latest Version                                                                                                             | Doc                                                               |
-|---------|----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| `core`  | ![core](https://img.shields.io/github/v/tag/starudream/go-lib?filter=core%2F*&style=for-the-badge&logo=go&label=version)   | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/core/v2)  |
-| `cobra` | ![cobra](https://img.shields.io/github/v/tag/starudream/go-lib?filter=cobra%2F*&style=for-the-badge&logo=go&label=version) | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/cobra/v2) |
-| `resty` | ![resty](https://img.shields.io/github/v/tag/starudream/go-lib?filter=resty%2F*&style=for-the-badge&logo=go&label=version) | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/resty/v2) |
-| `ntfy`  | ![ntfy](https://img.shields.io/github/v/tag/starudream/go-lib?filter=ntfy%2F*&style=for-the-badge&logo=go&label=version)   | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/ntfy/v2)  |
+| Name    | Latest Version                                                                                                             | doc                                                               | cfg                                                                                   |
+|---------|----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| `core`  | ![core](https://img.shields.io/github/v/tag/starudream/go-lib?filter=core%2F*&style=for-the-badge&logo=go&label=version)   | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/core/v2)  | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/core/v2/config/global#Config) |
+| `cobra` | ![cobra](https://img.shields.io/github/v/tag/starudream/go-lib?filter=cobra%2F*&style=for-the-badge&logo=go&label=version) | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/cobra/v2) | -                                                                                     |
+| `resty` | ![resty](https://img.shields.io/github/v/tag/starudream/go-lib?filter=resty%2F*&style=for-the-badge&logo=go&label=version) | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/resty/v2) | -                                                                                     |
+| `ntfy`  | ![ntfy](https://img.shields.io/github/v/tag/starudream/go-lib?filter=ntfy%2F*&style=for-the-badge&logo=go&label=version)   | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/ntfy/v2)  | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/ntfy/v2#Config)               |
 
 ## License
 
