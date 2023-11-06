@@ -39,6 +39,7 @@ func init() {
 			}
 		} else {
 			logs.D("config file loaded")
+			_loadedFile = file
 			break
 		}
 	}

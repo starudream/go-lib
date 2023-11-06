@@ -23,8 +23,9 @@ func LoadFile(name string) error {
 var (
 	_filesMustSize = 10
 	// files[0:_filesMustSize] must be success if not empty
-	_files     = make([]string, _filesMustSize, 20)
-	_filesOnce sync.Once
+	_files      = make([]string, _filesMustSize, 20)
+	_filesOnce  sync.Once
+	_loadedFile string
 )
 
 func Files() []string {
@@ -40,7 +41,15 @@ func Files() []string {
 			_files = append(_files,
 				filepath.Join(osutil.GoListRoot(), "app.yaml"),
 				filepath.Join(osutil.GoListRoot(), "../app.yaml"),
-				filepath.Join(osutil.GoListRoot(), "../bin/app.yaml"),
+			)
+		}
+
+		if name := os.Getenv("APP_NAME"); name != "" {
+			_files = append(_files,
+				filepath.Join(osutil.WorkDir(), name+".yaml"),
+				filepath.Join(osutil.WorkDir(), name+".yml"),
+				filepath.Join(osutil.ExeDir(), name+".yaml"),
+				filepath.Join(osutil.ExeDir(), name+".yml"),
 			)
 		}
 
@@ -53,6 +62,10 @@ func Files() []string {
 		)
 	})
 	return _files
+}
+
+func LoadedFile() string {
+	return _loadedFile
 }
 
 func fileFromFlags() (name string) {
