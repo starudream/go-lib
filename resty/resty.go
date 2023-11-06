@@ -17,6 +17,18 @@ type (
 	Response = resty.Response
 )
 
+func New() *Client {
+	c := resty.New()
+	c.SetDisableWarn(true)
+	c.SetLogger(&logger{})
+	c.SetDebug(osutil.DOT())
+	c.SetDebugBodyLimit(1 << 16) // 65536
+	c.SetJSONMarshaler(json.Marshal)
+	c.SetJSONUnmarshaler(json.Unmarshal)
+	c.SetHeader(HeaderUserAgent, runtime.Version())
+	return c
+}
+
 var (
 	_c     *Client
 	_cOnce sync.Once
@@ -24,14 +36,7 @@ var (
 
 func C() *Client {
 	_cOnce.Do(func() {
-		_c = resty.New()
-		_c.SetDisableWarn(true)
-		_c.SetLogger(&logger{})
-		_c.SetDebug(osutil.DOT())
-		_c.SetDebugBodyLimit(1 << 16) // 65536
-		_c.SetJSONMarshaler(json.Marshal)
-		_c.SetJSONUnmarshaler(json.Unmarshal)
-		_c.SetHeader(HeaderUserAgent, runtime.Version())
+		_c = New()
 	})
 	return _c
 }

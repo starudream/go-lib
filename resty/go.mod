@@ -4,12 +4,12 @@ go 1.21
 
 //replace github.com/starudream/go-lib/core/v2 => ../core
 
-require github.com/starudream/go-lib/core/v2 v2.0.0-rc.8
+require github.com/starudream/go-lib/core/v2 v2.0.0-rc.10
 
 require github.com/go-resty/resty/v2 v2.10.0
 
 require (
-	github.com/fatih/color v1.15.0 // indirect
+	github.com/fatih/color v1.16.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/goccy/go-yaml v1.11.2 // indirect
 	github.com/knadh/koanf/maps v0.1.1 // indirect
