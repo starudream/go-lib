@@ -97,6 +97,16 @@ func CallerFormatPath(path string, max ...int) string {
 	for i, cnt := len(bs)-1, 0; i >= 0; i-- {
 		if bs[i] == '@' {
 			cnt = 1
+			for j := i - 1; ; j-- {
+				// module/v2@v2.0.0/path to module@v2.0.0/path
+				if bs[j] == '/' {
+					if i+1+(i-j-1) < len(bs) && string(bs[j+1:i]) == string(bs[i+1:i+1+(i-j-1)]) {
+						path = path[:j] + path[i:]
+						i = j
+					}
+					break
+				}
+			}
 		} else if bs[i] == '/' {
 			cnt++
 			if cnt >= t {
