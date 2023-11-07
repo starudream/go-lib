@@ -23,16 +23,16 @@ func TestConfig(t *testing.T) {
 
 func TestGenStruct(t *testing.T) {
 	lines := []string{
-		"log.console.disabled		bool",
-		"log.console.format			string",
+		"log.console.disabled		bool				,omitempty",
+		"log.console.format			string				,omitempty",
 		"log.console.level			level.Level",
 		"log.file.enabled			bool",
-		"log.file.format			string",
+		"log.file.format			string				,omitempty",
 		"log.file.level				level.Level",
 		"log.file.filename			string",
-		"log.file.max_size			int",
-		"log.file.max_age			int",
-		"log.file.max_backups		int",
+		"log.file.max_size			int					,omitempty",
+		"log.file.max_age			int					,omitempty",
+		"log.file.max_backups		int					,omitempty",
 		"log.file.daily_rotate		bool",
 	}
 
@@ -57,15 +57,16 @@ func TestGenStruct(t *testing.T) {
 	mas := func() int {
 		i := 0
 		for _, line := range lines {
-			if l := len(get(split(line), 0)); l > i {
+			ss := split(line)
+			if l := len(get(ss, 0) + get(ss, 2)); l > i {
 				i = l
 			}
 		}
 		return i
 	}()
 
-	jsonTpl := `json:"%s,omitempty"`
-	yamlTpl := `yaml:"%s,omitempty"`
+	jsonTpl := `json:"%s"`
+	yamlTpl := `yaml:"%s"`
 
 	buf := &bytes.Buffer{}
 	buf.WriteString("\ntype Config struct {\n")
@@ -82,7 +83,8 @@ func TestGenStruct(t *testing.T) {
 		rn := get(fs, 0)
 		sn := strings.ReplaceAll(rn, ".", "_")
 		pn := strutil.ToPascalCase(sn)
-		tp := get(fs, 1)
+		dt := get(fs, 1)
+		tg := get(fs, 2)
 
 		buf.WriteString("\t")
 
@@ -91,14 +93,14 @@ func TestGenStruct(t *testing.T) {
 		buf.WriteString(" ")
 
 		// field type
-		buf.WriteString(tp)
+		buf.WriteString(dt)
 		buf.WriteString(" ")
 
 		// tag start
 		buf.WriteString("`")
 
 		// json tag
-		jsonTag := fmt.Sprintf(jsonTpl, rn)
+		jsonTag := fmt.Sprintf(jsonTpl, rn+tg)
 		buf.WriteString(jsonTag)
 		buf.WriteString(strings.Repeat(" ", mas+len(jsonTpl)-2-len(jsonTag)))
 
@@ -106,7 +108,7 @@ func TestGenStruct(t *testing.T) {
 		buf.WriteString(" ")
 
 		// yaml tag
-		yamlTag := fmt.Sprintf(yamlTpl, rn)
+		yamlTag := fmt.Sprintf(yamlTpl, rn+tg)
 		buf.WriteString(yamlTag)
 		buf.WriteString(strings.Repeat(" ", mas+len(yamlTpl)-2-len(yamlTag)))
 
