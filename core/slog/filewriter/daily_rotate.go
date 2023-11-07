@@ -41,7 +41,7 @@ func RotateDaily(logger *Logger) {
 		case <-time.After(tom.Sub(now)):
 			fn()
 		case <-signalutil.Done():
-			fn()
+			_ = logger.Close()
 			return
 		}
 	}
