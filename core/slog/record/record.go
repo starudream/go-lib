@@ -34,7 +34,7 @@ func Handle(os ...OptionI) {
 				}
 			}
 			return false
-		})
+		}, opts.skip)
 	} else {
 		pc = osutil.CallerPC(opts.skip)
 	}

@@ -60,9 +60,13 @@ func CallerPC(skip ...int) uintptr {
 
 type CallerFrame = runtime.Frame
 
-func CallerFn(fn func(frame CallerFrame) bool) uintptr {
+func CallerFn(fn func(frame CallerFrame) bool, skip ...int) uintptr {
+	t := 2
+	if len(skip) > 0 {
+		t += skip[0]
+	}
 	var pcs [20]uintptr
-	runtime.Callers(2, pcs[:])
+	runtime.Callers(t, pcs[:])
 	frames := runtime.CallersFrames(pcs[:])
 	for {
 		frame, more := frames.Next()
