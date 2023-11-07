@@ -37,7 +37,7 @@ func Equal(t T, expected, actual any, msgAndArgs ...any) bool {
 func NotEqual(t T, expected, actual any, msgAndArgs ...any) bool {
 	t.Helper()
 	if err := validateEqualArgs(expected, actual); err != nil {
-		return Fail(t, fmt.Sprintf("invalid operation: %#v == %#v (%s)", expected, actual, err), msgAndArgs...)
+		return Fail(t, fmt.Sprintf("invalid operation: %#v == %#v (%v)", expected, actual, err), msgAndArgs...)
 	}
 	if reflectutil.Equal(expected, actual) {
 		return Fail(t, fmt.Sprintf("should not be equal to %T", expected), msgAndArgs...)
