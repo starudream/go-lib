@@ -52,7 +52,7 @@ func (l *logger) Log(level slog.Level, msg string, kvs ...any) {
 	}
 	record.Handle(
 		record.WithLevel(level),
-		record.WithSkipNames("record/record.go", "cron/logger.go"),
+		record.WithSkip(1),
 		record.WithMsg(msg),
 		record.WithAttrs(attrs...),
 	)

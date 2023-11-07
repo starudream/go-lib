@@ -4,7 +4,7 @@ go 1.21
 
 //replace github.com/starudream/go-lib/core/v2 => ../core
 
-require github.com/starudream/go-lib/core/v2 v2.0.0-rc.9
+require github.com/starudream/go-lib/core/v2 v2.0.0
 
 require github.com/robfig/cron/v3 v3.0.1
 
