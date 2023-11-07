@@ -1,7 +1,9 @@
 package resty
 
 import (
+	"os"
 	"runtime"
+	"strconv"
 	"sync"
 
 	"github.com/go-resty/resty/v2"
@@ -20,7 +22,7 @@ type (
 func New() *Client {
 	c := resty.New()
 	c.SetDisableWarn(true)
-	c.SetLogger(&logger{})
+	c.SetLogger(_logger)
 	c.SetDebug(osutil.DOT())
 	c.SetDebugBodyLimit(1 << 16) // 65536
 	c.SetJSONMarshaler(json.Marshal)
@@ -37,6 +39,12 @@ var (
 func C() *Client {
 	_cOnce.Do(func() {
 		_c = New()
+		if s := os.Getenv("RESTY_DEBUG"); s != "" {
+			t, e := strconv.ParseBool(s)
+			if e == nil {
+				_c.SetDebug(t)
+			}
+		}
 	})
 	return _c
 }

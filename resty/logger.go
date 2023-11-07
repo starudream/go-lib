@@ -10,6 +10,8 @@ import (
 	"github.com/starudream/go-lib/core/v2/slog/record"
 )
 
+var _logger = &logger{}
+
 type logger struct {
 }
 
@@ -30,7 +32,8 @@ func (l *logger) Errorf(format string, args ...any) {
 func (l *logger) Log(level slog.Level, format string, args ...any) {
 	record.Handle(
 		record.WithLevel(level),
-		record.WithSkipNames("@", "record/record.go", "resty/logger.go"),
+		record.WithSkip(1),
+		record.WithSkipNames("github.com/go-resty/resty"),
 		record.WithMsg(strings.TrimSuffix(fmt.Sprintf(format, args...), "\n")),
 		record.WithAttrs(slog.String("module", "resty")),
 	)

@@ -10,5 +10,8 @@ var ProxyFromEnv = httpproxy.FromEnvironment
 
 func init() {
 	proxy := ProxyFromEnv()
-	slog.Debug("proxy config from env, http: %s, https: %s, no: %s", proxy.HTTPProxy, proxy.HTTPSProxy, proxy.NoProxy)
+	if proxy.HTTPProxy == "" && proxy.HTTPSProxy == "" {
+		return
+	}
+	slog.Debug("proxy env loaded", slog.String("http", proxy.HTTPProxy), slog.String("https", proxy.HTTPSProxy), slog.String("no", proxy.NoProxy))
 }
