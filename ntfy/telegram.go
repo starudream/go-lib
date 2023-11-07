@@ -27,12 +27,16 @@ func (c TelegramConfig) Notify(_ context.Context, text string) error {
 	req := &telegramReq{ChatId: c.ChatId, Text: text}
 	addr := "https://api.telegram.org/bot" + *c.Token + "/sendMessage"
 	_, err := resty.ParseResp[*telegramResp, *telegramResp](
-		R().SetBody(req).SetError(&telegramResp{}).SetResult(&telegramResp{}).Post(addr),
+		R().SetBody(req).SetError(&telegramResp{}).SetResult(&telegramResp{}).AddRetryCondition(c.retry).Post(addr),
 	)
 	if err != nil {
 		return fmt.Errorf("[ntfy/telegram] %w", err)
 	}
 	return nil
+}
+
+func (c TelegramConfig) retry(resp *resty.Response, err error) bool {
+	return err != nil || resp.IsError()
 }
 
 type telegramReq struct {

@@ -8,8 +8,8 @@ go 1.21
 //)
 
 require (
-	github.com/starudream/go-lib/core/v2 v2.0.0-rc.10
-	github.com/starudream/go-lib/resty/v2 v2.0.0-rc.6
+	github.com/starudream/go-lib/core/v2 v2.0.0-rc.11
+	github.com/starudream/go-lib/resty/v2 v2.0.0-rc.7
 )
 
 require (
@@ -34,5 +34,6 @@ require (
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
 	golang.org/x/net v0.17.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
 )

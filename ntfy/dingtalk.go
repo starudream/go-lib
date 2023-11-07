@@ -36,12 +36,16 @@ func (c DingtalkConfig) Notify(_ context.Context, text string) error {
 		addr += "&timestamp=" + ts + "&sign=" + sign
 	}
 	_, err := resty.ParseResp[*dingtalkResp, *dingtalkResp](
-		R().SetBody(req).SetError(&dingtalkResp{}).SetResult(&dingtalkResp{}).Post(addr),
+		R().SetBody(req).SetError(&dingtalkResp{}).SetResult(&dingtalkResp{}).AddRetryCondition(c.retry).Post(addr),
 	)
 	if err != nil {
 		return fmt.Errorf("[ntfy/dingtalk] %w", err)
 	}
 	return nil
+}
+
+func (c DingtalkConfig) retry(resp *resty.Response, err error) bool {
+	return err != nil || resp.IsError()
 }
 
 func (c DingtalkConfig) Sign() (string, string) {
