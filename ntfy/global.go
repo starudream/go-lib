@@ -13,18 +13,23 @@ import (
 )
 
 type Config struct {
-	Timeout time.Duration `json:"ntfy.timeout"  yaml:"ntfy.timeout"`
-	Proxy   string        `json:"ntfy.proxy"    yaml:"ntfy.proxy"`
-	Retry   int           `json:"ntfy.retry"    yaml:"ntfy.retry"`
+	Timeout time.Duration `json:"ntfy.timeout" yaml:"ntfy.timeout"`
+	Proxy   string        `json:"ntfy.proxy"   yaml:"ntfy.proxy"`
+	Retry   int           `json:"ntfy.retry"   yaml:"ntfy.retry"`
 
 	DingtalkConfig `yaml:",squash"`
 	TelegramConfig `yaml:",squash"`
+	WebhookConfig  `yaml:",squash"`
 }
 
 var _c = Config{}
 
 func init() {
 	_ = config.Unmarshal("", &_c)
+
+	_ = config.Unmarshal("ntfy.webhook.extra", &_c.WebhookConfig.Extra)
+	_ = config.Unmarshal("ntfy.webhook.header", &_c.WebhookConfig.Header)
+
 	if _c.Timeout <= 0 {
 		_c.Timeout = 10 * time.Second
 	}
@@ -50,6 +55,8 @@ func Notify(ctx context.Context, text string) (err error) {
 		c = _c.DingtalkConfig
 	case _c.TelegramConfig.Token != nil:
 		c = _c.TelegramConfig
+	case _c.WebhookConfig.URL != nil:
+		c = _c.WebhookConfig
 	}
 	if c != nil {
 		return c.Notify(ctx, text)

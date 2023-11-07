@@ -11,9 +11,19 @@ log:
 
 ntfy:
   timeout: 3s
+  proxy:
+  retry: 1
   telegram:
     token:
     chat_id:
   dingtalk:
     token:
     secret:
+  webhook:
+    url:
+    method:
+    type:
+    key:
+    extra:
+      title:
+    header:
