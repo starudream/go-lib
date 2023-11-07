@@ -79,7 +79,7 @@ func getBuildDate(bi *debug.BuildInfo) string {
 	if err != nil {
 		return unknown
 	}
-	return t.Format("2006-01-02T15:04:05.000Z07:00")
+	return t.UTC().Format("2006-01-02T15:04:05.000Z07:00")
 }
 
 func getKey(bi *debug.BuildInfo, key string) string {
