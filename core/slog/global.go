@@ -3,6 +3,7 @@ package slog
 import (
 	"context"
 	"log/slog"
+	"os"
 
 	"github.com/starudream/go-lib/core/v2/config/global"
 	"github.com/starudream/go-lib/core/v2/slog/handler"
@@ -25,6 +26,8 @@ func init() {
 var (
 	New        = logs.New
 	SetDefault = logs.SetDefault
+
+	OnFatal = func() { os.Exit(1) }
 )
 
 func Debug(format string, argsAndAttrs ...any) {
@@ -45,6 +48,7 @@ func Error(format string, argsAndAttrs ...any) {
 
 func Fatal(format string, argsAndAttrs ...any) {
 	log(context.Background(), LevelFatal, format, argsAndAttrs...)
+	OnFatal()
 }
 
 func Log(ctx context.Context, level Level, format string, argsAndAttrs ...any) {
