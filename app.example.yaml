@@ -1,11 +1,14 @@
 log:
   console:
+    disabled: false
     format: text
-    level: debug
+    level: DEBUG
   file:
     enabled: true
     format: json
-    level: fatal
+    level: FATAL
+    max_size: 100
+    max_age: 0
     max_backups: 10
     daily_rotate: true
 
@@ -13,17 +16,19 @@ ntfy:
   timeout: 3s
   proxy:
   retry: 1
-  telegram:
-    token:
-    chat_id:
+
   dingtalk:
     token:
     secret:
+
+  telegram:
+    token:
+    chat_id:
+
   webhook:
     url:
     method:
     type:
     key:
     extra:
-      title:
-    header:
+    headers:
