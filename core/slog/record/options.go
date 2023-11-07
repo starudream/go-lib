@@ -106,7 +106,7 @@ func WithMsgAndAttrs(format string, argsAndAttrs ...any) OptionI {
 			}
 			return argsAndAttrs[:i+1], attrs
 		}
-		return nil, attrs
+		return nil, reverse(attrs)
 	}()
 	return newOptionFunc(func(o *Options) {
 		if len(args) == 0 {
@@ -116,4 +116,14 @@ func WithMsgAndAttrs(format string, argsAndAttrs ...any) OptionI {
 		}
 		o.attrs = append(o.attrs, attrs...)
 	})
+}
+
+func reverse[T any](vs []T) []T {
+	length := len(vs)
+	half := length / 2
+	for i := 0; i < half; i++ {
+		j := length - 1 - i
+		vs[i], vs[j] = vs[j], vs[i]
+	}
+	return vs
 }
