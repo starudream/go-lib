@@ -147,5 +147,5 @@ func (i Info) String() string {
 	_, _ = w.Write([]byte("Compiler:\t" + i.Compiler + "\n"))
 	_, _ = w.Write([]byte("Platform:\t" + i.Platform + "\n"))
 	_ = w.Flush()
-	return strings.TrimSuffix(b.String(), "\n")
+	return b.String()
 }
