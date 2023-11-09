@@ -2,6 +2,7 @@ package signalutil
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -27,6 +28,7 @@ func NewContext(ctx ...context.Context) *Context {
 	go func() {
 		select {
 		case c.sig = <-ch:
+			fmt.Printf("\n\n")
 			logs.D("receive signal, the process will exit", "signal", c.sig)
 			c.cancel()
 		case <-c.ctx.Done():
