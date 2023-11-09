@@ -32,7 +32,7 @@ var _c = Config{
 	LogFileFilename: func() string {
 		path, name := osutil.ExeDir(), osutil.ExeName()+".log"
 		if osutil.ArgTest() {
-			path = filepath.Join(osutil.GoListRoot(), "..", "log")
+			path = filepath.Join(osutil.GoListRoot(), "log")
 		}
 		return filepath.Join(path, name)
 	}(),
