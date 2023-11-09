@@ -400,11 +400,13 @@ func (t *Table) SetStructs(v interface{}) error {
 					f = f.Elem()
 				}
 				if f.IsValid() {
-					if s, ok := f.Interface().(fmt.Stringer); ok {
-						rows[j] = s.String()
-						continue
+					if v1, ok1 := f.Interface().(fmt.Stringer); ok1 {
+						rows[j] = v1.String()
+					} else if v2, ok2 := f.Interface().(TableCell); ok2 {
+						rows[j] = v2.TableCellString()
+					} else {
+						rows[j] = fmt.Sprint(f)
 					}
-					rows[j] = fmt.Sprint(f)
 				} else {
 					rows[j] = "nil"
 				}

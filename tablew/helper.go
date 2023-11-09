@@ -20,3 +20,7 @@ func Structs(v any) string {
 		}
 	})
 }
+
+type TableCell interface {
+	TableCellString() string
+}

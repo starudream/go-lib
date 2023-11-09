@@ -1,17 +1,25 @@
 package tablew
 
 import (
+	"fmt"
 	"testing"
 )
 
+type T struct {
+	A string
+	B TB
+}
+
+type TB int
+
+func (v TB) TableCellString() string {
+	return fmt.Sprintf("%02d", v)
+}
+
 func TestStructs(t *testing.T) {
-	type T struct {
-		A string
-		B int
-	}
-	s := Structs([]T{
+	ts := []T{
 		{"a", 1},
 		{"b", 2},
-	})
-	t.Log("\n" + s)
+	}
+	t.Log("\n" + Structs(ts))
 }
