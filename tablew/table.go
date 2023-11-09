@@ -330,7 +330,7 @@ func (t *Table) SetBorders(border Border) {
 
 // SetStructs sets header and rows from slice of struct.
 // If something that is not a slice is passed, error will be returned.
-// The tag specified by "tablewriter" for the struct becomes the header.
+// The tag specified by "table" for the struct becomes the header.
 // If not specified or empty, the field name will be used.
 // The field of the first element of the slice is used as the header.
 // If the element implements fmt.Stringer, the result will be used.
@@ -364,15 +364,21 @@ func (t *Table) SetStructs(v interface{}) error {
 		default:
 			return fmt.Errorf("invalid kind %s", e.Kind())
 		}
+
 		n := e.NumField()
-		headers := make([]string, n)
+		ignored := map[int]bool{}
+		headers := make([]string, 0, n)
 		for i := 0; i < n; i++ {
 			f := e.Field(i)
-			header := f.Tag.Get("tablewriter")
-			if header == "" {
-				header = f.Name
+			tag := genFieldTag(f.Tag.Get("table"))
+			if tag.name == "" {
+				tag.name = f.Name
 			}
-			headers[i] = header
+			if tag.ignore {
+				ignored[i] = true
+				continue
+			}
+			headers = append(headers, tag.name)
 		}
 		t.SetHeader(headers)
 
@@ -393,23 +399,26 @@ func (t *Table) SetStructs(v interface{}) error {
 			if n != nf {
 				return errors.New("invalid num of field")
 			}
-			rows := make([]string, nf)
+			var rows []string
 			for j := 0; j < nf; j++ {
+				if ignored[j] {
+					continue
+				}
 				f := reflect.Indirect(item.Field(j))
 				if f.Kind() == reflect.Ptr {
 					f = f.Elem()
 				}
+				s := "nil"
 				if f.IsValid() {
 					if v1, ok1 := f.Interface().(fmt.Stringer); ok1 {
-						rows[j] = v1.String()
+						s = v1.String()
 					} else if v2, ok2 := f.Interface().(TableCell); ok2 {
-						rows[j] = v2.TableCellString()
+						s = v2.TableCellString()
 					} else {
-						rows[j] = fmt.Sprint(f)
+						s = fmt.Sprint(f)
 					}
-				} else {
-					rows[j] = "nil"
 				}
+				rows = append(rows, s)
 			}
 			t.Append(rows)
 		}

@@ -6,8 +6,8 @@ import (
 )
 
 type T struct {
-	A string
-	B TB
+	A string `json:"a" table:",ignore"`
+	B TB     `table:"foo"`
 }
 
 type TB int
