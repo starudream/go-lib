@@ -30,7 +30,7 @@ func (c TelegramConfig) Notify(_ context.Context, text string) error {
 		R().SetBody(req).SetError(&telegramResp{}).SetResult(&telegramResp{}).AddRetryCondition(c.retry).Post(addr),
 	)
 	if err != nil {
-		return fmt.Errorf("[ntfy/telegram] %w", err)
+		return fmt.Errorf("[ntfy/%s] %w", c.Name(), err)
 	}
 	return nil
 }

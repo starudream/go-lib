@@ -39,7 +39,7 @@ func (c DingtalkConfig) Notify(_ context.Context, text string) error {
 		R().SetBody(req).SetError(&dingtalkResp{}).SetResult(&dingtalkResp{}).AddRetryCondition(c.retry).Post(addr),
 	)
 	if err != nil {
-		return fmt.Errorf("[ntfy/dingtalk] %w", err)
+		return fmt.Errorf("[ntfy/%s] %w", c.Name(), err)
 	}
 	return nil
 }
@@ -57,7 +57,7 @@ func (c DingtalkConfig) Sign() (string, string) {
 
 type dingtalkReq struct {
 	MsgType string        `json:"msgtype"`
-	Text    *dingtalkText `json:"text,omitempty"`
+	Text    *dingtalkText `json:"text"`
 }
 
 type dingtalkText struct {

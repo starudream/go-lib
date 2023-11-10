@@ -68,7 +68,7 @@ func (c WebhookConfig) Notify(_ context.Context, text string) error {
 		}(),
 	)
 	if err != nil {
-		return fmt.Errorf("[ntfy/webhook] %w", err)
+		return fmt.Errorf("[ntfy/%s] %w", c.Name(), err)
 	}
 	return nil
 }
