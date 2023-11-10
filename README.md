@@ -1,5 +1,7 @@
 # Golang Library
 
+![golang](https://img.shields.io/github/actions/workflow/status/starudream/go-lib/golang.yml?style=for-the-badge&logo=github&label=golang)
+
 ## Install
 
 ![go-mod-version](https://img.shields.io/github/go-mod/go-version/starudream/go-lib?style=for-the-badge&logo=Go&label=go%20min%20version)
