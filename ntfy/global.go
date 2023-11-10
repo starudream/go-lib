@@ -57,6 +57,8 @@ func Notify(ctx context.Context, text string) (err error) {
 		c = _c.DingtalkConfig
 	case _c.TelegramConfig.Token != nil:
 		c = _c.TelegramConfig
+	case _c.WeixinWorkConfig.Key != nil:
+		c = _c.WeixinWorkConfig
 	case _c.WebhookConfig.URL != nil:
 		c = _c.WebhookConfig
 	}
