@@ -17,9 +17,11 @@ type Config struct {
 	Proxy   string        `json:"ntfy.proxy"   yaml:"ntfy.proxy"`
 	Retry   int           `json:"ntfy.retry"   yaml:"ntfy.retry"`
 
-	DingtalkConfig `yaml:",squash"`
-	TelegramConfig `yaml:",squash"`
-	WebhookConfig  `yaml:",squash"`
+	DingtalkConfig   `yaml:",squash"`
+	TelegramConfig   `yaml:",squash"`
+	WeixinWorkConfig `yaml:",squash"`
+
+	WebhookConfig `yaml:",squash"`
 }
 
 var _c = Config{}
