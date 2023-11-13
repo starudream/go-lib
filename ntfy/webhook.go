@@ -10,16 +10,30 @@ import (
 
 // WebhookConfig is the config for webhook.
 //
-// # ServerChan
+// # ServerChan [docs](https://sct.ftqq.com/sendkey)
 //
 //	ntfy:
 //	  webhook:
-//	    url: https://sctapi.ftqq.com/key.send
-//	    method: post
-//	    type: json
+//	    url: https://sctapi.ftqq.com/{key}.send
+//	    method: POST
+//	    type: JSON
 //	    key: desp
 //	    extras:
-//	    title: test
+//	      title: ntfy
+//
+// # ntfy.sh [docs](https://docs.ntfy.sh/publish/#publish-as-json)
+//
+//	ntfy:
+//	 webhook:
+//	   url: https://ntfy.com/
+//	   method: POST
+//	   type: JSON
+//	   key: message
+//	   extra:
+//	     title: ntfy
+//	     topic: default
+//	   headers:
+//	     Authorization: Basic base64(username:password)
 type WebhookConfig struct {
 	URL *string `json:"ntfy.webhook.url" yaml:"ntfy.webhook.url"`
 	// optional: GET or POST, default is GET
@@ -35,7 +49,7 @@ type WebhookConfig struct {
 	// extra values
 	Extra map[string]string `json:"ntfy.webhook.extra" yaml:"ntfy.webhook.extra"`
 	// headers
-	Header map[string]string `json:"ntfy.webhook.headers" yaml:"ntfy.webhook.headers"`
+	Headers map[string]string `json:"ntfy.webhook.headers" yaml:"ntfy.webhook.headers"`
 }
 
 var _ Interface = (*WebhookConfig)(nil)
@@ -57,12 +71,14 @@ func (c WebhookConfig) Notify(_ context.Context, text string) error {
 	c.Extra[c.Key] = text
 	_, err := resty.ParseResp[*webhookResp, *webhookResp](
 		func() (*resty.Response, error) {
-			req := R().SetHeaders(c.Header).SetError(&webhookResp{}).SetResult(&webhookResp{})
+			req := R().SetHeaders(c.Headers).SetError(&webhookResp{}).SetResult(&webhookResp{})
 			if clean(c.Method) == "POST" {
-				if clean(c.Type) == "JSON" {
+				switch clean(c.Type) {
+				case "JSON":
 					return req.SetBody(c.Extra).Post(*c.URL)
+				default:
+					return req.SetFormData(c.Extra).Post(*c.URL)
 				}
-				return req.SetFormData(c.Extra).Post(*c.URL)
 			}
 			return req.SetQueryParams(c.Extra).Get(*c.URL)
 		}(),

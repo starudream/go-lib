@@ -30,7 +30,7 @@ func init() {
 	_ = config.Unmarshal("", &_c)
 
 	_ = config.Unmarshal("ntfy.webhook.extra", &_c.WebhookConfig.Extra)
-	_ = config.Unmarshal("ntfy.webhook.header", &_c.WebhookConfig.Header)
+	_ = config.Unmarshal("ntfy.webhook.headers", &_c.WebhookConfig.Headers)
 
 	if _c.Timeout <= 0 {
 		_c.Timeout = 10 * time.Second
