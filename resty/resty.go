@@ -23,7 +23,7 @@ func New() *Client {
 	c := resty.New()
 	c.SetDisableWarn(true)
 	c.SetLogger(_logger)
-	c.SetDebug(osutil.DOT())
+	c.SetDebug(debug())
 	c.SetDebugBodyLimit(1 << 16) // 65536
 	c.SetJSONMarshaler(json.Marshal)
 	c.SetJSONUnmarshaler(json.Unmarshal)
@@ -37,15 +37,7 @@ var (
 )
 
 func C() *Client {
-	_cOnce.Do(func() {
-		_c = New()
-		if s := os.Getenv("RESTY_DEBUG"); s != "" {
-			t, e := strconv.ParseBool(s)
-			if e == nil {
-				_c.SetDebug(t)
-			}
-		}
-	})
+	_cOnce.Do(func() { _c = New() })
 	return _c
 }
 
@@ -57,4 +49,15 @@ func R(ros ...rOptionI) *Request {
 		ros[i].apply(opts)
 	}
 	return C().R().SetHeaders(opts.Headers)
+}
+
+func debug() bool {
+	v := osutil.DOT()
+	if s := os.Getenv("RESTY_DEBUG"); s != "" {
+		t, e := strconv.ParseBool(s)
+		if e == nil {
+			v = t
+		}
+	}
+	return v
 }

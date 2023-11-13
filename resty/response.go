@@ -15,16 +15,24 @@ type iRespRes interface {
 }
 
 func ParseResp[Err iRespErr, Res iRespRes](resp *Response, ee error) (t Res, _ error) {
+	re := &RespErr{Response: resp}
 	if ee != nil {
-		return t, &RespErr{Response: resp, err: fmt.Errorf("execute error: %w", ee)}
+		re.err = fmt.Errorf("execute error: %w", ee)
+		return
 	}
 	if resp.IsError() {
 		err := resp.Error().(Err)
-		return t, &RespErr{Response: resp, msg: err.String()}
+		if err != nil {
+			re.msg = err.String()
+		} else {
+			re.err = fmt.Errorf("response status: %s", resp.Status())
+		}
+		return
 	}
 	res := resp.Result().(Res)
-	if !res.IsSuccess() {
-		return t, &RespErr{Response: resp, msg: res.String()}
+	if res != nil && !res.IsSuccess() {
+		re.msg = res.String()
+		return
 	}
 	return res, nil
 }
@@ -35,11 +43,15 @@ type RespErr struct {
 	msg string
 }
 
-func (e *RespErr) Error() string {
+func (e *RespErr) String() string {
 	if e.err != nil {
 		e.msg = e.err.Error()
 	}
 	return fmt.Sprintf("response status: %s, error: %s", e.Response.Status(), e.msg)
+}
+
+func (e *RespErr) Error() string {
+	return e.String()
 }
 
 func AsRespErr(err error) (*RespErr, bool) {
