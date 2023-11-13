@@ -3,6 +3,8 @@ package resty
 import (
 	"errors"
 	"fmt"
+
+	"github.com/starudream/go-lib/core/v2/utils/reflectutil"
 )
 
 type iRespErr interface {
@@ -22,16 +24,16 @@ func ParseResp[Err iRespErr, Res iRespRes](resp *Response, ee error) (t Res, _ e
 	}
 	if resp.IsError() {
 		err := resp.Error().(Err)
-		if err != nil {
-			re.msg = err.String()
+		if !reflectutil.IsNil(err) {
+			re.esg = err.String()
 		} else {
 			re.err = fmt.Errorf("response status: %s", resp.Status())
 		}
 		return
 	}
 	res := resp.Result().(Res)
-	if res != nil && !res.IsSuccess() {
-		re.msg = res.String()
+	if !reflectutil.IsNil(res) && !res.IsSuccess() {
+		re.esg = res.String()
 		return
 	}
 	return res, nil
@@ -40,14 +42,14 @@ func ParseResp[Err iRespErr, Res iRespRes](resp *Response, ee error) (t Res, _ e
 type RespErr struct {
 	*Response
 	err error
-	msg string
+	esg string
 }
 
 func (e *RespErr) String() string {
 	if e.err != nil {
-		e.msg = e.err.Error()
+		e.esg = e.err.Error()
 	}
-	return fmt.Sprintf("response status: %s, error: %s", e.Response.Status(), e.msg)
+	return fmt.Sprintf("response status: %s, error: %s", e.Response.Status(), e.esg)
 }
 
 func (e *RespErr) Error() string {
