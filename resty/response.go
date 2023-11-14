@@ -20,7 +20,7 @@ func ParseResp[Err iRespErr, Res iRespRes](resp *Response, ee error) (t Res, _ e
 	re := &RespErr{Response: resp}
 	if ee != nil {
 		re.err = fmt.Errorf("execute error: %w", ee)
-		return
+		return t, re
 	}
 	if resp.IsError() {
 		err := resp.Error().(Err)
@@ -29,12 +29,12 @@ func ParseResp[Err iRespErr, Res iRespRes](resp *Response, ee error) (t Res, _ e
 		} else {
 			re.err = fmt.Errorf("response status: %s", resp.Status())
 		}
-		return
+		return t, re
 	}
 	res := resp.Result().(Res)
 	if !reflectutil.IsNil(res) && !res.IsSuccess() {
 		re.esg = res.String()
-		return
+		return t, re
 	}
 	return res, nil
 }
