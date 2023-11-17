@@ -22,4 +22,4 @@ bin-%: init
 
 .PHONY: run-%
 run-%: bin-%
-	DEBUG=true bin/example-$* $(ARGS)
+	DEBUG=true APP__LOG__FILE__ENABLED=true APP__LOG__FILE__LEVEL=debug bin/example-$* $(ARGS)
