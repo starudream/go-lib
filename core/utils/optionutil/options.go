@@ -4,10 +4,13 @@ type I[T any] interface {
 	apply(*T)
 }
 
+var _ I[any] = (*F[any])(nil)
+
 type F[T any] struct {
 	f func(*T)
 }
 
+//nolint:unused
 func (f *F[T]) apply(opts *T) {
 	f.f(opts)
 }
