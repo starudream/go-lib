@@ -27,7 +27,7 @@ func NewFile(cfg global.Config) slog.Handler {
 		go filewriter.RotateDaily(file)
 	}
 
-	logs.D("log file enabled", "format", cfg.LogFileFormat, "file", file.Filename)
+	logs.D("log file enabled", "format", cfg.LogFileFormat, "level", cfg.LogFileLevel, "file", file.Filename)
 
 	if cfg.LogFileFormat == "json" {
 		return logs.NewJSONHandler(file, true, cfg.LogFileLevel)
