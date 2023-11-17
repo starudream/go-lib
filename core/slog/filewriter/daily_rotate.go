@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
-	"github.com/starudream/go-lib/core/v2/utils/signalutil"
 
 	"github.com/starudream/go-lib/core/v2/internal/logs"
 )
@@ -40,9 +39,6 @@ func RotateDaily(logger *Logger) {
 		// 	fn()
 		case <-time.After(tom.Sub(now)):
 			fn()
-		case <-signalutil.Done():
-			_ = logger.Close()
-			return
 		}
 	}
 }

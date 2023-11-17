@@ -6,14 +6,19 @@ import (
 
 var _c = NewContext()
 
+func Defer(fn func()) *Context {
+	return _c.Defer(fn)
+}
+
+// Done must be called last
 func Done() <-chan struct{} {
-	return _c.ctx.Done()
+	return _c.Done()
 }
 
 func Cancel() {
-	_c.cancel()
+	_c.Cancel()
 }
 
 func Signal() os.Signal {
-	return _c.sig
+	return _c.Signal()
 }

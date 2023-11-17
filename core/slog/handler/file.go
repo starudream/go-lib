@@ -23,6 +23,8 @@ func NewFile(cfg global.Config) slog.Handler {
 		Compress:   true,
 	}
 
+	go filewriter.Sync(file)
+
 	if cfg.LogFileDailyRotate {
 		go filewriter.RotateDaily(file)
 	}
