@@ -1,6 +1,7 @@
 package config
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 	"sync"
@@ -61,6 +62,7 @@ func LoadedFile() string {
 
 func fileFromFlags() (name string) {
 	fs := pflag.NewFlagSet("", pflag.ContinueOnError)
+	fs.SetOutput(io.Discard)
 	fs.StringVarP(&name, "config", "c", "", "")
 	_ = fs.Parse(os.Args[1:])
 	if name != "" {
