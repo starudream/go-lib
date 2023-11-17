@@ -88,6 +88,5 @@ func Remove(name string) {
 
 func Run() {
 	C().Start()
-	<-signalutil.Done()
-	C().Stop()
+	<-signalutil.Defer(func() { C().Stop() }).Done()
 }
