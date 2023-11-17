@@ -14,7 +14,7 @@ func Log(t T, msgAndArgs ...any) {
 func LogNoErr(t T, err error, msgAndArgs ...any) {
 	t.Helper()
 	if err != nil {
-		FailNow(t, fmt.Sprintf("Unexpected error: %v", err))
+		FailNow(t, fmt.Sprintf("unexpected error: %v", err))
 	} else {
 		Log(t, msgAndArgs...)
 	}
