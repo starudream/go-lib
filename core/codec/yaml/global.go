@@ -53,7 +53,5 @@ func UnmarshalTo[T any](a any) (T, error) {
 }
 
 func MustUnmarshalTo[T any](a any) T {
-	v, err := codec.UnmarshalTo[T](G, a)
-	osutil.PanicErr(err)
-	return v
+	return osutil.Must1(codec.UnmarshalTo[T](G, a))
 }

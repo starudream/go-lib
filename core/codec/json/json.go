@@ -42,9 +42,7 @@ func (o MarshalOptions) MarshalString(v any) (string, error) {
 }
 
 func (o MarshalOptions) MustMarshal(v any) []byte {
-	bs, err := o.Marshal(v)
-	osutil.PanicErr(err)
-	return bs
+	return osutil.Must1(o.Marshal(v))
 }
 
 func (o MarshalOptions) MustMarshalString(v any) string {
@@ -63,9 +61,7 @@ func (o MarshalOptions) MarshalIndentString(v any) (string, error) {
 }
 
 func (o MarshalOptions) MustMarshalIndent(v any) []byte {
-	bs, err := o.MarshalIndent(v)
-	osutil.PanicErr(err)
-	return bs
+	return osutil.Must1(o.MarshalIndent(v))
 }
 
 func (o MarshalOptions) MustMarshalIndentString(v any) string {
@@ -86,7 +82,7 @@ func (o UnmarshalOptions) UnmarshalString(s string, v any) error {
 }
 
 func (o UnmarshalOptions) MustUnmarshal(bs []byte, v any) {
-	osutil.PanicErr(o.Unmarshal(bs, v))
+	osutil.Must0(o.Unmarshal(bs, v))
 }
 
 func (o UnmarshalOptions) MustUnmarshalString(s string, v any) {
