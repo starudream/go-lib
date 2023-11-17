@@ -16,7 +16,7 @@ var Exit = func(t int, s string) {
 }
 
 func ExitErr(err error, a ...any) {
-	RunErr(Exit, err, a...)
+	runErr(Exit, err, a...)
 }
 
 var Panic = func(t int, s string) {
@@ -24,13 +24,33 @@ var Panic = func(t int, s string) {
 }
 
 func PanicErr(err error, a ...any) {
-	if err == nil {
-		return
-	}
-	RunErr(Panic, err, a...)
+	runErr(Panic, err, a...)
+}
+
+func Must0(err error, a ...any) {
+	runErr(Panic, err, a...)
+}
+
+func Must1[T any](v1 T, err error, a ...any) T {
+	runErr(Panic, err, a...)
+	return v1
+}
+
+func Must2[T1 any, T2 any](v1 T1, v2 T2, err error, a ...any) (T1, T2) {
+	runErr(Panic, err, a...)
+	return v1, v2
+}
+
+func Must3[T1 any, T2 any, T3 any](v1 T1, v2 T2, v3 T3, err error, a ...any) (T1, T2, T3) {
+	runErr(Panic, err, a...)
+	return v1, v2, v3
 }
 
 func RunErr(fn func(t int, s string), err error, a ...any) {
+	runErr(fn, err, a...)
+}
+
+func runErr(fn func(t int, s string), err error, a ...any) {
 	t := -1
 	if len(a) > 0 {
 		if i, ok := a[0].(int); ok {
