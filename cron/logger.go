@@ -21,7 +21,7 @@ func (l *logger) Info(msg string, kvs ...any) {
 }
 
 func (l *logger) Error(error, string, ...any) {
-	panic("implement me")
+	panic("unreachable")
 }
 
 func (l *logger) E(msg string, kvs ...any) {
