@@ -24,25 +24,37 @@ var Panic = func(t int, s string) {
 }
 
 func PanicErr(err error, a ...any) {
+	if err == nil {
+		return
+	}
 	runErr(Panic, err, a...)
 }
 
 func Must0(err error, a ...any) {
+	if err == nil {
+		return
+	}
 	runErr(Panic, err, a...)
 }
 
 func Must1[T any](v1 T, err error, a ...any) T {
-	runErr(Panic, err, a...)
+	if err != nil {
+		runErr(Panic, err, a...)
+	}
 	return v1
 }
 
 func Must2[T1 any, T2 any](v1 T1, v2 T2, err error, a ...any) (T1, T2) {
-	runErr(Panic, err, a...)
+	if err != nil {
+		runErr(Panic, err, a...)
+	}
 	return v1, v2
 }
 
 func Must3[T1 any, T2 any, T3 any](v1 T1, v2 T2, v3 T3, err error, a ...any) (T1, T2, T3) {
-	runErr(Panic, err, a...)
+	if err != nil {
+		runErr(Panic, err, a...)
+	}
 	return v1, v2, v3
 }
 
