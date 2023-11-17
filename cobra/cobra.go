@@ -1,6 +1,9 @@
 package cobra
 
 import (
+	"io"
+	"os"
+
 	"github.com/spf13/cobra"
 
 	"github.com/starudream/go-lib/core/v2/config/version"
@@ -25,6 +28,9 @@ func NewRootCommand(f ...func(c *Command)) *Command {
 		// set version template
 		c.SetVersionTemplate("{{ print .Version }}")
 		c.Version = version.GetVersionInfo().String()
+		// output
+		c.SetOut(os.Stdout)
+		c.SetErr(io.Discard)
 
 		if len(f) > 0 && f[0] != nil {
 			f[0](c)
