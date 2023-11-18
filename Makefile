@@ -9,12 +9,18 @@ LDFLAGS += -X "github.com/starudream/go-lib/core/v2/config/version.gitVersion=$(
 init:
 	git status -b -s
 
+.PHONY: test-all
+test-all: test-core
+
 .PHONY: test-%
 test-%: init
 	@CGO_ENABLED=0 go install github.com/kyoh86/richgo@latest
 	@mkdir -p cover
 	cd $* && go mod tidy && CGO_ENABLED=1 richgo test -race -count 1 -cover -failfast -coverprofile ../cover/$*.out -v ./...
 	cd $* && go tool cover -html ../cover/$*.out -o ../cover/$*.html
+
+.PHONY: bin-all
+bin-all: bin-app bin-release bin-service
 
 .PHONY: bin-%
 bin-%: init

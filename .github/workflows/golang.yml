@@ -19,6 +19,5 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: stable
-      - run: make test-core
-      - run: make bin-app
-      - run: make bin-release
+      - run: make test-all
+      - run: make bin-all
