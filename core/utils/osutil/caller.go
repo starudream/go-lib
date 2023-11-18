@@ -71,7 +71,7 @@ func CallerFn(fn func(frame CallerFrame) bool, skip ...int) uintptr {
 	for {
 		frame, more := frames.Next()
 		if !fn(frame) {
-			return frame.Entry
+			return frame.PC
 		}
 		if !more {
 			break
