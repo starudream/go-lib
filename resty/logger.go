@@ -33,7 +33,7 @@ func (l *logger) Log(level slog.Level, format string, args ...any) {
 	record.Handle(
 		record.WithLevel(level),
 		record.WithSkip(1),
-		record.WithSkipNames("github.com/go-resty/resty"),
+		record.WithSkipNames("@"),
 		record.WithMsg(strings.TrimSuffix(fmt.Sprintf(format, args...), "\n")),
 		record.WithAttrs(slog.String("module", "resty")),
 	)
