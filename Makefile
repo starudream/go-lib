@@ -29,3 +29,10 @@ bin-%: init
 .PHONY: run-%
 run-%: bin-%
 	DEBUG=true APP__LOG__FILE__ENABLED=true APP__LOG__FILE__LEVEL=debug bin/example-$* $(ARGS)
+
+.PHONY: lint-all
+lint-all: lint-core lint-cobra lint-cron lint-ntfy lint-resty lint-service lint-sqlite
+
+.PHONY: lint-%
+lint-%:
+	cd $* && golangci-lint run --skip-dirs internal/driver
