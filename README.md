@@ -18,6 +18,7 @@ go get -u github.com/starudream/go-lib/${MODULE_NAME}/v2
 | `ntfy`    | ![ntfy](https://img.shields.io/github/v/tag/starudream/go-lib?filter=ntfy%2F*&style=for-the-badge&logo=go&label=version)       | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/ntfy/v2)    | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/ntfy/v2#Config)               |
 | `resty`   | ![resty](https://img.shields.io/github/v/tag/starudream/go-lib?filter=resty%2F*&style=for-the-badge&logo=go&label=version)     | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/resty/v2)   | -                                                                                     |
 | `service` | ![service](https://img.shields.io/github/v/tag/starudream/go-lib?filter=service%2F*&style=for-the-badge&logo=go&label=version) | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/service/v2) | -                                                                                     |
+| `sqlite`  | ![sqlite](https://img.shields.io/github/v/tag/starudream/go-lib?filter=sqlite%2F*&style=for-the-badge&logo=go&label=version)   | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/sqlite/v2)  | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/sqlite/v2#Config)             |
 | `tablew`  | ![resty](https://img.shields.io/github/v/tag/starudream/go-lib?filter=tablew%2F*&style=for-the-badge&logo=go&label=version)    | [GoDoc](https://pkg.go.dev/github.com/starudream/go-lib/tablew/v2)  | -                                                                                     |
 
 ## License
