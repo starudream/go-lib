@@ -7,19 +7,18 @@ import (
 	"time"
 
 	"github.com/starudream/go-lib/core/v2/slog/level"
+	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
 )
 
-func Handle(os ...OptionI) {
+func Handle(options ...Option) {
 	opts := &Options{
 		ctx:    context.Background(),
 		logger: slog.Default(),
 		time:   time.Now(),
 		level:  level.Debug,
 	}
-	for i := 0; i < len(os); i++ {
-		os[i].apply(opts)
-	}
+	opts = optionutil.Build(opts, options...)
 
 	if !opts.logger.Enabled(opts.ctx, opts.level.Level()) {
 		return

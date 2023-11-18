@@ -1,30 +1,17 @@
 package resty
 
-type rOptions struct {
+import (
+	"github.com/starudream/go-lib/core/v2/utils/optionutil"
+)
+
+type ROptions struct {
 	Headers map[string]string
 }
 
-type rOptionI interface {
-	apply(*rOptions)
-}
+type ROption = optionutil.I[ROptions]
 
-type rOptionF struct {
-	f func(*rOptions)
-}
-
-var _ rOptionI = (*rOptionF)(nil)
-
-func (of rOptionF) apply(opts *rOptions) {
-	of.f(opts)
-}
-
-func newROptionFunc(f func(*rOptions)) *rOptionF {
-	return &rOptionF{f: f}
-}
-
-//goland:noinspection GoExportedFuncWithUnexportedType
-func WithAccept(accept string) rOptionI {
-	return newROptionFunc(func(opts *rOptions) {
+func WithAccept(accept string) ROption {
+	return optionutil.New(func(opts *ROptions) {
 		if accept == "" {
 			return
 		}
@@ -32,9 +19,8 @@ func WithAccept(accept string) rOptionI {
 	})
 }
 
-//goland:noinspection GoExportedFuncWithUnexportedType
-func WithUserAgent(useragent string) rOptionI {
-	return newROptionFunc(func(opts *rOptions) {
+func WithUserAgent(useragent string) ROption {
+	return optionutil.New(func(opts *ROptions) {
 		if useragent == "" {
 			return
 		}

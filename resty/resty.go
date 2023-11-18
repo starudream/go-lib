@@ -9,6 +9,7 @@ import (
 	"github.com/go-resty/resty/v2"
 
 	"github.com/starudream/go-lib/core/v2/codec/json"
+	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
 )
 
@@ -41,13 +42,8 @@ func C() *Client {
 	return _c
 }
 
-func R(ros ...rOptionI) *Request {
-	opts := &rOptions{
-		Headers: map[string]string{},
-	}
-	for i := 0; i < len(ros); i++ {
-		ros[i].apply(opts)
-	}
+func R(rOptions ...ROption) *Request {
+	opts := optionutil.Build(&ROptions{Headers: map[string]string{}}, rOptions...)
 	return C().R().SetHeaders(opts.Headers)
 }
 
