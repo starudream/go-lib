@@ -43,4 +43,5 @@ func AddConfigFlag(c *Command, usage ...string) {
 		usage = []string{"path to config file"}
 	}
 	c.PersistentFlags().StringP("config", "c", "", usage[0])
+	_ = c.MarkPersistentFlagFilename("config")
 }
