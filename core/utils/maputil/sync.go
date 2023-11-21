@@ -27,6 +27,11 @@ func (m *SyncMap[K, V]) Delete(k K) {
 	m.m().Delete(k)
 }
 
+func (m *SyncMap[K, V]) Len() (l int) {
+	m.m().Range(func(k, v any) bool { l++; return true })
+	return
+}
+
 func (m *SyncMap[K, V]) LoadOrStore(k K, v V) (V, bool) {
 	t, loaded := m.m().LoadOrStore(k, v)
 	return t.(V), loaded

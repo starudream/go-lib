@@ -9,6 +9,8 @@ func TestSyncMap(t *testing.T) {
 	t.Log(m.Load("a"))
 	t.Log(m.LoadOrStore("a", 1))
 	m.Store("a", 2)
+	m.Store("b", 1)
+	t.Log(m.Len())
 	t.Log(m.CompareAndSwap("a", 3, 1))
 	t.Log(m.LoadAndDelete("a"))
 	t.Log(m.LoadAndDelete("a"))
