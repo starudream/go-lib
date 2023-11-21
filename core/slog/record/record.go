@@ -1,24 +1,14 @@
 package record
 
 import (
-	"context"
 	"log/slog"
 	"strings"
-	"time"
 
-	"github.com/starudream/go-lib/core/v2/slog/level"
-	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
 )
 
 func Handle(options ...Option) {
-	opts := &Options{
-		ctx:    context.Background(),
-		logger: slog.Default(),
-		time:   time.Now(),
-		level:  level.Debug,
-	}
-	opts = optionutil.Build(opts, options...)
+	opts := newOptions(options...)
 
 	if !opts.logger.Enabled(opts.ctx, opts.level.Level()) {
 		return

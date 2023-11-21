@@ -21,6 +21,15 @@ type Options struct {
 	attrs     []slog.Attr
 }
 
+func newOptions(options ...Option) *Options {
+	return optionutil.Build(&Options{
+		ctx:    context.Background(),
+		logger: slog.Default(),
+		time:   time.Now(),
+		level:  level.Debug,
+	}, options...)
+}
+
 type Option = optionutil.I[Options]
 
 func WithContext(ctx context.Context) Option {

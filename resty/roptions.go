@@ -8,6 +8,10 @@ type ROptions struct {
 	Headers map[string]string
 }
 
+func newROptions(rOptions ...ROption) *ROptions {
+	return optionutil.Build(&ROptions{Headers: map[string]string{}}, rOptions...)
+}
+
 type ROption = optionutil.I[ROptions]
 
 func WithAccept(accept string) ROption {

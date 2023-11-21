@@ -11,6 +11,10 @@ type Options struct {
 	envVars     map[string]string
 }
 
+func newOptions(options ...Option) *Options {
+	return optionutil.Build(&Options{}, options...)
+}
+
 type Option = optionutil.I[Options]
 
 func WithDisplayName(displayName string) Option {

@@ -12,7 +12,6 @@ import (
 
 	"github.com/starudream/go-lib/core/v2/config/global"
 	"github.com/starudream/go-lib/core/v2/utils/maputil"
-	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
 )
 
@@ -37,10 +36,9 @@ func newService(name string, run func(context.Context), options ...Option) (Serv
 		return nil, fmt.Errorf("service run is nil")
 	}
 
-	prg := &program{Run: run}
-	opts := optionutil.Build(&Options{}, options...)
+	opts := newOptions(options...)
 
-	svc, err := service.New(prg, &service.Config{
+	svc, err := service.New(&program{Run: run}, &service.Config{
 		Name:             name,
 		DisplayName:      opts.displayName,
 		Description:      opts.description,
