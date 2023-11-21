@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# https://github.com/olekukonko/tablewriter
+
 wget -qO table.go https://raw.githubusercontent.com/olekukonko/tablewriter/master/table.go
 wget -qO table_unicode.go https://raw.githubusercontent.com/olekukonko/tablewriter/master/table_unicode.go
 wget -qO table_color.go https://raw.githubusercontent.com/olekukonko/tablewriter/master/table_with_color.go
