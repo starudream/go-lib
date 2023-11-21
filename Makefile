@@ -10,7 +10,7 @@ init:
 	git status -b -s
 
 .PHONY: test-all
-test-all: test-core
+test-all: test-core test-cobra test-cron test-resty test-tablew
 
 .PHONY: test-%
 test-%: init
