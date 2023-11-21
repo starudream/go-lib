@@ -8,11 +8,12 @@ import (
 	"reflect"
 	"runtime"
 	"sync"
-	"sync/atomic"
 	"syscall"
 	"time"
 
 	"github.com/starudream/go-lib/core/v2/internal/logs"
+	"github.com/starudream/go-lib/core/v2/utils/osutil"
+	"github.com/starudream/go-lib/core/v2/utils/sliceutil"
 )
 
 type Context struct {
@@ -20,12 +21,11 @@ type Context struct {
 
 	ctx    context.Context
 	cancel context.CancelFunc
+	done   chan struct{}
 
 	sig os.Signal
 
-	done    chan struct{}
-	stopped atomic.Bool
-	fns     []func()
+	fns sliceutil.SyncSlice[func()]
 }
 
 func NewContext(ctx ...context.Context) *Context {
@@ -50,13 +50,17 @@ func (c *Context) init() *Context {
 				c.cancel()
 			case <-c.ctx.Done():
 			}
-			c.stopped.Store(true)
+			// add interval between Defer() and Done()
+			time.Sleep(50 * time.Millisecond)
 			// close done after all defer functions are executed
 			c.wait()
+			// all done
 			close(c.done)
 			signal.Stop(ch)
 			// force exit because some goroutines may not exit
-			os.Exit(0)
+			if !osutil.ArgTest() {
+				os.Exit(0)
+			}
 		}()
 	})
 	return c
@@ -64,26 +68,27 @@ func (c *Context) init() *Context {
 
 func (c *Context) wait() {
 	wg := sync.WaitGroup{}
-	wg.Add(len(c.fns))
-	for _, fn := range c.fns {
-		go func(fn func()) {
+	wg.Add(1)
+	c.fns.Range(func(i int, fn func()) bool {
+		wg.Add(1)
+		go func() {
 			defer func(start time.Time) {
 				defer wg.Done()
-				took := time.Since(start)
-				name := runtime.FuncForPC(reflect.ValueOf(fn).Pointer()).Name()
-				logs.D("graceful shutdown", "func", name, "took", took)
+				logs.D("graceful shutdown", "func", runtime.FuncForPC(reflect.ValueOf(fn).Pointer()).Name(), "took", time.Since(start))
 			}(time.Now())
 			fn()
-		}(fn)
-	}
+		}()
+		return true
+	})
+	wg.Done()
 	wg.Wait()
 }
 
 func (c *Context) Defer(fn func()) *Context {
-	if fn == nil || c.stopped.Load() {
+	if fn == nil {
 		return c
 	}
-	c.fns = append(c.fns, fn)
+	c.fns.Append(fn)
 	return c
 }
 
