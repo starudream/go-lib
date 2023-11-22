@@ -1,12 +1,17 @@
 package resty
 
 import (
+	"net"
+	"net/http"
+	"net/http/cookiejar"
 	"os"
 	"runtime"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/go-resty/resty/v2"
+	"golang.org/x/net/publicsuffix"
 
 	"github.com/starudream/go-lib/core/v2/codec/json"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
@@ -20,7 +25,7 @@ type (
 )
 
 func New() *Client {
-	c := resty.New()
+	c := newClient()
 	c.SetDisableWarn(true)
 	c.SetLogger(_logger)
 	c.SetDebug(debug())
@@ -44,6 +49,27 @@ func C() *Client {
 func R(rOptions ...ROption) *Request {
 	opts := newROptions(rOptions...)
 	return C().R().SetHeaders(opts.Headers)
+}
+
+func newClient() *Client {
+	cookieJar, _ := cookiejar.New(&cookiejar.Options{PublicSuffixList: publicsuffix.List})
+	return resty.NewWithClient(&http.Client{Transport: createTransport(), Jar: cookieJar})
+}
+
+func createTransport() *http.Transport {
+	return &http.Transport{
+		Proxy: http.ProxyFromEnvironment,
+		DialContext: (&net.Dialer{
+			Timeout:   30 * time.Second,
+			KeepAlive: 30 * time.Second,
+		}).DialContext,
+		ForceAttemptHTTP2:     true,
+		MaxIdleConns:          100,
+		IdleConnTimeout:       90 * time.Second,
+		TLSHandshakeTimeout:   10 * time.Second,
+		ExpectContinueTimeout: 1 * time.Second,
+		MaxIdleConnsPerHost:   runtime.GOMAXPROCS(0) + 1,
+	}
 }
 
 func debug() bool {
