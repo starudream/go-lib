@@ -9,6 +9,17 @@ type SyncSlice[V any] struct {
 	mu   sync.RWMutex
 }
 
+func (s *SyncSlice[V]) Make(length int, capacity ...int) *SyncSlice[V] {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if len(capacity) > 0 {
+		s.data = make([]V, length, capacity[0])
+	} else {
+		s.data = make([]V, length)
+	}
+	return s
+}
+
 func (s *SyncSlice[V]) Append(v ...V) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -19,6 +30,12 @@ func (s *SyncSlice[V]) Index(i int) V {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	return s.data[i]
+}
+
+func (s *SyncSlice[V]) Set(i int, v V) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.data[i] = v
 }
 
 func (s *SyncSlice[V]) Delete(i int) {
