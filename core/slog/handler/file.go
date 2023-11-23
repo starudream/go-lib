@@ -4,9 +4,9 @@ import (
 	"log/slog"
 
 	"github.com/starudream/go-lib/core/v2/config/global"
+	"github.com/starudream/go-lib/core/v2/slog/filewriter"
 
 	"github.com/starudream/go-lib/core/v2/internal/logs"
-	"github.com/starudream/go-lib/core/v2/slog/filewriter"
 )
 
 func NewFile(cfg global.Config) slog.Handler {
