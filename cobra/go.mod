@@ -4,7 +4,7 @@ go 1.21
 
 //replace github.com/starudream/go-lib/core/v2 => ../core
 
-require github.com/starudream/go-lib/core/v2 v2.0.8
+require github.com/starudream/go-lib/core/v2 v2.0.11
 
 require github.com/spf13/cobra v1.8.0
 

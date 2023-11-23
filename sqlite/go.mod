@@ -4,7 +4,7 @@ go 1.21
 
 //replace github.com/starudream/go-lib/core/v2 => ../core
 
-require github.com/starudream/go-lib/core/v2 v2.0.9
+require github.com/starudream/go-lib/core/v2 v2.0.11
 
 require (
 	gorm.io/gorm v1.25.5
@@ -41,7 +41,7 @@ require (
 	lukechampine.com/uint128 v1.3.0 // indirect
 	modernc.org/cc/v3 v3.41.0 // indirect
 	modernc.org/ccgo/v3 v3.16.15 // indirect
-	modernc.org/libc v1.34.4 // indirect
+	modernc.org/libc v1.34.9 // indirect
 	modernc.org/mathutil v1.6.0 // indirect
 	modernc.org/memory v1.7.2 // indirect
 	modernc.org/opt v0.1.3 // indirect
