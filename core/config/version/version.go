@@ -1,6 +1,7 @@
 package version
 
 import (
+	"bufio"
 	"fmt"
 	"runtime"
 	"runtime/debug"
@@ -148,4 +149,32 @@ func (i Info) String() string {
 	_, _ = w.Write([]byte("Platform:\t" + i.Platform + "\n"))
 	_ = w.Flush()
 	return b.String()
+}
+
+func Parse(text string) (info Info) {
+	sc := bufio.NewScanner(strings.NewReader(text))
+	for sc.Scan() {
+		ss := strings.SplitN(sc.Text(), ":", 2)
+		if len(ss) != 2 {
+			continue
+		}
+		k, v := strings.TrimSpace(ss[0]), strings.TrimSpace(ss[1])
+		switch k {
+		case "GitVersion":
+			info.GitVersion = v
+		case "GitCommit":
+			info.GitCommit = v
+		case "GitTreeState":
+			info.GitTreeState = v
+		case "BuildDate":
+			info.BuildDate = v
+		case "GoVersion":
+			info.GoVersion = v
+		case "Compiler":
+			info.Compiler = v
+		case "Platform":
+			info.Platform = v
+		}
+	}
+	return
 }
