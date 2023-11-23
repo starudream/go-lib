@@ -2,7 +2,7 @@ package ntfy
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"net/url"
 	"sync"
 	"time"
@@ -48,7 +48,7 @@ func C() Config {
 	return _c
 }
 
-var ErrNoConfig = fmt.Errorf("no notify config")
+var ErrNoConfig = errors.New("no notify config")
 
 func Notify(ctx context.Context, text string) (err error) {
 	var c Interface
