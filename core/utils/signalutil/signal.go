@@ -54,6 +54,7 @@ func (c *Context) init() *Context {
 				logs.D("receive signal, the process will exit", "signal", c.sig)
 				c.cancel()
 			case <-c.ctx.Done():
+				logs.D("user cancel, the process will exit")
 			}
 			// add interval between Defer() and Done()
 			time.Sleep(50 * time.Millisecond)
@@ -65,8 +66,7 @@ func (c *Context) init() *Context {
 			// force exit
 			go func() {
 				time.Sleep(time.Second)
-				logs.D("something still running, force exit after 3 seconds")
-				<-time.After(3 * time.Second)
+				logs.D("something still running after 1s, force exit")
 				if osutil.ArgTest() {
 					os.Exit(1)
 				} else {
