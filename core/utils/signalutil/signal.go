@@ -39,6 +39,10 @@ func NewContext(ctx ...context.Context) *Context {
 	return c
 }
 
+func (c *Context) Ctx() context.Context {
+	return c.ctx
+}
+
 func (c *Context) init() *Context {
 	c.once.Do(func() {
 		ch := make(chan os.Signal, 1)

@@ -1,10 +1,15 @@
 package signalutil
 
 import (
+	"context"
 	"os"
 )
 
 var _c = NewContext()
+
+func Ctx() context.Context {
+	return _c.Ctx()
+}
 
 func Defer(fn func()) *Context {
 	return _c.Defer(fn)
