@@ -65,8 +65,8 @@ func (c *Context) init() *Context {
 			signal.Stop(ch)
 			// force exit
 			go func() {
-				time.Sleep(time.Second)
-				logs.D("something still running after 1s, force exit")
+				<-time.After(5 * time.Second)
+				logs.D("something still running after 5 seconds, force exit")
 				if osutil.ArgTest() {
 					os.Exit(1)
 				} else {
