@@ -11,9 +11,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/starudream/go-lib/core/v2/internal/logs"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
 	"github.com/starudream/go-lib/core/v2/utils/sliceutil"
+
+	"github.com/starudream/go-lib/core/v2/internal/logs"
 )
 
 type Context struct {
@@ -57,10 +58,17 @@ func (c *Context) init() *Context {
 			// all done
 			close(c.done)
 			signal.Stop(ch)
-			// force exit because some goroutines may not exit
-			if !osutil.ArgTest() {
-				os.Exit(0)
-			}
+			// force exit
+			go func() {
+				time.Sleep(time.Second)
+				logs.D("something still running, force exit after 3 seconds")
+				<-time.After(3 * time.Second)
+				if osutil.ArgTest() {
+					os.Exit(1)
+				} else {
+					os.Exit(0)
+				}
+			}()
 		}()
 	})
 	return c
