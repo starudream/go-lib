@@ -45,3 +45,7 @@ func AddConfigFlag(c *Command, usage ...string) {
 	c.PersistentFlags().StringP("config", "c", "", usage[0])
 	_ = c.MarkPersistentFlagFilename("config")
 }
+
+func SetMousetrapHelpText(text string) {
+	cobra.MousetrapHelpText = text
+}
