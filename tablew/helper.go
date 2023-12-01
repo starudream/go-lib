@@ -2,6 +2,7 @@ package tablew
 
 import (
 	"bytes"
+	"reflect"
 	"strings"
 )
 
@@ -14,6 +15,17 @@ func Render(cb func(w *Table)) string {
 }
 
 func Structs(v any) string {
+	if v == nil {
+		return "<nil>"
+	}
+	vt := reflect.TypeOf(v)
+	if vt.Kind() != reflect.Array && vt.Kind() != reflect.Slice {
+		panic("must be array or slice")
+	}
+	vv := reflect.ValueOf(v)
+	if vv.Len() < 1 {
+		return "<empty>"
+	}
 	return Render(func(w *Table) {
 		err := w.SetStructs(v)
 		if err != nil {
