@@ -410,10 +410,10 @@ func (t *Table) SetStructs(v interface{}) error {
 				}
 				s := "nil"
 				if f.IsValid() {
-					if v1, ok1 := f.Interface().(fmt.Stringer); ok1 {
-						s = v1.String()
-					} else if v2, ok2 := f.Interface().(TableCell); ok2 {
-						s = v2.TableCellString()
+					if v1, ok1 := f.Interface().(TableCell); ok1 {
+						s = v1.TableCellString()
+					} else if v2, ok2 := f.Interface().(fmt.Stringer); ok2 {
+						s = v2.String()
 					} else {
 						s = fmt.Sprint(f)
 					}
