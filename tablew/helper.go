@@ -6,32 +6,37 @@ import (
 	"strings"
 )
 
-func Render(cb func(w *Table)) string {
+type Option func(w *Table)
+
+func Render(opts ...Option) string {
 	buf := &bytes.Buffer{}
 	w := NewWriter(buf)
-	cb(w)
+	for i := 0; i < len(opts); i++ {
+		opts[i](w)
+	}
 	w.Render()
 	return buf.String()
 }
 
-func Structs(v any) string {
-	if v == nil {
+func Structs(vs any, opts ...Option) string {
+	if vs == nil {
 		return "<nil>"
 	}
-	vt := reflect.TypeOf(v)
+	vt := reflect.TypeOf(vs)
 	if vt.Kind() != reflect.Array && vt.Kind() != reflect.Slice {
 		panic("must be array or slice")
 	}
-	vv := reflect.ValueOf(v)
+	vv := reflect.ValueOf(vs)
 	if vv.Len() < 1 {
 		return "<empty>"
 	}
-	return Render(func(w *Table) {
-		err := w.SetStructs(v)
+	fn := func(w *Table) {
+		err := w.SetStructs(vs)
 		if err != nil {
 			panic(err)
 		}
-	})
+	}
+	return Render(append(opts, fn)...)
 }
 
 type TableCell interface {
