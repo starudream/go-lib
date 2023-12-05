@@ -11,7 +11,7 @@ require (
 	github.com/lmittmann/tint v1.0.3
 	github.com/mattn/go-colorable v0.1.13
 	github.com/mattn/go-isatty v0.0.20
-	github.com/samber/lo v1.38.1
+	github.com/samber/lo v1.39.0
 	github.com/spf13/cast v1.6.0
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/text v0.14.0

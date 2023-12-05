@@ -15,7 +15,7 @@ go 1.21
 //)
 
 require (
-	github.com/starudream/go-lib/cobra/v2 v2.0.3
+	github.com/starudream/go-lib/cobra/v2 v2.0.4
 	github.com/starudream/go-lib/core/v2 v2.0.12
 	github.com/starudream/go-lib/selfupdate/v2 v2.0.1
 	github.com/starudream/go-lib/service/v2 v2.0.1
@@ -25,7 +25,7 @@ require (
 require (
 	github.com/Masterminds/semver/v3 v3.2.1
 	github.com/oklog/ulid/v2 v2.1.0
-	github.com/samber/lo v1.38.1
+	github.com/samber/lo v1.39.0
 	golang.org/x/mod v0.14.0
 )
 
@@ -70,7 +70,7 @@ require (
 	lukechampine.com/uint128 v1.3.0 // indirect
 	modernc.org/cc/v3 v3.41.0 // indirect
 	modernc.org/ccgo/v3 v3.16.15 // indirect
-	modernc.org/libc v1.34.9 // indirect
+	modernc.org/libc v1.35.0 // indirect
 	modernc.org/mathutil v1.6.0 // indirect
 	modernc.org/memory v1.7.2 // indirect
 	modernc.org/opt v0.1.3 // indirect
