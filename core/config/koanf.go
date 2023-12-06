@@ -69,6 +69,10 @@ func Get(path string) Value {
 	return NewValue(_k.Get(path))
 }
 
+func Exists(path string) bool {
+	return _k.Exists(path)
+}
+
 func Set(path string, value any) {
 	_ = _k.Set(path, value)
 }
