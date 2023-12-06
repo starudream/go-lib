@@ -7,6 +7,7 @@ import (
 )
 
 type Value interface {
+	Any() any
 	Int64(def ...int64) int64
 	Int(def ...int) int
 	Float64(def ...float64) float64
@@ -25,6 +26,10 @@ func NewValue(v any) Value {
 }
 
 var _ Value = (*value)(nil)
+
+func (v *value) Any() any {
+	return v.v
+}
 
 func (v *value) Int64(def ...int64) int64 {
 	return iArr[int64](def).Cast(cast.ToInt64E(v.v))
