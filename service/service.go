@@ -58,6 +58,7 @@ func defaultServiceOption() map[string]any {
 	return map[string]any{
 		"UserService": func() (user bool) {
 			fs := pflag.NewFlagSet("", pflag.ContinueOnError)
+			fs.ParseErrorsWhitelist.UnknownFlags = true
 			fs.SetOutput(io.Discard)
 			fs.BoolVar(&user, "user", false, "")
 			_ = fs.Parse(os.Args[1:])

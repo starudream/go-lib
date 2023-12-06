@@ -62,6 +62,7 @@ func LoadedFile() string {
 
 func fileFromFlags() (name string) {
 	fs := pflag.NewFlagSet("", pflag.ContinueOnError)
+	fs.ParseErrorsWhitelist.UnknownFlags = true
 	fs.SetOutput(io.Discard)
 	fs.StringVarP(&name, "config", "c", "", "")
 	_ = fs.Parse(os.Args[1:])
