@@ -13,6 +13,12 @@ func TestG(t *testing.T) {
 	testutil.LogNoErr(t, err, s1)
 	testutil.MustEqual(t, `{"a":"hello world","b":{"bool":true,"float":3.14,"int":16}}`, s1)
 
+	s3, err := IndentString(s1)
+	testutil.LogNoErr(t, err, s3)
+
+	s4, err := CompactString(s3)
+	testutil.LogNoErr(t, err, s4)
+
 	s2, err := MarshalIndentString(testdata.V1)
 	testutil.LogNoErr(t, err, s2)
 

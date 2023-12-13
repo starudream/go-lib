@@ -1,6 +1,8 @@
 package json
 
 import (
+	"bytes"
+
 	"github.com/goccy/go-json"
 
 	"github.com/starudream/go-lib/core/v2/codec"
@@ -16,8 +18,8 @@ type MarshalOptions struct {
 	DisableHTMLEscape    bool
 	DisableNormalizeUTF8 bool
 
-	Prefix string
-	Indent string
+	PrefixStr string
+	IndentStr string
 }
 
 func (o MarshalOptions) opts() (opts []json.EncodeOptionFunc) {
@@ -52,7 +54,7 @@ func (o MarshalOptions) MustMarshalString(v any) string {
 var _ codec.IndentMarshaler = MarshalOptions{}
 
 func (o MarshalOptions) MarshalIndent(v any) ([]byte, error) {
-	return json.MarshalIndentWithOption(v, o.Prefix, o.Indent, o.opts()...)
+	return json.MarshalIndentWithOption(v, o.PrefixStr, o.IndentStr, o.opts()...)
 }
 
 func (o MarshalOptions) MarshalIndentString(v any) (string, error) {
@@ -66,6 +68,48 @@ func (o MarshalOptions) MustMarshalIndent(v any) []byte {
 
 func (o MarshalOptions) MustMarshalIndentString(v any) string {
 	return string(o.MustMarshalIndent(v))
+}
+
+var _ codec.Compacter = MarshalOptions{}
+
+func (o MarshalOptions) Compact(src []byte) ([]byte, error) {
+	dst := &bytes.Buffer{}
+	err := json.Compact(dst, src)
+	return dst.Bytes(), err
+}
+
+func (o MarshalOptions) CompactString(src string) (string, error) {
+	bs, err := o.Compact([]byte(src))
+	return string(bs), err
+}
+
+func (o MarshalOptions) MustCompact(src []byte) []byte {
+	return osutil.Must1(o.Compact(src))
+}
+
+func (o MarshalOptions) MustCompactString(src string) string {
+	return string(o.MustCompact([]byte(src)))
+}
+
+var _ codec.Indenter = MarshalOptions{}
+
+func (o MarshalOptions) Indent(src []byte) ([]byte, error) {
+	dst := &bytes.Buffer{}
+	err := json.Indent(dst, src, o.PrefixStr, o.IndentStr)
+	return dst.Bytes(), err
+}
+
+func (o MarshalOptions) IndentString(src string) (string, error) {
+	bs, err := o.Indent([]byte(src))
+	return string(bs), err
+}
+
+func (o MarshalOptions) MustIndent(src []byte) []byte {
+	return osutil.Must1(o.Indent(src))
+}
+
+func (o MarshalOptions) MustIndentString(src string) string {
+	return string(o.MustIndent([]byte(src)))
 }
 
 type UnmarshalOptions struct {

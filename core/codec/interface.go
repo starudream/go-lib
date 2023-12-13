@@ -16,6 +16,22 @@ type IndentMarshaler interface {
 	MustMarshalIndentString(v any) string
 }
 
+type Compacter interface {
+	Compact(src []byte) ([]byte, error)
+	CompactString(src string) (string, error)
+
+	MustCompact(src []byte) []byte
+	MustCompactString(src string) string
+}
+
+type Indenter interface {
+	Indent(src []byte) ([]byte, error)
+	IndentString(src string) (string, error)
+
+	MustIndent(src []byte) []byte
+	MustIndentString(src string) string
+}
+
 type Unmarshaler interface {
 	Unmarshal(bs []byte, v any) error
 	UnmarshalString(s string, v any) error

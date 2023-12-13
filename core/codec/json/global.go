@@ -7,8 +7,8 @@ import (
 
 var G = Options{
 	MarshalOptions: MarshalOptions{
-		Prefix: "",
-		Indent: "  ",
+		PrefixStr: "",
+		IndentStr: "  ",
 	},
 	UnmarshalOptions: UnmarshalOptions{},
 }
@@ -43,6 +43,38 @@ func MustMarshalIndent(v any) []byte {
 
 func MustMarshalIndentString(v any) string {
 	return G.MustMarshalIndentString(v)
+}
+
+func Compact(src []byte) ([]byte, error) {
+	return G.Compact(src)
+}
+
+func CompactString(src string) (string, error) {
+	return G.CompactString(src)
+}
+
+func MustCompact(src []byte) []byte {
+	return G.MustCompact(src)
+}
+
+func MustCompactString(src string) string {
+	return G.MustCompactString(src)
+}
+
+func Indent(src []byte) ([]byte, error) {
+	return G.Indent(src)
+}
+
+func IndentString(src string) (string, error) {
+	return G.IndentString(src)
+}
+
+func MustIndent(src []byte) []byte {
+	return G.MustIndent(src)
+}
+
+func MustIndentString(src string) string {
+	return G.MustIndentString(src)
 }
 
 func Unmarshal(bs []byte, v any) error {
