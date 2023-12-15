@@ -9,6 +9,15 @@ LDFLAGS += -X "github.com/starudream/go-lib/core/v2/config/version.gitVersion=$(
 init:
 	git status -b -s
 
+.PHONY: update-all
+update-all: update-core update-cobra update-cron update-resty update-ntfy update-selfupdate update-service update-sqlite
+
+.PHONY: update-%
+update-%:
+	cd $* && go get -v -u ./...
+	@cd $* && if grep -q 'go-resty' go.mod; then go get github.com/go-resty/resty/v2@v2.9.1; fi
+	@cd $* && go mod tidy
+
 .PHONY: test-all
 test-all: test-core test-cobra test-cron test-resty test-tablew
 
