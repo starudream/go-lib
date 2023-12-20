@@ -17,6 +17,6 @@ func LoadFlags(fs *pflag.FlagSet) {
 
 func flagCB(fs *pflag.FlagSet) func(f *pflag.Flag) (string, any) {
 	return func(f *pflag.Flag) (string, any) {
-		return strings.ReplaceAll(strings.ToLower(strings.TrimSpace(f.Name)), "__", "."), posflag.FlagVal(fs, f)
+		return strings.ReplaceAll(strings.ToLower(strings.TrimSpace(f.Name)), "-", "."), posflag.FlagVal(fs, f)
 	}
 }
