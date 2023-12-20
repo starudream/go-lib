@@ -8,8 +8,8 @@ go 1.21
 //)
 
 require (
-	github.com/starudream/go-lib/cobra/v2 v2.0.5
-	github.com/starudream/go-lib/core/v2 v2.0.15
+	github.com/starudream/go-lib/cobra/v2 v2.0.6
+	github.com/starudream/go-lib/core/v2 v2.0.16
 )
 
 require (
@@ -33,7 +33,7 @@ require (
 	github.com/samber/lo v1.39.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/spf13/cobra v1.8.0 // indirect
-	golang.org/x/exp v0.0.0-20231214170342-aacd6d4b4611 // indirect
+	golang.org/x/exp v0.0.0-20231219180239-dc181d75b848 // indirect
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
