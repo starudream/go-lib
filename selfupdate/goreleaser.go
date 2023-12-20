@@ -13,7 +13,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/cheggaaa/pb"
+	"github.com/cheggaaa/pb/v3"
 
 	"github.com/starudream/go-lib/core/v2/gh"
 	"github.com/starudream/go-lib/core/v2/slog"
@@ -120,7 +120,7 @@ func (t *GoReleaser) download(version, filename string) ([]byte, error) {
 		return nil, errors.New(resp.Status())
 	}
 	size, _ := strconv.Atoi(resp.Header().Get("Content-Length"))
-	bar := pb.New(size).SetUnits(pb.U_BYTES).Start()
+	bar := pb.New(size).Set(pb.Bytes, true).Set(pb.CleanOnFinish, true).Start()
 	bs, err := io.ReadAll(bar.NewProxyReader(resp.RawBody()))
 	if err != nil {
 		return nil, err

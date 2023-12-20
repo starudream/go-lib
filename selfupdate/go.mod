@@ -8,16 +8,17 @@ go 1.21
 //)
 
 require (
-	github.com/starudream/go-lib/core/v2 v2.0.16
+	github.com/starudream/go-lib/core/v2 v2.0.17
 	github.com/starudream/go-lib/resty/v2 v2.0.8
 )
 
 require (
 	github.com/Masterminds/semver/v3 v3.2.1
-	github.com/cheggaaa/pb v1.0.29
+	github.com/cheggaaa/pb/v3 v3.1.4
 )
 
 require (
+	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/go-ping/ping v1.1.0 // indirect
 	github.com/go-resty/resty/v2 v2.9.1 // indirect
