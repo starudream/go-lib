@@ -50,7 +50,7 @@ func (c *Context) init() *Context {
 		go func() {
 			select {
 			case c.sig = <-ch:
-				fmt.Printf("\n\n")
+				fmt.Printf("\n")
 				logs.D("receive signal, the process will exit", "signal", c.sig)
 				c.cancel()
 			case <-c.ctx.Done():
@@ -63,16 +63,19 @@ func (c *Context) init() *Context {
 			// all done
 			close(c.done)
 			signal.Stop(ch)
+			// wait
+			time.Sleep(50 * time.Millisecond)
 			// force exit
-			go func() {
-				<-time.After(5 * time.Second)
-				logs.D("something still running after 5 seconds, force exit")
-				if osutil.ArgTest() {
-					os.Exit(1)
-				} else {
+			if osutil.ArgTest() {
+				// wait 1s for test
+				go func() {
+					<-time.After(time.Second)
 					os.Exit(0)
-				}
-			}()
+				}()
+			} else {
+				// normal exit
+				os.Exit(0)
+			}
 		}()
 	})
 	return c
