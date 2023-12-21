@@ -12,7 +12,6 @@ func TestClose(t *testing.T) {
 	c1 := Closer{}
 	Close(c1)
 
-	c2 := &Closer{}
-	c2 = nil
+	var c2 *Closer
 	Close(c2)
 }
