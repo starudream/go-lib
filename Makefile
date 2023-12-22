@@ -27,7 +27,7 @@ test-%: init
 	cd $* && go tool cover -html ../cover/$*.out -o ../cover/$*.html
 
 .PHONY: bin-all
-bin-all: bin-app bin-release bin-service
+bin-all: bin-app bin-release bin-selfupdate bin-service bin-sqlite
 
 .PHONY: bin-%
 bin-%: init
@@ -38,7 +38,7 @@ run-%: bin-%
 	DEBUG=true APP__LOG__FILE__ENABLED=true APP__LOG__FILE__LEVEL=debug bin/example-$* $(ARGS)
 
 .PHONY: lint-all
-lint-all: lint-core lint-cobra lint-cron lint-ntfy lint-resty lint-service lint-sqlite
+lint-all: lint-core lint-cobra lint-cron lint-ntfy lint-resty lint-selfupdate lint-server lint-service lint-sqlite
 
 .PHONY: lint-%
 lint-%:
