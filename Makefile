@@ -14,9 +14,7 @@ update-all: update-core update-cobra update-cron update-resty update-ntfy update
 
 .PHONY: update-%
 update-%:
-	cd $* && go get -v -u ./...
-	@cd $* && if grep -q 'go-resty' go.mod; then go get github.com/go-resty/resty/v2@v2.9.1; fi
-	@cd $* && go mod tidy
+	cd $* && go get -v -u ./... && go mod tidy
 
 .PHONY: test-all
 test-all: test-core test-cobra test-cron test-resty test-tablew
