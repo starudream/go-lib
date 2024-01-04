@@ -2,15 +2,11 @@ package main
 
 import (
 	"context"
-	"errors"
-	"net"
-	"net/http"
-	"time"
 
 	"github.com/starudream/go-lib/cobra/v2"
-	"github.com/starudream/go-lib/core/v2/slog"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
-	"github.com/starudream/go-lib/core/v2/utils/signalutil"
+	"github.com/starudream/go-lib/server/v2"
+	"github.com/starudream/go-lib/server/v2/http"
 	"github.com/starudream/go-lib/service/v2"
 )
 
@@ -25,7 +21,7 @@ var (
 		c.Use = "server"
 		c.Short = "Run server"
 		c.Run = func(cmd *cobra.Command, args []string) {
-			start(context.Background())
+			run(context.Background())
 		}
 	})
 )
@@ -38,35 +34,10 @@ func main() {
 	osutil.ExitErr(rootCmd.Execute())
 }
 
-func start(context.Context) {
-	server := &http.Server{}
-
-	ln := osutil.Must1(net.Listen("tcp", ":8080"))
-	slog.Info("listening on %s", ln.Addr())
-
-	go func() {
-		err := server.Serve(ln)
-		if err != nil && !errors.Is(err, http.ErrServerClosed) {
-			osutil.PanicErr(err)
-		}
-	}()
-
-	slog.Info("server started")
-
-	<-signalutil.Defer(stop(server)).Done()
-}
-
-func stop(server *http.Server) func() {
-	return func() {
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
-
-		_ = server.Shutdown(ctx)
-
-		slog.Info("server stopped")
-	}
+func run(context.Context) {
+	osutil.PanicErr(server.Run(":8080", server.WithHTTP(http.NewServer())))
 }
 
 func svc() service.Service {
-	return service.New("example", start, service.WithArguments("server"))
+	return service.New("example", run, service.WithArguments("server"))
 }
