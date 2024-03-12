@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package api.doc;
+
+option go_package = "api/doc";
+
+import "google/protobuf/descriptor.proto";
+
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "doc"
+    description: "for test"
+  }
+
+  schemes: HTTP
+
+  consumes: "application/json"
+  produces: "application/json"
+
+  security_definitions: {
+    security: {
+      key: "Authorization"
+      value: {
+        type: TYPE_API_KEY
+        in: IN_HEADER
+        name: "Authorization"
+      }
+    }
+  }
+};

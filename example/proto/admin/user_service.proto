@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package api.admin;
+
+option go_package = "github.com/starudream/go-lib/example/v2/api/admin";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+import "common/common.proto";
+
+import "admin/user/user.proto";
+
+service AdminUserService {
+  rpc Health(google.protobuf.Empty) returns (google.protobuf.Struct) {
+    option (google.api.http) = {
+      get: "/admin/user/_health"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "健康检查"
+      security: {}
+    };
+  };
+
+  // 创建用户
+  rpc AddUser(admin.user.AddUserReq) returns (common.Id) {
+    option (google.api.http) = {
+      post: "/admin/user/add"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "用户|创建"
+    };
+  };
+
+  // 获取用户
+  rpc GetUser(admin.user.GetUserReq) returns (admin.user.User) {
+    option (google.api.http) = {
+      post: "/admin/user/get"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "用户|获取"
+    };
+  };
+}

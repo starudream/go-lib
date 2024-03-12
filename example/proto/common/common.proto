@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package api.common;
+
+option go_package = "github.com/starudream/go-lib/example/v2/api/common";
+
+import public "google/protobuf/any.proto";
+import public "google/protobuf/duration.proto";
+import public "google/protobuf/empty.proto";
+import public "google/protobuf/struct.proto";
+import public "google/protobuf/timestamp.proto";
+import public "google/protobuf/wrappers.proto";
+
+message Id {
+  string id = 1;
+}
