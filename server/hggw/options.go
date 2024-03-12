@@ -11,13 +11,13 @@ import (
 type Option = optionutil.I[Server]
 
 func WithMuxOptions(muxOpts ...runtime.ServeMuxOption) Option {
-	return optionutil.New(func(opts *Server) {
-		opts.muxOpts = append(opts.muxOpts, muxOpts...)
+	return optionutil.New(func(s *Server) {
+		s.muxOpts = append(s.muxOpts, muxOpts...)
 	})
 }
 
 func WithDialOptions(dialOpts ...grpc.DialOption) Option {
-	return optionutil.New(func(opts *Server) {
-		opts.dialOpts = append(opts.dialOpts, dialOpts...)
+	return optionutil.New(func(s *Server) {
+		s.dialOpts = append(s.dialOpts, dialOpts...)
 	})
 }

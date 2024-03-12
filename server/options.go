@@ -22,21 +22,21 @@ func newOptions(options ...Option) *Options {
 type Option = optionutil.I[Options]
 
 func WithHTTP(hs Server) Option {
-	return optionutil.New(func(opts *Options) {
-		opts.hs = hs
+	return optionutil.New(func(o *Options) {
+		o.hs = hs
 	})
 }
 
 func WithGRPC(gs Server) Option {
-	return optionutil.New(func(opts *Options) {
-		opts.gs = gs
+	return optionutil.New(func(o *Options) {
+		o.gs = gs
 	})
 }
 
 func WithStopTimeout(timeout time.Duration) Option {
-	return optionutil.New(func(opts *Options) {
+	return optionutil.New(func(o *Options) {
 		if timeout >= 0 {
-			opts.timeout = timeout
+			o.timeout = timeout
 		}
 	})
 }
