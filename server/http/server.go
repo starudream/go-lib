@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/starudream/go-lib/core/v2/slog"
+	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/server/v2"
 )
 
@@ -16,8 +17,10 @@ type Server struct {
 	srv *http.Server
 }
 
-func NewServer() *Server {
-	s := &Server{Mux: NewMux()}
+func NewServer(options ...Option) *Server {
+	s := optionutil.Build(&Server{
+		Mux: NewMux(),
+	}, options...)
 	s.srv = &http.Server{Handler: s}
 	return s
 }
@@ -26,15 +29,11 @@ var _ server.Server = (*Server)(nil)
 
 func (s *Server) Start(ln net.Listener) error {
 	slog.Info("http server started, listening on %s", ln.Addr())
-	err := s.srv.Serve(ln)
-	if err != nil && !errors.Is(err, http.ErrServerClosed) {
-		return err
-	}
-	return nil
+	return s.srv.Serve(ln)
 }
 
-func (s *Server) Stop() {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+func (s *Server) Stop(timeout time.Duration) {
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	err := s.srv.Shutdown(ctx)
 	if err != nil {

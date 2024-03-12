@@ -3,17 +3,19 @@ package server
 import (
 	"net"
 	"sync"
+	"time"
 
 	"github.com/soheilhy/cmux"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/starudream/go-lib/core/v2/gh"
+	"github.com/starudream/go-lib/core/v2/slog"
 	"github.com/starudream/go-lib/core/v2/utils/signalutil"
 )
 
 type Server interface {
 	Start(ln net.Listener) error
-	Stop()
+	Stop(timeout time.Duration)
 }
 
 func Run(address string, options ...Option) error {
@@ -37,6 +39,10 @@ func Run(address string, options ...Option) error {
 				eg.Go(func() error { return opts.hs.Start(hl) })
 			}
 			eg.Go(func() error { return cm.Serve() })
+			if e := eg.Wait(); e != nil {
+				slog.Fatal("start server error: %v", e)
+				signalutil.Cancel()
+			}
 		}
 		stop = func() {
 			wg := sync.WaitGroup{}
@@ -44,13 +50,13 @@ func Run(address string, options ...Option) error {
 			go func() {
 				defer wg.Done()
 				if opts.gs != nil {
-					opts.gs.Stop()
+					opts.gs.Stop(opts.timeout)
 				}
 			}()
 			go func() {
 				defer wg.Done()
 				if opts.hs != nil {
-					opts.hs.Stop()
+					opts.hs.Stop(opts.timeout)
 				}
 			}()
 			wg.Wait()
