@@ -10,7 +10,7 @@ init:
 	git status -b -s
 
 .PHONY: update-all
-update-all: update-core update-cobra update-cron update-resty update-ntfy update-selfupdate update-service update-sqlite
+update-all: update-core update-cobra update-cron update-resty update-ntfy update-selfupdate update-server update-service update-sqlite update-example
 
 .PHONY: update-%
 update-%:
