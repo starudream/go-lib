@@ -91,8 +91,12 @@ func WithMsgAndAttrs(format string, argsAndAttrs ...any) Option {
 			return nil, nil
 		}
 		for i := n - 1; i >= 0; i-- {
-			if attr, ok := argsAndAttrs[i].(slog.Attr); ok {
-				attrs = append(attrs, attr)
+			if as, ok := argsAndAttrs[i].([]slog.Attr); ok {
+				attrs = append(attrs, as...)
+				continue
+			}
+			if a, ok := argsAndAttrs[i].(slog.Attr); ok {
+				attrs = append(attrs, a)
 				continue
 			}
 			if i == n-1 {

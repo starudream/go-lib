@@ -1,6 +1,7 @@
 package slog
 
 import (
+	"context"
 	"log/slog"
 )
 
@@ -20,3 +21,16 @@ var (
 	Time     = slog.Time
 	Uint64   = slog.Uint64
 )
+
+const attrCtxkey = "slog-attr-ctxkey"
+
+func WithAttrs(ctx context.Context, attrs ...Attr) context.Context {
+	attrs = append(GetAttrs(ctx), attrs...)
+	ctx = context.WithValue(ctx, attrCtxkey, attrs)
+	return ctx
+}
+
+func GetAttrs(ctx context.Context) []Attr {
+	attrs, _ := ctx.Value(attrCtxkey).([]Attr)
+	return attrs
+}
