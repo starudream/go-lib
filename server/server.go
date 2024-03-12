@@ -40,7 +40,7 @@ func Run(address string, options ...Option) error {
 			}
 			eg.Go(func() error { return cm.Serve() })
 			if e := eg.Wait(); e != nil {
-				slog.Fatal("start server error: %v", e)
+				slog.Error("start server error: %v", e)
 				signalutil.Cancel()
 			}
 		}
