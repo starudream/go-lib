@@ -1,6 +1,6 @@
 module github.com/starudream/go-lib/server/v2
 
-go 1.21
+go 1.22
 
 require (
 	github.com/starudream/go-lib/core/v2 v2.0.19

@@ -1,6 +1,6 @@
 module github.com/starudream/go-lib/service/v2
 
-go 1.21
+go 1.22
 
 //replace (
 //	github.com/starudream/go-lib/cobra/v2 => ../cobra

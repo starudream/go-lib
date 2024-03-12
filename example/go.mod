@@ -26,7 +26,7 @@ require (
 	github.com/starudream/go-lib/ntfy/v2 v2.0.9
 	github.com/starudream/go-lib/resty/v2 v2.0.9
 	github.com/starudream/go-lib/selfupdate/v2 v2.0.4
-	github.com/starudream/go-lib/server/v2 v2.0.0-rc.2
+	github.com/starudream/go-lib/server/v2 v2.0.0-rc.3
 	github.com/starudream/go-lib/service/v2 v2.0.3
 	github.com/starudream/go-lib/sqlite/v2 v2.0.2
 	github.com/starudream/go-lib/tablew/v2 v2.0.5
