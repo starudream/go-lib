@@ -7,6 +7,7 @@ import (
 	"net"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/starudream/go-lib/core/v2/gh"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
@@ -188,6 +189,6 @@ func With(sfn func(t *testing.T, s *http.Server), cfn func(t *testing.T, c *rest
 		sfn(t, s)
 		c := resty.New().SetBaseURL(fmt.Sprintf("http://localhost:%d", ln.Addr().(*net.TCPAddr).Port))
 		cfn(t, c)
-		s.Stop()
+		s.Stop(time.Second)
 	}
 }
