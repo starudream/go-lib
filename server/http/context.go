@@ -14,6 +14,7 @@ import (
 	"github.com/go-chi/chi/v5"
 
 	"github.com/starudream/go-lib/core/v2/codec/json"
+	"github.com/starudream/go-lib/server/v2/iconst"
 )
 
 type Context struct {
@@ -76,7 +77,7 @@ func (c *Context) GetHeaders(key string) []string {
 }
 
 func (c *Context) GetContentType() string {
-	return filterFlags(c.GetHeader(HeaderContentType))
+	return filterFlags(c.GetHeader(iconst.HeaderContentType))
 }
 
 func (c *Context) GetRawBody() ([]byte, error) {
@@ -159,14 +160,14 @@ func (c *Context) Header(key, value string) {
 // --- Resp Render
 
 func (c *Context) Render(status int, contentType string, bs []byte) error {
-	c.Header(HeaderContentType, contentType)
+	c.Header(iconst.HeaderContentType, contentType)
 	c.Status(status)
 	_, err := c.Res.Write(bs)
 	return err
 }
 
 func (c *Context) HTML(status int, tpl template.Template, data any, name ...string) error {
-	c.Header(HeaderContentType, MIMETextHTMLCharsetUTF8)
+	c.Header(iconst.HeaderContentType, iconst.MIMETextHTMLCharsetUTF8)
 	c.Status(status)
 	if len(name) > 0 {
 		return tpl.ExecuteTemplate(c.Res, name[0], data)
@@ -175,7 +176,7 @@ func (c *Context) HTML(status int, tpl template.Template, data any, name ...stri
 }
 
 func (c *Context) TEXT(status int, text string) error {
-	return c.Render(status, MIMETextPlainCharsetUTF8, []byte(text))
+	return c.Render(status, iconst.MIMETextPlainCharsetUTF8, []byte(text))
 }
 
 func (c *Context) JSON(status int, v any) error {
@@ -183,7 +184,7 @@ func (c *Context) JSON(status int, v any) error {
 	if err != nil {
 		return err
 	}
-	return c.Render(status, MIMEApplicationJSONCharsetUTF8, bs)
+	return c.Render(status, iconst.MIMEApplicationJSONCharsetUTF8, bs)
 }
 
 func (c *Context) XML(status int, v any) error {
@@ -191,7 +192,7 @@ func (c *Context) XML(status int, v any) error {
 	if err != nil {
 		return err
 	}
-	return c.Render(status, MIMEApplicationXMLCharsetUTF8, bs)
+	return c.Render(status, iconst.MIMEApplicationXMLCharsetUTF8, bs)
 }
 
 func (c *Context) Redirect(status int, url string) {

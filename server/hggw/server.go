@@ -14,6 +14,7 @@ import (
 	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/server/v2"
 	"github.com/starudream/go-lib/server/v2/http"
+	"github.com/starudream/go-lib/server/v2/otel/otelgrpc"
 )
 
 type Server struct {
@@ -33,6 +34,7 @@ func NewServer(options ...Option) *Server {
 		dialOpts: []grpc.DialOption{
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 			grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(64 * 1024 * 1024)),
+			grpc.WithStatsHandler(otelgrpc.NewClientHandler()),
 		},
 	}, options...)
 	s.mux = runtime.NewServeMux(s.muxOpts...)
@@ -43,7 +45,7 @@ func NewServer(options ...Option) *Server {
 var _ server.Server = (*Server)(nil)
 
 func (s *Server) Start(ln net.Listener) error {
-	endpoint := fmt.Sprintf("%s:%d", localIP(), ln.Addr().(*net.TCPAddr).Port)
+	endpoint := fmt.Sprintf("%s:%d", getLocalIP(), ln.Addr().(*net.TCPAddr).Port)
 	conn, err := grpc.Dial(endpoint, s.dialOpts...)
 	if err != nil {
 		return err

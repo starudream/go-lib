@@ -13,3 +13,21 @@ func WithServerOptions(opts ...grpc.ServerOption) Option {
 		s.srvOpts = append(s.srvOpts, opts...)
 	})
 }
+
+func WithUnaryInterceptor(ints ...grpc.UnaryServerInterceptor) Option {
+	return optionutil.New(func(s *Server) {
+		s.uInts = append(s.uInts, ints...)
+	})
+}
+
+func WithStreamInterceptor(ints ...grpc.StreamServerInterceptor) Option {
+	return optionutil.New(func(s *Server) {
+		s.sInts = append(s.sInts, ints...)
+	})
+}
+
+func WithReflection(t bool) Option {
+	return optionutil.New(func(s *Server) {
+		s.reflection = t
+	})
+}

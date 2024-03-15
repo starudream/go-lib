@@ -1,4 +1,4 @@
-package http
+package iconst
 
 // MIME types
 const (
@@ -19,4 +19,5 @@ const (
 	HeaderAuthorization = "Authorization" // Requests
 	HeaderContentType   = "Content-Type"  // Requests, Responses
 	HeaderUserAgent     = "User-Agent"    // Requests
+	HeaderXRequestID    = "X-Request-Id"  // Requests
 )

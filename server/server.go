@@ -3,12 +3,12 @@ package server
 import (
 	"net"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/soheilhy/cmux"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/starudream/go-lib/core/v2/gh"
 	"github.com/starudream/go-lib/core/v2/slog"
 	"github.com/starudream/go-lib/core/v2/utils/signalutil"
 )
@@ -29,6 +29,7 @@ func Run(address string, options ...Option) error {
 	var (
 		cm    = cmux.New(ln)
 		eg, _ = errgroup.WithContext(signalutil.Ctx())
+		done  = atomic.Bool{}
 		start = func() {
 			if opts.gs != nil {
 				gl := cm.MatchWithWriters(cmux.HTTP2MatchHeaderFieldSendSettings("content-type", "application/grpc"))
@@ -40,11 +41,14 @@ func Run(address string, options ...Option) error {
 			}
 			eg.Go(func() error { return cm.Serve() })
 			if e := eg.Wait(); e != nil {
-				slog.Error("start server error: %v", e)
+				if !done.Load() {
+					slog.Error("start server error: %v", e)
+				}
 				signalutil.Cancel()
 			}
 		}
 		stop = func() {
+			done.Store(true)
 			wg := sync.WaitGroup{}
 			wg.Add(2)
 			go func() {
@@ -60,7 +64,8 @@ func Run(address string, options ...Option) error {
 				}
 			}()
 			wg.Wait()
-			gh.Close(cm, ln)
+			cm.Close()
+			_ = ln.Close()
 		}
 	)
 
