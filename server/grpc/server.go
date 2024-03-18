@@ -16,6 +16,7 @@ import (
 	"github.com/starudream/go-lib/server/v2/otel/otelgrpc"
 
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/logger"
+	"github.com/starudream/go-lib/server/v2/grpc/middlewares/prepare"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/propagation"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/recovery"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/validator"
@@ -38,6 +39,7 @@ func NewServer(options ...Option) *Server {
 			grpc.MaxRecvMsgSize(64 * 1024 * 1024),
 		},
 		uInts: []grpc.UnaryServerInterceptor{
+			prepare.Unary(),
 			recovery.Unary(),
 			logger.Unary(),
 			validator.Unary(),

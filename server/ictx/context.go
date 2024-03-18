@@ -43,6 +43,7 @@ func (c *Context) Set(kvs ...string) *Context {
 		panic("kvs must be even")
 	}
 	md, _ := metadata.FromOutgoingContext(c.Context)
+	md = md.Copy()
 	for i := 0; i < len(kvs); i += 2 {
 		md.Set(kvs[i], kvs[i+1])
 	}
@@ -55,6 +56,7 @@ func (c *Context) Append(k string, vs ...string) *Context {
 		return c
 	}
 	md, _ := metadata.FromOutgoingContext(c.Context)
+	md = md.Copy()
 	for i := 0; i < len(vs); i++ {
 		md.Append(k, vs[i])
 	}

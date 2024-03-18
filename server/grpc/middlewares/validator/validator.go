@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"google.golang.org/grpc"
+
+	"github.com/starudream/go-lib/server/v2/ierr"
 )
 
 func Unary() grpc.UnaryServerInterceptor {
@@ -11,8 +13,7 @@ func Unary() grpc.UnaryServerInterceptor {
 		if v, ok := req.(interface{ Validate() error }); ok {
 			err = v.Validate()
 			if err != nil {
-				// todo: wrap error
-				return nil, err
+				return nil, ierr.BadRequest("validate error", err.Error())
 			}
 		}
 		return handler(ctx, req)
