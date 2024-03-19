@@ -13,6 +13,7 @@ import (
 
 	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/server/v2"
+	"github.com/starudream/go-lib/server/v2/hggw/middlewares"
 	"github.com/starudream/go-lib/server/v2/http"
 	"github.com/starudream/go-lib/server/v2/otel/otelgrpc"
 )
@@ -29,8 +30,15 @@ type Server struct {
 
 func NewServer(options ...Option) *Server {
 	s := optionutil.Build(&Server{
-		Server:  http.NewServer(),
-		muxOpts: []runtime.ServeMuxOption{},
+		Server: http.NewServer(),
+		muxOpts: []runtime.ServeMuxOption{
+			middlewares.WithErrorHandler(),
+			middlewares.WithMetadata(),
+			middlewares.WithMarshalerOption(),
+			middlewares.WithIncomingHeaderMatcher(),
+			middlewares.WithOutgoingHeaderMatcher(),
+			middlewares.WithForwardResponseOption(),
+		},
 		dialOpts: []grpc.DialOption{
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 			grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(64 * 1024 * 1024)),

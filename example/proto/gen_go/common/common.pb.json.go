@@ -11,7 +11,7 @@ import (
 func (msg *Id) MarshalJSON() ([]byte, error) {
 	return protojson.MarshalOptions{
 		UseEnumNumbers:  true,
-		EmitUnpopulated: true,
+		EmitUnpopulated: false,
 		UseProtoNames:   false,
 	}.Marshal(msg)
 }
