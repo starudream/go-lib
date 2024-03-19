@@ -167,6 +167,10 @@
         "password": {
           "type": "string",
           "title": "密码"
+        },
+        "displayName": {
+          "type": "string",
+          "title": "显示名"
         }
       }
     },

@@ -9,7 +9,6 @@ import (
 
 	"github.com/starudream/go-lib/core/v2/config/version"
 	"github.com/starudream/go-lib/server/v2/grpc"
-	"github.com/starudream/go-lib/server/v2/otel"
 
 	"github.com/starudream/go-lib/example/v2/api/admin"
 	"github.com/starudream/go-lib/example/v2/api/admin/user"
@@ -27,12 +26,7 @@ func (s *AdminUserService) Health(ctx context.Context, _ *common.Empty) (*common
 	for k, vs := range md {
 		fmt.Printf("%s -> %s\n", k, strings.Join(vs, ","))
 	}
-	fmt.Println("spanId", otel.SpanID(ctx))
-	fmt.Println("traceId", otel.TraceID(ctx))
-	vi := version.GetVersionInfo()
-	return common.NewStruct(map[string]any{
-		"version": vi.GitVersion,
-	})
+	return common.NewStruct(map[string]any{"version": version.GetVersionInfo().GitVersion})
 }
 
 func (s *AdminUserService) AddUser(context.Context, *user.AddUserReq) (*common.Id, error) {

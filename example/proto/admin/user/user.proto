@@ -18,6 +18,8 @@ message AddUserReq {
   string username = 2 [(validate.rules).string = { min_len: 1 }];
   // 密码
   string password = 3;
+  // 显示名
+  string display_name = 5;
 }
 
 message GetUserReq {

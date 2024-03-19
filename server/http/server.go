@@ -36,7 +36,7 @@ func (s *Server) Stop(timeout time.Duration) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	err := s.srv.Shutdown(ctx)
-	if err != nil {
+	if err != nil && !errors.Is(err, net.ErrClosed) {
 		if errors.Is(err, context.DeadlineExceeded) {
 			slog.Warn("http server shutdown timeout")
 		} else {

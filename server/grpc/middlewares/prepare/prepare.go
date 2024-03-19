@@ -26,7 +26,7 @@ func Unary() grpc.UnaryServerInterceptor {
 
 		reqId := c.Get(iconst.HeaderXRequestID)
 		if reqId == "" {
-			reqId = "X" + uuid.NewString()[1:]
+			reqId = "x" + uuid.NewString()[1:]
 		}
 		_ = grpc.SetHeader(ctx, metadata.Pairs(iconst.HeaderXRequestID, reqId))
 

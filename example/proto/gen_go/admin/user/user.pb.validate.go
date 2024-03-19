@@ -172,6 +172,8 @@ func (m *AddUserReq) validate(all bool) error {
 
 	// no validation rules for Password
 
+	// no validation rules for DisplayName
+
 	if len(errors) > 0 {
 		return AddUserReqMultiError(errors)
 	}
