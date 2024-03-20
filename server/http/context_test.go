@@ -1,10 +1,12 @@
 package http_test
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"mime/multipart"
 	"net"
+	stdhttp "net/http"
 	"strings"
 	"testing"
 	"time"
@@ -185,7 +187,11 @@ func With(sfn func(t *testing.T, s *http.Server), cfn func(t *testing.T, c *rest
 	return func(t *testing.T) {
 		s := http.NewServer()
 		ln := osutil.Must1(net.Listen("tcp", ":http"))
-		go func() { osutil.Must0(s.Start(ln)) }()
+		go func() {
+			if err := s.Start(ln); err != nil && !errors.Is(err, stdhttp.ErrServerClosed) {
+				osutil.PanicErr(err)
+			}
+		}()
 		sfn(t, s)
 		c := resty.New().SetBaseURL(fmt.Sprintf("http://localhost:%d", ln.Addr().(*net.TCPAddr).Port))
 		cfn(t, c)
