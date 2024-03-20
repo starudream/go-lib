@@ -10,31 +10,33 @@ import (
 )
 
 var (
-	UnknownCode   = 500
-	UnknownReason = ""
+	UnknownStatus = 500
+	UnknownCode   = 9999
 )
 
 const (
-	DefaultOKCode = 200
+	DefaultStatus = 200
 )
 
 type Error struct {
-	Code    int32  `json:"code"`
-	Reason  string `json:"reason,omitempty"`
-	Message string `json:"message,omitempty"`
+	status int32
+
+	Code     int32             `json:"code"`
+	Message  string            `json:"message,omitempty"`
+	Metadata map[string]string `json:"metadata,omitempty"`
 }
 
-func New(code int, reason, format string, args ...any) *Error {
+func New(status, code int, format string, args ...any) *Error {
 	if len(args) > 0 {
 		format = fmt.Sprintf(format, args...)
 	}
-	return &Error{Code: int32(code), Reason: reason, Message: format}
+	return &Error{status: int32(status), Code: int32(code), Message: format}
 }
 
 var _ error = (*Error)(nil)
 
 func (e *Error) Error() string {
-	return fmt.Sprintf("error: code=%d, reason=%s, message=%s", e.Code, e.Reason, e.Message)
+	return fmt.Sprintf("error: status=%d, code=%d, message=%s, metadata=%v", e.status, e.Code, e.Message, e.Metadata)
 }
 
 var _ fmt.Stringer = (*Error)(nil)
@@ -44,8 +46,23 @@ func (e *Error) String() string {
 }
 
 func (e *Error) GRPCStatus() *status.Status {
-	t, _ := status.New(toGRPCCode(int(e.Code)), e.Message).WithDetails(&errdetails.ErrorInfo{Reason: e.Reason})
+	t, _ := status.New(toGRPCCode(int(e.status)), e.Message).WithDetails(&errdetails.ErrorInfo{Metadata: e.Metadata})
 	return t
+}
+
+func (e *Error) WithMetadata(metadata map[string]string) *Error {
+	e.Metadata = metadata
+	return e
+}
+
+func (e *Error) AppendMetadata(metadata map[string]string) *Error {
+	if e.Metadata == nil {
+		e.Metadata = map[string]string{}
+	}
+	for k, v := range metadata {
+		e.Metadata[k] = v
+	}
+	return e
 }
 
 func (e *Error) AppendMessage(format string, args ...any) *Error {
@@ -68,27 +85,20 @@ func FromError(err error) *Error {
 	}
 	ge, ok := status.FromError(err)
 	if !ok {
-		return New(UnknownCode, UnknownReason, err.Error())
+		return New(UnknownStatus, UnknownCode, err.Error())
 	}
-	ne := New(fromGRPCCode(ge.Code()), UnknownReason, ge.Message())
+	ne := New(fromGRPCCode(ge.Code()), UnknownCode, ge.Message())
 	if dts := ge.Details(); len(dts) > 0 {
 		if dt, ok := dts[0].(*errdetails.ErrorInfo); ok {
-			ne.Reason = dt.Reason
+			ne.Metadata = dt.Metadata
 		}
 	}
 	return ne
 }
 
-func Code(err error) int {
+func Status(err error) int {
 	if err == nil {
-		return DefaultOKCode
+		return DefaultStatus
 	}
-	return int(FromError(err).Code)
-}
-
-func Reason(err error) string {
-	if err == nil {
-		return UnknownReason
-	}
-	return FromError(err).Reason
+	return int(FromError(err).status)
 }

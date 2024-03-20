@@ -15,7 +15,8 @@ import (
 )
 
 func TestError(t *testing.T) {
-	e1 := ierr.BadRequest("empty account", "hello %s", "foo")
+	e1 := ierr.BadRequest(1, "hello %s", "foo")
+	_ = e1.AppendMetadata(map[string]string{"name": "starudream"})
 	testutil.Log(t, e1.String())
 	testutil.Log(t, e1.GRPCStatus().String())
 	testutil.Log(t, json.MustMarshalString(e1))
@@ -31,5 +32,5 @@ func TestError(t *testing.T) {
 	e5, _ := status.New(codes.NotFound, "not fount").WithDetails(&errdetails.ErrorInfo{Reason: "???"})
 
 	e6 := ierr.FromError(e5.Err())
-	testutil.Log(t, e6, ierr.Code(e6), ierr.Reason(e6))
+	testutil.Log(t, e6, ierr.Status(e6))
 }

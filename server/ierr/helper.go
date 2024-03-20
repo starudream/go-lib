@@ -1,49 +1,49 @@
 package ierr
 
-func BadRequest(reason, format string, args ...any) *Error {
-	return New(400, reason, format, args...)
+func BadRequest(code int, format string, args ...any) *Error {
+	return New(400, code, format, args...)
 }
 
 func IsBadRequest(err error) bool {
-	return Code(err) == 400
+	return Status(err) == 400
 }
 
-func Unauthorized(reason, format string, args ...any) *Error {
-	return New(401, reason, format, args...)
+func Unauthorized(code int, format string, args ...any) *Error {
+	return New(401, code, format, args...)
 }
 
 func IsUnauthorized(err error) bool {
-	return Code(err) == 401
+	return Status(err) == 401
 }
 
-func Forbidden(reason, format string, args ...any) *Error {
-	return New(403, reason, format, args...)
+func Forbidden(code int, format string, args ...any) *Error {
+	return New(403, code, format, args...)
 }
 
 func IsForbidden(err error) bool {
-	return Code(err) == 403
+	return Status(err) == 403
 }
 
-func NotFound(reason, format string, args ...any) *Error {
-	return New(404, reason, format, args...)
+func NotFound(code int, format string, args ...any) *Error {
+	return New(404, code, format, args...)
 }
 
 func IsNotFound(err error) bool {
-	return Code(err) == 404
+	return Status(err) == 404
 }
 
-func Conflict(reason, format string, args ...any) *Error {
-	return New(409, reason, format, args...)
+func Conflict(code int, format string, args ...any) *Error {
+	return New(409, code, format, args...)
 }
 
 func IsConflict(err error) bool {
-	return Code(err) == 409
+	return Status(err) == 409
 }
 
-func InternalServer(reason, format string, args ...any) *Error {
-	return New(500, reason, format, args...)
+func InternalServer(code int, format string, args ...any) *Error {
+	return New(500, code, format, args...)
 }
 
 func IsInternalServer(err error) bool {
-	return Code(err) == 500
+	return Status(err) == 500
 }

@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/oklog/ulid/v2"
+
+	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
 
 	"github.com/starudream/go-lib/core/v2/config/version"
 	"github.com/starudream/go-lib/server/v2/grpc"
@@ -23,8 +25,10 @@ var _ admin.AdminUserServiceServer = (*AdminUserService)(nil)
 
 func (s *AdminUserService) Health(ctx context.Context, _ *common.Empty) (*common.Struct, error) {
 	md := grpc.GetMD(ctx)
-	for k, vs := range md {
-		fmt.Printf("%s -> %s\n", k, strings.Join(vs, ","))
+	ks := maps.Keys(md)
+	slices.Sort(ks)
+	for i := 0; i < len(ks); i++ {
+		fmt.Printf("\t%-30s - %s\n", ks[i], md.Get(ks[i]))
 	}
 	return common.NewStruct(map[string]any{"version": version.GetVersionInfo().GitVersion})
 }

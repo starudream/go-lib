@@ -9,7 +9,9 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 
+	"github.com/starudream/go-lib/core/v2/codec/json"
 	"github.com/starudream/go-lib/core/v2/slog"
+	"github.com/starudream/go-lib/server/v2/ierr"
 )
 
 var marshalOptions = protojson.MarshalOptions{
@@ -18,8 +20,12 @@ var marshalOptions = protojson.MarshalOptions{
 }
 
 func marshal(v any) string {
-	if m, ok := v.(proto.Message); ok {
-		bs, _ := marshalOptions.Marshal(m)
+	switch x := v.(type) {
+	case proto.Message:
+		bs, _ := marshalOptions.Marshal(x)
+		return string(bs)
+	case *ierr.Error:
+		bs, _ := json.Marshal(x)
 		return string(bs)
 	}
 	return fmt.Sprintf("(%T)", v)
@@ -35,7 +41,7 @@ func Unary() grpc.UnaryServerInterceptor {
 			attrs = append(attrs, slog.Duration("took", time.Since(start)))
 
 			if err != nil {
-				slog.Error("resp: %v", err, attrs)
+				slog.Error("resp: %v", marshal(err), attrs)
 			} else {
 				slog.Info("resp: %s", marshal(resp), attrs)
 			}

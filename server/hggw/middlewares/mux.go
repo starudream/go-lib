@@ -13,7 +13,14 @@ import (
 
 func WithMetadata() runtime.ServeMuxOption {
 	fn := func(ctx context.Context, req *http.Request) metadata.MD {
-		return nil
+		md := metadata.New(map[string]string{
+			gwMetadataPrefix + "method":    req.Method,
+			gwMetadataPrefix + "raw-query": req.URL.RawQuery,
+		})
+		for k, vs := range req.URL.Query() {
+			md.Set(gwMetadataPrefix+"query-"+k, vs...)
+		}
+		return md
 	}
 	return runtime.WithMetadata(fn)
 }

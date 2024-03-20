@@ -15,7 +15,7 @@ func Unary() grpc.UnaryServerInterceptor {
 		defer func() {
 			if r := recover(); r != nil {
 				slog.Error("[%s] %v", osutil.CallerString(2), r, slog.String("stack", osutil.Stack(2)), slog.GetAttrs(ctx))
-				err = ierr.InternalServer("internal error", "%v", r)
+				err = ierr.InternalServer(9999, "%v", r)
 			}
 		}()
 		return handler(ctx, req)
