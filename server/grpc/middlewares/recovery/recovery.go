@@ -11,7 +11,7 @@ import (
 )
 
 func Unary() grpc.UnaryServerInterceptor {
-	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp any, err error) {
+	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (_ any, err error) {
 		defer func() {
 			if r := recover(); r != nil {
 				slog.Error("[%s] %v", osutil.CallerString(2), r, slog.String("stack", osutil.Stack(2)), slog.GetAttrs(ctx))

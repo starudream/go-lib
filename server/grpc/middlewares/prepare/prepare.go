@@ -2,6 +2,7 @@ package prepare
 
 import (
 	"context"
+	"strings"
 
 	"github.com/google/uuid"
 
@@ -21,7 +22,7 @@ const (
 )
 
 func Unary() grpc.UnaryServerInterceptor {
-	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp any, err error) {
+	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
 		c := ictx.FromContext(ctx)
 
 		reqId := c.Get(iconst.HeaderXRequestID)
@@ -37,6 +38,15 @@ func Unary() grpc.UnaryServerInterceptor {
 			traceId, spanId := spanCtx.TraceID().String(), spanCtx.SpanID().String()
 			attrs = append(attrs, slog.String(keyTraceId, traceId), slog.String(keySpanId, spanId))
 		}
+
+		ff := c.Get(iconst.HeaderXForwardedFor)
+		if ff != "" {
+			ip := strings.Split(ff, ",")[0]
+			attrs = append(attrs, slog.String("ip", ip))
+		}
+
+		ua := c.Get("V-"+iconst.HeaderUserAgent, iconst.HeaderUserAgent)
+		attrs = append(attrs, slog.String("user-agent", ua))
 
 		ctx = slog.WithAttrs(ctx, attrs...)
 

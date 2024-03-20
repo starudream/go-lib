@@ -64,12 +64,14 @@ func (c *Context) Append(k string, vs ...string) *Context {
 	return c
 }
 
-func (c *Context) Get(k string) string {
+func (c *Context) Get(ks ...string) string {
 	md, _ := metadata.FromOutgoingContext(c.Context)
-	vs := md.Get(k)
-	for i := len(vs) - 1; i >= 0; i-- {
-		if vs[i] != "" {
-			return vs[i]
+	for i := 0; i < len(ks); i++ {
+		vs := md.Get(ks[i])
+		for j := len(vs) - 1; j >= 0; j-- {
+			if vs[j] != "" {
+				return vs[j]
+			}
 		}
 	}
 	return ""

@@ -3,6 +3,7 @@ package ierr
 import (
 	"errors"
 	"fmt"
+	"strconv"
 
 	"google.golang.org/grpc/status"
 
@@ -19,9 +20,9 @@ const (
 )
 
 type Error struct {
-	status int32
+	status int
 
-	Code     int32             `json:"code"`
+	Code     int               `json:"code"`
 	Message  string            `json:"message,omitempty"`
 	Metadata map[string]string `json:"metadata,omitempty"`
 }
@@ -30,7 +31,7 @@ func New(status, code int, format string, args ...any) *Error {
 	if len(args) > 0 {
 		format = fmt.Sprintf(format, args...)
 	}
-	return &Error{status: int32(status), Code: int32(code), Message: format}
+	return &Error{status: status, Code: code, Message: format}
 }
 
 var _ error = (*Error)(nil)
@@ -46,7 +47,8 @@ func (e *Error) String() string {
 }
 
 func (e *Error) GRPCStatus() *status.Status {
-	t, _ := status.New(toGRPCCode(int(e.status)), e.Message).WithDetails(&errdetails.ErrorInfo{Metadata: e.Metadata})
+	detail := &errdetails.ErrorInfo{Reason: strconv.Itoa(e.Code), Metadata: e.Metadata}
+	t, _ := status.New(toGRPCCode(e.status), e.Message).WithDetails(detail)
 	return t
 }
 
@@ -89,7 +91,10 @@ func FromError(err error) *Error {
 	}
 	ne := New(fromGRPCCode(ge.Code()), UnknownCode, ge.Message())
 	if dts := ge.Details(); len(dts) > 0 {
-		if dt, ok := dts[0].(*errdetails.ErrorInfo); ok {
+		if dt, ok2 := dts[0].(*errdetails.ErrorInfo); ok2 {
+			if t, te := strconv.Atoi(dt.Reason); te == nil {
+				ne.Code = t
+			}
 			ne.Metadata = dt.Metadata
 		}
 	}
@@ -100,5 +105,5 @@ func Status(err error) int {
 	if err == nil {
 		return DefaultStatus
 	}
-	return int(FromError(err).status)
+	return FromError(err).status
 }

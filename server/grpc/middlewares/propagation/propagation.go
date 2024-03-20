@@ -8,7 +8,7 @@ import (
 )
 
 func Unary() grpc.UnaryServerInterceptor {
-	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp any, err error) {
+	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
 		md, _ := metadata.FromIncomingContext(ctx)
 		md = md.Copy()
 		ctx = metadata.NewOutgoingContext(ctx, md)

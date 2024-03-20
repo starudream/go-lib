@@ -8,11 +8,6 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 )
 
-var (
-	gwMetadataPrefix = "gw-"
-	gwHeaderPrefix   = textproto.CanonicalMIMEHeaderKey(gwMetadataPrefix)
-)
-
 func WithIncomingHeaderMatcher() runtime.ServeMuxOption {
 	return runtime.WithIncomingHeaderMatcher(IncomingHeaderMatcher)
 }
@@ -24,9 +19,9 @@ func IncomingHeaderMatcher(key string) (string, bool) {
 	case strings.HasPrefix(key, "X-"):
 		return key, true
 	case isPermanentHTTPHeader(key):
-		return gwMetadataPrefix + key, true
-	case strings.HasPrefix(key, gwHeaderPrefix):
-		return key[len(gwHeaderPrefix):], true
+		return "V-" + key, true
+	case strings.HasPrefix(key, "V-"):
+		return key[2:], true
 	}
 	return key, false
 }
@@ -44,7 +39,7 @@ func OutgoingHeaderMatcher(key string) (string, bool) {
 }
 
 func OutgoingTrailerMatcher(key string) (string, bool) {
-	return fmt.Sprintf("%s%s", gwHeaderPrefix, key), true
+	return fmt.Sprintf("%s%s", "V-", key), true
 }
 
 func isForwardedHeader(hdr string) bool {

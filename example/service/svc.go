@@ -11,6 +11,7 @@ import (
 
 	"github.com/starudream/go-lib/core/v2/config/version"
 	"github.com/starudream/go-lib/server/v2/grpc"
+	"github.com/starudream/go-lib/server/v2/ierr"
 
 	"github.com/starudream/go-lib/example/v2/api/admin"
 	"github.com/starudream/go-lib/example/v2/api/admin/user"
@@ -38,5 +39,5 @@ func (s *AdminUserService) AddUser(context.Context, *user.AddUserReq) (*common.I
 }
 
 func (s *AdminUserService) GetUser(context.Context, *user.GetUserReq) (*user.User, error) {
-	return nil, fmt.Errorf("not found")
+	return nil, ierr.NotFound(9, "not found")
 }

@@ -41,6 +41,7 @@ func Unary() grpc.UnaryServerInterceptor {
 			attrs = append(attrs, slog.Duration("took", time.Since(start)))
 
 			if err != nil {
+				err = ierr.FromError(err)
 				slog.Error("resp: %v", marshal(err), attrs)
 			} else {
 				slog.Info("resp: %s", marshal(resp), attrs)
