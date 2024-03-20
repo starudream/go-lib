@@ -35,6 +35,8 @@ func Unary() grpc.UnaryServerInterceptor {
 	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp any, err error) {
 		attrs := slog.GetAttrs(ctx)
 
+		attrs = append(attrs, slog.String("grpc-method", info.FullMethod))
+
 		slog.Info("req: %s", marshal(req), attrs)
 
 		defer func(start time.Time) {
