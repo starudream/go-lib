@@ -20,11 +20,11 @@ replace (
 )
 
 require (
-	github.com/starudream/go-lib/cobra/v2 v2.0.6
+	github.com/starudream/go-lib/cobra/v2 v2.0.7
 	github.com/starudream/go-lib/core/v2 v2.0.20
 	github.com/starudream/go-lib/cron/v2 v2.0.6
 	github.com/starudream/go-lib/ntfy/v2 v2.0.9
-	github.com/starudream/go-lib/resty/v2 v2.0.9
+	github.com/starudream/go-lib/resty/v2 v2.0.10
 	github.com/starudream/go-lib/selfupdate/v2 v2.0.4
 	github.com/starudream/go-lib/server/v2 v2.0.0-rc.3
 	github.com/starudream/go-lib/service/v2 v2.0.3
@@ -94,7 +94,7 @@ require (
 	gorm.io/gorm v1.25.8 // indirect
 	gorm.io/plugin/soft_delete v1.2.1 // indirect
 	modernc.org/gc/v3 v3.0.0-20240304020402-f0dba7c97c2b // indirect
-	modernc.org/libc v1.45.3 // indirect
+	modernc.org/libc v1.46.0 // indirect
 	modernc.org/mathutil v1.6.0 // indirect
 	modernc.org/memory v1.7.2 // indirect
 	modernc.org/sqlite v1.29.5 // indirect

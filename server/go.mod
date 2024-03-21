@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/starudream/go-lib/core/v2 v2.0.20
-	github.com/starudream/go-lib/resty/v2 v2.0.9
+	github.com/starudream/go-lib/resty/v2 v2.0.10
 )
 
 require (
@@ -25,7 +25,7 @@ require (
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-resty/resty/v2 v2.11.0 // indirect
+	github.com/go-resty/resty/v2 v2.12.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.0.0-alpha.1 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/goccy/go-yaml v1.11.3 // indirect

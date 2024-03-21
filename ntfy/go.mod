@@ -9,7 +9,7 @@ go 1.22
 
 require (
 	github.com/starudream/go-lib/core/v2 v2.0.20
-	github.com/starudream/go-lib/resty/v2 v2.0.9
+	github.com/starudream/go-lib/resty/v2 v2.0.10
 )
 
 require (
