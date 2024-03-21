@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/oklog/ulid/v2"
+	"github.com/google/uuid"
 
 	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/server/v2/ierr"
@@ -28,7 +28,7 @@ var _ jwt.Claims = (*Claims)(nil)
 
 func Sign(issuer, subject, audience string, options ...Option) (string, error) {
 	claims := optionutil.Build(&Claims{
-		Id:       ulid.Make().String(),
+		Id:       uuid.NewString(),
 		Issuer:   issuer,
 		Subject:  subject,
 		Audience: audience,
