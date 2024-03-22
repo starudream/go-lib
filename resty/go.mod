@@ -4,7 +4,7 @@ go 1.22
 
 //replace github.com/starudream/go-lib/core/v2 => ../core
 
-require github.com/starudream/go-lib/core/v2 v2.0.20
+require github.com/starudream/go-lib/core/v2 v2.0.21
 
 require (
 	github.com/go-ping/ping v1.1.0
