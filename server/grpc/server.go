@@ -15,6 +15,7 @@ import (
 	"github.com/starudream/go-lib/server/v2"
 	"github.com/starudream/go-lib/server/v2/otel/otelgrpc"
 
+	"github.com/starudream/go-lib/server/v2/grpc/middlewares/auth"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/logger"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/prepare"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/propagation"
@@ -41,8 +42,9 @@ func NewServer(options ...Option) *Server {
 		uInts: []grpc.UnaryServerInterceptor{
 			prepare.Unary(),
 			recovery.Unary(),
-			logger.Unary(),
 			validator.Unary(),
+			auth.Unary(),
+			logger.Unary(),
 			propagation.Unary(),
 		},
 		reflection: true,

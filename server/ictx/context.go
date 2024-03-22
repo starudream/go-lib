@@ -15,9 +15,6 @@ var _ context.Context = (*Context)(nil)
 const srvCtxkey = "server-ctxkey"
 
 func FromContext(ctx context.Context) *Context {
-	if ctx == nil {
-		ctx = context.Background()
-	}
 	if c, ok := ctx.(*Context); ok {
 		return c
 	}
@@ -32,7 +29,9 @@ func FromContext(ctx context.Context) *Context {
 			}
 		}
 	}
-	return &Context{Context: metadata.AppendToOutgoingContext(ctx, kvs...)}
+	nc := &Context{Context: metadata.AppendToOutgoingContext(ctx, kvs...)}
+	ctx = context.WithValue(ctx, srvCtxkey, nc)
+	return nc
 }
 
 func (c *Context) Set(kvs ...string) *Context {
@@ -75,4 +74,17 @@ func (c *Context) Get(ks ...string) string {
 		}
 	}
 	return ""
+}
+
+func Get(ctx context.Context, ks ...string) string {
+	return FromContext(ctx).Get(ks...)
+}
+
+func (c *Context) Range(fn func(k string, vs []string) bool) {
+	md, _ := metadata.FromOutgoingContext(c.Context)
+	for k, vs := range md {
+		if !fn(k, vs) {
+			return
+		}
+	}
 }

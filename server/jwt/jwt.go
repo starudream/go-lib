@@ -1,12 +1,14 @@
 package jwt
 
 import (
+	"context"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 
 	"github.com/starudream/go-lib/core/v2/utils/optionutil"
+	"github.com/starudream/go-lib/core/v2/utils/osutil"
 	"github.com/starudream/go-lib/server/v2/ierr"
 )
 
@@ -69,7 +71,7 @@ func Parse(raw string) (*Claims, error) {
 		return secretKey, nil
 	}, jwt.WithoutClaimsValidation())
 	if err != nil {
-		return nil, ierr.Unauthorized(9999, err.Error())
+		return nil, err
 	}
 
 	err = claims.Validate()
@@ -78,4 +80,21 @@ func Parse(raw string) (*Claims, error) {
 	}
 
 	return claims, nil
+}
+
+const jwtCtxkey = "jwt-ctxkey"
+
+func (c *Claims) WithContext(ctx context.Context) context.Context {
+	return context.WithValue(ctx, jwtCtxkey, c)
+}
+
+func FromContext(ctx context.Context) (*Claims, error) {
+	if c, ok := ctx.Value(jwtCtxkey).(*Claims); ok {
+		return c, nil
+	}
+	return nil, ierr.Unauthorized(9999, "does not contain jwt claims")
+}
+
+func MustFromContext(ctx context.Context) *Claims {
+	return osutil.Must1(FromContext(ctx))
 }

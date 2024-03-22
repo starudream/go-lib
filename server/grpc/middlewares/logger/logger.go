@@ -12,6 +12,7 @@ import (
 	"github.com/starudream/go-lib/core/v2/codec/json"
 	"github.com/starudream/go-lib/core/v2/slog"
 	"github.com/starudream/go-lib/server/v2/ierr"
+	"github.com/starudream/go-lib/server/v2/jwt"
 
 	"github.com/starudream/go-lib/server/v2/grpc/internal/annotation"
 	"github.com/starudream/go-lib/server/v2/grpc/internal/fieldmask"
@@ -43,6 +44,15 @@ func Unary() grpc.UnaryServerInterceptor {
 		attrs := slog.GetAttrs(ctx)
 
 		attrs = append(attrs, slog.String("grpc-method", info.FullMethod))
+
+		claims, err := jwt.FromContext(ctx)
+		if err == nil {
+			attrs = append(attrs,
+				slog.String("jwt-issuer", claims.Issuer),
+				slog.String("jwt-subject", claims.Subject),
+				slog.String("jwt-audience", claims.Audience),
+			)
+		}
 
 		slog.Info("req: %s", marshal(req, annotation.GetMethodOptions(info.FullMethod).GetReqMaskPaths()), attrs)
 
