@@ -21,3 +21,11 @@ func WithDialOptions(dialOpts ...grpc.DialOption) Option {
 		s.dialOpts = append(s.dialOpts, dialOpts...)
 	})
 }
+
+func WithMountPath(path string) Option {
+	return optionutil.New(func(s *Server) {
+		if path != "" {
+			s.mountPath = path
+		}
+	})
+}

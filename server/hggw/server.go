@@ -6,16 +6,13 @@ import (
 	"net"
 	"time"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 
 	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/server/v2"
+	"github.com/starudream/go-lib/server/v2/grpc"
 	"github.com/starudream/go-lib/server/v2/hggw/middlewares"
 	"github.com/starudream/go-lib/server/v2/http"
-	"github.com/starudream/go-lib/server/v2/otel/otelgrpc"
 )
 
 type Server struct {
@@ -26,6 +23,8 @@ type Server struct {
 
 	muxOpts  []runtime.ServeMuxOption
 	dialOpts []grpc.DialOption
+
+	mountPath string
 }
 
 func NewServer(options ...Option) *Server {
@@ -39,14 +38,11 @@ func NewServer(options ...Option) *Server {
 			middlewares.WithOutgoingHeaderMatcher(),
 			middlewares.WithForwardResponseOption(),
 		},
-		dialOpts: []grpc.DialOption{
-			grpc.WithTransportCredentials(insecure.NewCredentials()),
-			grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(64 * 1024 * 1024)),
-			grpc.WithStatsHandler(otelgrpc.NewClientHandler()),
-		},
+		dialOpts:  []grpc.DialOption{},
+		mountPath: "/",
 	}, options...)
 	s.mux = runtime.NewServeMux(s.muxOpts...)
-	s.Mount("/", s.mux)
+	s.Mount(s.mountPath, s.mux)
 	return s
 }
 
