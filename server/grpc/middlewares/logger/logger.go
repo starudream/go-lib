@@ -9,13 +9,12 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/mennanov/fmutils"
-
 	"github.com/starudream/go-lib/core/v2/codec/json"
 	"github.com/starudream/go-lib/core/v2/slog"
 	"github.com/starudream/go-lib/server/v2/ierr"
 
-	"github.com/starudream/go-lib/server/v2/grpc/middlewares/annotation"
+	"github.com/starudream/go-lib/server/v2/grpc/internal/annotation"
+	"github.com/starudream/go-lib/server/v2/grpc/internal/fieldmask"
 )
 
 var marshalOptions = protojson.MarshalOptions{
@@ -28,7 +27,7 @@ func marshal(v any, paths []string) string {
 	case proto.Message:
 		if len(paths) > 0 {
 			x = proto.Clone(x)
-			fmutils.Prune(x, paths)
+			fieldmask.Prune(x, paths)
 		}
 		bs, _ := marshalOptions.Marshal(x)
 		return string(bs)
