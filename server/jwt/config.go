@@ -2,6 +2,7 @@ package jwt
 
 import (
 	"crypto/rsa"
+	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 
@@ -10,7 +11,7 @@ import (
 )
 
 var (
-	expireTime = config.Get("jwt.expire_time").Duration()
+	expireTime = config.Get("jwt.expire_time").Duration(15 * 24 * time.Hour)
 
 	secretKey = []byte("GI7WgEK8zlasWo9TFoXNddgpAqikexkV")
 

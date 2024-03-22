@@ -32,3 +32,6 @@ ntfy:
     key:
     extra:
     headers:
+
+jwt:
+  expire_time: 360h
