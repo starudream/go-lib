@@ -22,15 +22,15 @@ var (
 	Uint64   = slog.Uint64
 )
 
-const attrCtxkey = "slog-attr-ctxkey"
+type ctxkeyAttr struct{}
 
 func WithAttrs(ctx context.Context, attrs ...Attr) context.Context {
 	attrs = append(GetAttrs(ctx), attrs...)
-	ctx = context.WithValue(ctx, attrCtxkey, attrs)
+	ctx = context.WithValue(ctx, ctxkeyAttr{}, attrs)
 	return ctx
 }
 
 func GetAttrs(ctx context.Context) []Attr {
-	attrs, _ := ctx.Value(attrCtxkey).([]Attr)
+	attrs, _ := ctx.Value(ctxkeyAttr{}).([]Attr)
 	return attrs
 }
