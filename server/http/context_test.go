@@ -186,7 +186,7 @@ func TestContext_Render(t *testing.T) {
 func With(sfn func(t *testing.T, s *http.Server), cfn func(t *testing.T, c *resty.Client)) func(*testing.T) {
 	return func(t *testing.T) {
 		s := http.NewServer()
-		ln := osutil.Must1(net.Listen("tcp", ":http"))
+		ln := osutil.Must1(net.Listen("tcp", ":54444"))
 		go func() {
 			if err := s.Start(ln); err != nil && !errors.Is(err, stdhttp.ErrServerClosed) {
 				osutil.PanicErr(err)
