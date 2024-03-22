@@ -195,6 +195,10 @@
         "username": {
           "type": "string",
           "title": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
         }
       },
       "title": "用户"

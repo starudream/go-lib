@@ -11,6 +11,8 @@ message User {
   string id = 1;
   // 用户名
   string username = 2;
+  // 密码
+  string password = 3;
 }
 
 message AddUserReq {
@@ -19,7 +21,7 @@ message AddUserReq {
   // 密码
   string password = 3;
   // 显示名
-  string display_name = 5;
+  string display_name = 4;
 }
 
 message GetUserReq {

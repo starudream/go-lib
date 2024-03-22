@@ -11,6 +11,7 @@ buf generate
 echo "Generating go mod files"
 pushd gen_go >/dev/null
 rm -rf doc google protoc-gen-openapiv2 validate
+rm -rf common/annotation.pb.json.go common/annotation.pb.validate.go
 cat<<EOF > "go.mod"
 module github.com/starudream/go-lib/example/v2/api
 

@@ -7,6 +7,7 @@ option go_package = "github.com/starudream/go-lib/example/v2/api/admin";
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
+import "common/annotation.proto";
 import "common/common.proto";
 
 import "admin/user/user.proto";
@@ -20,6 +21,9 @@ service AdminUserService {
       tags: "健康检查"
       security: {}
     };
+    option (api.common.options) = {
+      skip_auth: true
+    };
   };
 
   // 创建用户
@@ -31,6 +35,9 @@ service AdminUserService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "用户|创建"
     };
+    option (api.common.options) = {
+      req_mask_paths: [ "password" ]
+    };
   };
 
   // 获取用户
@@ -41,6 +48,9 @@ service AdminUserService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "用户|获取"
+    };
+    option (api.common.options) = {
+      resp_mask_paths: [ "password" ]
     };
   };
 }

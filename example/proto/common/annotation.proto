@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package api.common;
+
+option go_package = "github.com/starudream/go-lib/example/v2/api/common";
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MethodOptions {
+  Options options = 202403216;
+}
+
+message Options {
+  // 是否跳过鉴权
+  bool skip_auth = 6;
+
+  // 请求日志字段掩码
+  repeated string req_mask_paths = 11;
+  // 响应日志字段掩码
+  repeated string resp_mask_paths = 12;
+}

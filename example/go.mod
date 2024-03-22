@@ -22,14 +22,14 @@ replace (
 require (
 	github.com/starudream/go-lib/cobra/v2 v2.0.7
 	github.com/starudream/go-lib/core/v2 v2.0.20
-	github.com/starudream/go-lib/cron/v2 v2.0.6
-	github.com/starudream/go-lib/ntfy/v2 v2.0.9
+	github.com/starudream/go-lib/cron/v2 v2.0.7
+	github.com/starudream/go-lib/ntfy/v2 v2.0.10
 	github.com/starudream/go-lib/resty/v2 v2.0.10
-	github.com/starudream/go-lib/selfupdate/v2 v2.0.4
-	github.com/starudream/go-lib/server/v2 v2.0.0-rc.3
-	github.com/starudream/go-lib/service/v2 v2.0.3
-	github.com/starudream/go-lib/sqlite/v2 v2.0.3
-	github.com/starudream/go-lib/tablew/v2 v2.0.5
+	github.com/starudream/go-lib/selfupdate/v2 v2.0.5
+	github.com/starudream/go-lib/server/v2 v2.0.0-rc.4
+	github.com/starudream/go-lib/service/v2 v2.0.4
+	github.com/starudream/go-lib/sqlite/v2 v2.0.4
+	github.com/starudream/go-lib/tablew/v2 v2.0.6
 )
 
 require (
@@ -68,6 +68,7 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/mennanov/fmutils v0.3.0 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/ncruces/go-strftime v0.1.9 // indirect

@@ -4,12 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/oklog/ulid/v2"
-
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
 
 	"github.com/starudream/go-lib/core/v2/config/version"
+	"github.com/starudream/go-lib/core/v2/slog"
 	"github.com/starudream/go-lib/server/v2/grpc"
 	"github.com/starudream/go-lib/server/v2/ierr"
 
@@ -34,10 +33,11 @@ func (s *AdminUserService) Health(ctx context.Context, _ *common.Empty) (*common
 	return common.NewStruct(map[string]any{"version": version.GetVersionInfo().GitVersion})
 }
 
-func (s *AdminUserService) AddUser(context.Context, *user.AddUserReq) (*common.Id, error) {
-	return &common.Id{Id: ulid.Make().String()}, nil
+func (s *AdminUserService) AddUser(ctx context.Context, req *user.AddUserReq) (*common.Id, error) {
+	slog.Info("password: %s", req.Password, slog.GetAttrs(ctx))
+	return nil, ierr.Forbidden(1, "no permission")
 }
 
 func (s *AdminUserService) GetUser(context.Context, *user.GetUserReq) (*user.User, error) {
-	return nil, ierr.NotFound(9, "not found")
+	return &user.User{Username: "admin", Password: "password"}, nil
 }

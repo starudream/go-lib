@@ -31,7 +31,7 @@ bin-all: bin-app bin-release bin-selfupdate bin-service bin-sqlite
 
 .PHONY: bin-%
 bin-%: init
-	cd example && CGO_ENABLED=0 go build -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' -o ../bin/example-$* github.com/starudream/go-lib/example/v2/$*
+	cd example && go mod tidy && CGO_ENABLED=0 go build -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' -o ../bin/example-$* github.com/starudream/go-lib/example/v2/$*
 
 .PHONY: run-%
 run-%: bin-%

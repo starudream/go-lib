@@ -3,6 +3,7 @@
 FILES=(
     ## https://github.com/protocolbuffers/protobuf
     protocolbuffers/protobuf/raw/main/src@google/protobuf/descriptor.proto
+    protocolbuffers/protobuf/raw/main/src@google/protobuf/field_mask.proto
 
     protocolbuffers/protobuf/raw/main/src@google/protobuf/any.proto
     protocolbuffers/protobuf/raw/main/src@google/protobuf/duration.proto
