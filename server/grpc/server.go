@@ -18,7 +18,6 @@ import (
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/auth"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/logger"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/prepare"
-	"github.com/starudream/go-lib/server/v2/grpc/middlewares/propagation"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/recovery"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/validator"
 )
@@ -45,7 +44,6 @@ func NewServer(options ...Option) *Server {
 			validator.Unary(),
 			auth.Unary(),
 			logger.Unary(),
-			propagation.Unary(),
 		},
 		reflection: true,
 	}, options...)

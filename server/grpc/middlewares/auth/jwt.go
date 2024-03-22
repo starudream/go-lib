@@ -21,20 +21,22 @@ func Unary() grpc.UnaryServerInterceptor {
 			return nil, err
 		}
 
-		ctx = claims.WithContext(ctx)
+		if claims != nil {
+			ctx = claims.WithContext(ctx)
+		}
 
 		return handler(ctx, req)
 	}
 }
 
-func parse(ctx context.Context) (*jwt.Claims, error) {
+func parse(ctx context.Context) (jwt.Interface, error) {
 	raw := ictx.Get(ctx, iconst.HeaderAuthorization)
 	if raw == "" {
 		return nil, ierr.Unauthorized(9999, "missing authorization header")
 	}
 	claims, err := jwt.Parse(strings.TrimPrefix(raw, "Bearer "))
 	if err != nil {
-		return nil, ierr.Unauthorized(9998, "parse authorization header error: %v", err)
+		return nil, err
 	}
 	return claims, nil
 }

@@ -21,7 +21,7 @@ replace (
 
 require (
 	github.com/starudream/go-lib/cobra/v2 v2.0.7
-	github.com/starudream/go-lib/core/v2 v2.0.20
+	github.com/starudream/go-lib/core/v2 v2.0.21
 	github.com/starudream/go-lib/cron/v2 v2.0.7
 	github.com/starudream/go-lib/ntfy/v2 v2.0.10
 	github.com/starudream/go-lib/resty/v2 v2.0.10
@@ -36,7 +36,6 @@ require (
 	github.com/Masterminds/semver/v3 v3.2.1
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/samber/lo v1.39.0
-	golang.org/x/exp v0.0.0-20240318143956-a85f2c67cd81
 	golang.org/x/mod v0.16.0
 )
 
@@ -65,6 +64,8 @@ require (
 	github.com/kardianos/service v1.2.2 // indirect
 	github.com/knadh/koanf/maps v0.1.1 // indirect
 	github.com/knadh/koanf/v2 v2.1.0 // indirect
+	github.com/kr/pretty v0.3.1 // indirect
+	github.com/kr/text v0.2.0 // indirect
 	github.com/lmittmann/tint v1.0.4 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
@@ -75,6 +76,7 @@ require (
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
+	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/soheilhy/cmux v0.1.5 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/spf13/cobra v1.8.0 // indirect
@@ -83,6 +85,7 @@ require (
 	go.opentelemetry.io/otel v1.24.0 // indirect
 	go.opentelemetry.io/otel/metric v1.24.0 // indirect
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
+	golang.org/x/exp v0.0.0-20240318143956-a85f2c67cd81 // indirect
 	golang.org/x/net v0.22.0 // indirect
 	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect

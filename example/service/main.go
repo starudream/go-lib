@@ -4,15 +4,9 @@ import (
 	"context"
 
 	"github.com/starudream/go-lib/cobra/v2"
-	"github.com/starudream/go-lib/core/v2/config/version"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
 	"github.com/starudream/go-lib/server/v2"
-	"github.com/starudream/go-lib/server/v2/grpc"
-	"github.com/starudream/go-lib/server/v2/hggw"
-	"github.com/starudream/go-lib/server/v2/http"
 	"github.com/starudream/go-lib/service/v2"
-
-	"github.com/starudream/go-lib/example/v2/api/admin"
 )
 
 var (
@@ -40,14 +34,7 @@ func main() {
 }
 
 func run(context.Context) {
-	hs := hggw.NewServer()
-	hs.Get("/admin/user/add", func(c *http.Context) error { return c.JSON(200, version.GetVersionInfo()) })
-
-	gs := grpc.NewServer()
-	gs.RegisterServer(admin.RegisterAdminUserServiceServer, &AdminUserService{})
-
-	hs.RegisterHandler(admin.RegisterAdminUserServiceHandler)
-
+	hs, gs := NewHTTPServer(), NewGRPCServer()
 	osutil.PanicErr(server.Run(":8080", server.WithHTTP(hs), server.WithGRPC(gs)))
 }
 

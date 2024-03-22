@@ -10,15 +10,13 @@ type Context struct {
 	context.Context
 }
 
-var _ context.Context = (*Context)(nil)
-
-const srvCtxkey = "server-ctxkey"
+type ctxkey struct{}
 
 func FromContext(ctx context.Context) *Context {
 	if c, ok := ctx.(*Context); ok {
 		return c
 	}
-	if c, ok := ctx.Value(srvCtxkey).(*Context); ok {
+	if c, ok := ctx.Value(ctxkey{}).(*Context); ok {
 		return c
 	}
 	var kvs []string
@@ -30,7 +28,6 @@ func FromContext(ctx context.Context) *Context {
 		}
 	}
 	nc := &Context{Context: metadata.AppendToOutgoingContext(ctx, kvs...)}
-	ctx = context.WithValue(ctx, srvCtxkey, nc)
 	return nc
 }
 

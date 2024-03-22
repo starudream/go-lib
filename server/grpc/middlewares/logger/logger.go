@@ -45,12 +45,12 @@ func Unary() grpc.UnaryServerInterceptor {
 
 		attrs = append(attrs, slog.String("grpc-method", info.FullMethod))
 
-		claims, err := jwt.FromContext(ctx)
-		if err == nil {
+		claims, _ := jwt.FromContext(ctx)
+		if claims != nil {
 			attrs = append(attrs,
-				slog.String("jwt-issuer", claims.Issuer),
-				slog.String("jwt-subject", claims.Subject),
-				slog.String("jwt-audience", claims.Audience),
+				slog.String("jwt-issuer", claims.ISS()),
+				slog.String("jwt-subject", claims.SUB()),
+				slog.String("jwt-audience", claims.AUD()),
 			)
 		}
 

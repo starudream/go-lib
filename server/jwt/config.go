@@ -10,6 +10,8 @@ import (
 )
 
 var (
+	expireTime = config.Get("jwt.expire_time").Duration()
+
 	secretKey = []byte("GI7WgEK8zlasWo9TFoXNddgpAqikexkV")
 
 	privateKey *rsa.PrivateKey
