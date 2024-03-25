@@ -42,13 +42,13 @@ func NewServer(options ...Option) *Server {
 		mountPath: "/",
 	}, options...)
 	s.mux = runtime.NewServeMux(s.muxOpts...)
-	s.Mount(s.mountPath, s.mux)
 	return s
 }
 
 var _ server.Server = (*Server)(nil)
 
 func (s *Server) Start(ln net.Listener) error {
+	s.Mount(s.mountPath, s.mux)
 	endpoint := fmt.Sprintf("%s:%d", getLocalIP(), ln.Addr().(*net.TCPAddr).Port)
 	conn, err := grpc.Dial(endpoint, s.dialOpts...)
 	if err != nil {

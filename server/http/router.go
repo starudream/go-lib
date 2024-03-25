@@ -8,15 +8,18 @@ import (
 	"github.com/starudream/go-lib/core/v2/slog"
 )
 
-type Handler = http.Handler
+type (
+	Handler     = http.Handler
+	HandlerFunc func(c *Context) error
 
-type HandlerFunc func(c *Context) error
+	Middleware = func(next Handler) Handler
+)
 
 type Router interface {
 	Handler
 
-	Use(middlewares ...func(Handler) Handler)
-	With(middlewares ...func(Handler) Handler) Router
+	Use(middlewares ...Middleware)
+	With(middlewares ...Middleware) Router
 	Group(fn func(r Router)) Router
 	Route(pattern string, fn func(r Router)) Router
 	Mount(pattern string, h Handler)
@@ -50,11 +53,11 @@ func (m *Mux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	m.mux.ServeHTTP(w, r)
 }
 
-func (m *Mux) Use(middlewares ...func(Handler) Handler) {
+func (m *Mux) Use(middlewares ...Middleware) {
 	m.mux.Use(middlewares...)
 }
 
-func (m *Mux) With(middlewares ...func(Handler) Handler) Router {
+func (m *Mux) With(middlewares ...Middleware) Router {
 	return &Mux{m.mux.With(middlewares...).(*chi.Mux)}
 }
 

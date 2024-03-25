@@ -9,6 +9,7 @@ import (
 	"github.com/starudream/go-lib/server/v2/grpc"
 	"github.com/starudream/go-lib/server/v2/hggw"
 	"github.com/starudream/go-lib/server/v2/http"
+	"github.com/starudream/go-lib/server/v2/http/middlewares/cors"
 	"github.com/starudream/go-lib/server/v2/ictx"
 	"github.com/starudream/go-lib/server/v2/ierr"
 
@@ -19,6 +20,7 @@ import (
 
 func NewHTTPServer() *hggw.Server {
 	hs := hggw.NewServer()
+	hs.Use(cors.AllowAll())
 	hs.Get("/admin/user/add", func(c *http.Context) error { return c.JSON(200, version.GetVersionInfo()) })
 	hs.RegisterHandler(admin.RegisterAdminUserServiceHandler)
 	return hs
