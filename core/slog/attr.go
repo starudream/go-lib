@@ -25,6 +25,11 @@ var (
 type ctxkeyAttr struct{}
 
 func WithAttrs(ctx context.Context, attrs ...Attr) context.Context {
+	ctx = context.WithValue(ctx, ctxkeyAttr{}, attrs)
+	return ctx
+}
+
+func AppendAttrs(ctx context.Context, attrs ...Attr) context.Context {
 	attrs = append(GetAttrs(ctx), attrs...)
 	ctx = context.WithValue(ctx, ctxkeyAttr{}, attrs)
 	return ctx
