@@ -1,0 +1,46 @@
+### CORS
+OPTIONS http://localhost:8080/panic
+Access-Control-Request-Method: GET
+
+### GET /token
+GET http://localhost:8080/token
+
+> {% client.global.set("token", response.body.token) %}
+
+### GET /panic
+GET http://localhost:8080/panic
+
+### GET /logger no error
+GET http://localhost:8080/logger?error=0
+
+### GET /logger with error
+GET http://localhost:8080/logger?error=1
+
+### GET /admin/user/add
+GET http://localhost:8080/admin/user/add
+Authorization: Bearer {{token}}
+
+// --------------------------------------------------------------------------------
+
+### GET /admin/user/_health
+GET http://localhost:8080/admin/user/_health
+
+### POST /admin/user/add
+POST http://localhost:8080/admin/user/add
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "username": "starudream",
+    "password": "password",
+    "displayName": "camelCase"
+}
+
+### POST /admin/user/get
+POST http://localhost:8080/admin/user/get
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "id": "123"
+}
