@@ -48,7 +48,7 @@ func (e *Error) String() string {
 
 func (e *Error) GRPCStatus() *status.Status {
 	detail := &errdetails.ErrorInfo{Reason: strconv.Itoa(e.Code), Metadata: e.Metadata}
-	t, _ := status.New(toGRPCCode(e.status), e.Message).WithDetails(detail)
+	t, _ := status.New(toGRPCCode(e.Status()), e.Message).WithDetails(detail)
 	return t
 }
 
@@ -78,6 +78,10 @@ func (e *Error) AppendMessage(format string, args ...any) *Error {
 	return e
 }
 
+func (e *Error) Status() int {
+	return e.status
+}
+
 func FromError(err error) *Error {
 	if err == nil {
 		return nil
@@ -105,5 +109,5 @@ func Status(err error) int {
 	if err == nil {
 		return DefaultStatus
 	}
-	return FromError(err).status
+	return FromError(err).Status()
 }
