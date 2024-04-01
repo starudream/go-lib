@@ -14,51 +14,49 @@ import (
 	"github.com/go-chi/chi/v5"
 
 	"github.com/starudream/go-lib/core/v2/codec/json"
+	"github.com/starudream/go-lib/core/v2/config"
+	"github.com/starudream/go-lib/core/v2/utils/osutil"
 	"github.com/starudream/go-lib/server/v2/iconst"
 )
 
 type Context struct {
-	mux *Mux
+	Req *Request
+	Res ResponseWriter
 
-	Req *http.Request
-	Res http.ResponseWriter
+	rtx *chi.Context
 
-	chi   *chi.Context
-	kvs   map[any]any
 	body  []byte
 	query url.Values
 }
 
-func NewContext(m *Mux, w http.ResponseWriter, r *http.Request) *Context {
+func NewContext(w ResponseWriter, r *Request) *Context {
 	c := &Context{
-		mux: m,
 		Req: r,
-		Res: newResponseWriter(w),
-		chi: chi.RouteContext(r.Context()),
-		kvs: map[any]any{},
+		Res: w,
+		rtx: chi.RouteContext(r.Context()),
 	}
 	return c
 }
 
 // --- Req
 
-func (c *Context) GetParam(key string) string {
-	return c.chi.URLParam(key)
+func (c *Context) GetParam(key string) config.Value {
+	return config.NewValue(c.rtx.URLParam(key))
 }
 
 func (c *Context) GetParams() map[string]string {
 	m := map[string]string{}
-	for i, k := range c.chi.URLParams.Keys {
-		m[k] = c.chi.URLParams.Values[i]
+	for i, k := range c.rtx.URLParams.Keys {
+		m[k] = c.rtx.URLParams.Values[i]
 	}
 	return m
 }
 
-func (c *Context) GetQuery(key string) string {
+func (c *Context) GetQuery(key string) config.Value {
 	if c.query == nil {
 		c.query = c.Req.URL.Query()
 	}
-	return c.query.Get(key)
+	return config.NewValue(c.query.Get(key))
 }
 
 func (c *Context) GetQueries(key string) []string {
@@ -68,8 +66,8 @@ func (c *Context) GetQueries(key string) []string {
 	return c.query[key]
 }
 
-func (c *Context) GetHeader(key string) string {
-	return c.Req.Header.Get(key)
+func (c *Context) GetHeader(key string) config.Value {
+	return config.NewValue(c.Req.Header.Get(key))
 }
 
 func (c *Context) GetHeaders(key string) []string {
@@ -77,7 +75,7 @@ func (c *Context) GetHeaders(key string) []string {
 }
 
 func (c *Context) GetContentType() string {
-	return filterFlags(c.GetHeader(iconst.HeaderContentType))
+	return filterFlags(c.GetHeader(iconst.HeaderContentType).String())
 }
 
 func (c *Context) GetRawBody() ([]byte, error) {
@@ -90,6 +88,10 @@ func (c *Context) GetRawBody() ([]byte, error) {
 		c.body = b
 	}
 	return c.body, nil
+}
+
+func (c *Context) MustGetRawBody() []byte {
+	return osutil.Must1(c.GetRawBody())
 }
 
 // --- Req Bind
@@ -201,42 +203,24 @@ func (c *Context) Redirect(status int, url string) {
 
 // --- Context
 
+func (c *Context) Context() context.Context {
+	return c.Req.Context()
+}
+
 var _ context.Context = (*Context)(nil)
 
 func (c *Context) Deadline() (deadline time.Time, ok bool) {
-	return c.Req.Context().Deadline()
+	return c.Context().Deadline()
 }
 
 func (c *Context) Done() <-chan struct{} {
-	return c.Req.Context().Done()
+	return c.Context().Done()
 }
 
 func (c *Context) Err() error {
-	return c.Req.Context().Err()
+	return c.Context().Err()
 }
 
 func (c *Context) Value(key any) any {
-	if v, ok := c.kvs[key]; ok {
-		return v
-	}
-	return c.Req.Context().Value(key)
-}
-
-// --- Values
-
-func (c *Context) Get(key any) (any, bool) {
-	v, ok := c.kvs[key]
-	return v, ok
-}
-
-func (c *Context) MustGet(key any) any {
-	v, ok := c.kvs[key]
-	if ok {
-		return v
-	}
-	panic("key not found")
-}
-
-func (c *Context) Set(key, value any) {
-	c.kvs[key] = value
+	return c.Context().Value(key)
 }

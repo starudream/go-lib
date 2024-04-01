@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/starudream/go-lib/core/v2/slog"
-	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/server/v2"
 )
 
@@ -17,10 +16,8 @@ type Server struct {
 	srv *http.Server
 }
 
-func NewServer(options ...Option) *Server {
-	s := optionutil.Build(&Server{
-		Mux: NewMux(),
-	}, options...)
+func NewServer() *Server {
+	s := &Server{Mux: NewMux()}
 	s.srv = &http.Server{Handler: s}
 	return s
 }

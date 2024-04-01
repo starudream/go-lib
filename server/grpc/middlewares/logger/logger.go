@@ -61,11 +61,13 @@ func Unary() grpc.UnaryServerInterceptor {
 
 			if err != nil {
 				err = ierr.FromError(err)
-				slog.Error("resp: %v", marshal(err, nil), attrs)
+				slog.Error("resp: %s", marshal(err, nil), attrs)
 			} else {
 				slog.Info("resp: %s", marshal(resp, annotation.GetMethodOptions(info.FullMethod).GetRespMaskPaths()), attrs)
 			}
 		}(time.Now())
+
+		ctx = slog.WithAttrs(ctx, attrs...)
 
 		return handler(ctx, req)
 	}
