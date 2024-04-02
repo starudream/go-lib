@@ -13,7 +13,6 @@ import (
 	"github.com/starudream/go-lib/core/v2/slog"
 	"github.com/starudream/go-lib/core/v2/utils/optionutil"
 	"github.com/starudream/go-lib/server/v2"
-	"github.com/starudream/go-lib/server/v2/otel/otelgrpc"
 
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/auth"
 	"github.com/starudream/go-lib/server/v2/grpc/middlewares/logger"
@@ -50,7 +49,6 @@ func NewServer(options ...Option) *Server {
 	s.srvOpts = append(s.srvOpts,
 		grpc.ChainUnaryInterceptor(s.uInts...),
 		grpc.ChainStreamInterceptor(s.sInts...),
-		grpc.StatsHandler(otelgrpc.NewServerHandler()),
 	)
 	s.srv = grpc.NewServer(s.srvOpts...)
 	if s.reflection {
