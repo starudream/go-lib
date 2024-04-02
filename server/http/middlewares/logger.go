@@ -39,8 +39,9 @@ func Logger() http.Middleware {
 			rw := middleware.NewWrapResponseWriter(c.Res, c.Req.ProtoMajor)
 			c.Res = rw
 			buf := loggerBuf.Get()
-			defer loggerBuf.Put(buf)
+			buf.Reset()
 			rw.Tee(buf)
+			defer loggerBuf.Put(buf)
 
 			defer func(start time.Time) {
 				attrs = append(attrs, slog.Duration("took", time.Since(start)))
