@@ -40,6 +40,10 @@ func NewContext(w ResponseWriter, r *Request) *Context {
 
 // --- Req
 
+func (c *Context) GetRoutePattern() string {
+	return c.rtx.RoutePattern()
+}
+
 func (c *Context) GetParam(key string) config.Value {
 	return config.NewValue(c.rtx.URLParam(key))
 }

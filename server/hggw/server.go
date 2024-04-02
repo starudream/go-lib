@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"strings"
 	"time"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -48,7 +49,7 @@ func NewServer(options ...Option) *Server {
 var _ server.Server = (*Server)(nil)
 
 func (s *Server) Start(ln net.Listener) error {
-	s.Mount(s.mountPath, s.mux)
+	s.Mount(s.mountPath, s.handler())
 	endpoint := fmt.Sprintf("%s:%d", getLocalIP(), ln.Addr().(*net.TCPAddr).Port)
 	conn, err := grpc.Dial(endpoint, s.dialOpts...)
 	if err != nil {
@@ -61,6 +62,14 @@ func (s *Server) Start(ln net.Listener) error {
 		}
 	}
 	return s.Server.Start(ln)
+}
+
+func (s *Server) handler() http.Handler {
+	if s.mountPath == "/" {
+		return s.mux
+	}
+	s.mountPath = strings.TrimSuffix(s.mountPath, "/")
+	return http.StripPrefix(s.mountPath, s.mux)
 }
 
 func (s *Server) Stop(timeout time.Duration) {

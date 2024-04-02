@@ -8,6 +8,8 @@ import (
 	"strconv"
 )
 
+var StripPrefix = http.StripPrefix
+
 func filterFlags(content string) string {
 	for i, char := range content {
 		if char == ' ' || char == ';' {
