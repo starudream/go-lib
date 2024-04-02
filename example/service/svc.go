@@ -2,11 +2,14 @@ package main
 
 import (
 	"context"
+	"embed"
 	"fmt"
+	"io/fs"
 
 	"github.com/starudream/go-lib/core/v2/config/version"
 	"github.com/starudream/go-lib/core/v2/gh"
 	"github.com/starudream/go-lib/core/v2/slog"
+	"github.com/starudream/go-lib/core/v2/utils/osutil"
 	"github.com/starudream/go-lib/server/v2/grpc"
 	"github.com/starudream/go-lib/server/v2/hggw"
 	"github.com/starudream/go-lib/server/v2/http"
@@ -20,35 +23,38 @@ import (
 	"github.com/starudream/go-lib/example/v2/api/common"
 )
 
-func NewHTTPServer() *hggw.Server {
-	hs := hggw.NewServer()
-	hs.RegisterHandler(admin.RegisterAdminUserServiceHandler)
-	RegisterHTTPRouter(hs.With(middlewares.CORS(), middlewares.Logger()))
-	return hs
-}
+//go:embed dist
+var dist embed.FS
 
-func RegisterHTTPRouter(r http.Router) {
-	r.HandleCtx("GET /token", func(c *http.Context) error {
-		token, err := jwt.New("*", "starudream", "*").Sign()
-		if err != nil {
-			return err
-		}
-		return c.JSON(200, gh.M{"token": token})
+func NewHTTPServer() *hggw.Server {
+	hs := hggw.NewServer(hggw.WithMountPath("/api"))
+	hs.Use(middlewares.CORS())
+	hs.RegisterHandler(admin.RegisterAdminUserServiceHandler)
+	hs.With(middlewares.Logger()).Group(func(r http.Router) {
+		r.HandleCtx("GET /token", func(c *http.Context) error {
+			token, err := jwt.New("*", "starudream", "*").Sign()
+			if err != nil {
+				return err
+			}
+			return c.JSON(200, gh.M{"token": token})
+		})
+		r.HandleCtx("GET /panic", func(c *http.Context) error {
+			panic("panic")
+		})
+		r.HandleCtx("GET /logger", func(c *http.Context) error {
+			if c.GetQuery("error").Bool() {
+				return ierr.BadRequest(9, "request error")
+			}
+			return c.JSON(200, gh.M{"foo": "bar"})
+		})
+		r.With(middlewares.JWT()).HandleCtx("GET /admin/user/add", func(c *http.Context) error {
+			jc := jwt.MustFromContext(c)
+			slog.Info("subject: %s", jc.SUB(), slog.GetAttrs(c))
+			return c.JSON(200, "ok")
+		})
 	})
-	r.HandleCtx("GET /panic", func(c *http.Context) error {
-		panic("panic")
-	})
-	r.HandleCtx("GET /logger", func(c *http.Context) error {
-		if c.GetQuery("error").Bool() {
-			return ierr.BadRequest(9, "request error")
-		}
-		return c.JSON(200, gh.M{"foo": "bar"})
-	})
-	r.With(middlewares.JWT()).HandleCtx("GET /admin/user/add", func(c *http.Context) error {
-		jc := jwt.MustFromContext(c)
-		slog.Info("subject: %s", jc.SUB(), slog.GetAttrs(c))
-		return c.JSON(200, "ok")
-	})
+	http.FileServer(hs, "/", osutil.Must1(fs.Sub(dist, "dist")))
+	return hs
 }
 
 func NewGRPCServer() *grpc.Server {

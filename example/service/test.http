@@ -20,13 +20,13 @@ GET http://localhost:8080/logger?error=1
 GET http://localhost:8080/admin/user/add
 Authorization: Bearer {{token}}
 
-// --------------------------------------------------------------------------------
-
 ### GET /admin/user/_health
-GET http://localhost:8080/admin/user/_health
+GET http://localhost:8080/api/admin/user/_health
+#GRPC localhost:8080/api.admin.AdminUserService/Health
 
 ### POST /admin/user/add
-POST http://localhost:8080/admin/user/add
+POST http://localhost:8080/api/admin/user/add
+#GRPC localhost:8080/api.admin.AdminUserService/AddUser
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -37,10 +37,14 @@ Content-Type: application/json
 }
 
 ### POST /admin/user/get
-POST http://localhost:8080/admin/user/get
+POST http://localhost:8080/api/admin/user/get
+#GRPC localhost:8080/api.admin.AdminUserService/GetUser
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
     "id": "123"
 }
+
+### GET /js/a.js
+GET http://localhost:8080/js/a.js
