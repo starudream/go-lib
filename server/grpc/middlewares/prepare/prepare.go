@@ -14,8 +14,6 @@ import (
 	"github.com/starudream/go-lib/server/v2/ictx"
 )
 
-const keyRequestId = "request-id"
-
 func Unary() grpc.UnaryServerInterceptor {
 	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
 		c := ictx.FromContext(ctx)
@@ -26,12 +24,14 @@ func Unary() grpc.UnaryServerInterceptor {
 		}
 		_ = grpc.SetHeader(ctx, metadata.Pairs(iconst.HeaderXRequestID, reqId))
 
-		attrs := []slog.Attr{slog.String(keyRequestId, reqId)}
+		attrs := []slog.Attr{slog.String("request-id", reqId)}
 
 		ff := c.Get(iconst.HeaderXForwardedFor)
 		if ff != "" {
-			ip := strings.Split(ff, ",")[0]
-			attrs = append(attrs, slog.String("ip", ip))
+			ip := strings.TrimSpace(strings.Split(ff, ",")[0])
+			if ip != "" {
+				attrs = append(attrs, slog.String("ip", ip))
+			}
 		}
 
 		ua := c.Get("V-"+iconst.HeaderUserAgent, iconst.HeaderUserAgent)

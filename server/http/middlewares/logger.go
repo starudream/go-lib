@@ -1,9 +1,11 @@
 package middlewares
 
 import (
+	"strings"
 	"time"
 
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/google/uuid"
 
 	"github.com/starudream/go-lib/core/v2/codec/json"
 	"github.com/starudream/go-lib/core/v2/slog"
@@ -24,6 +26,27 @@ func Logger() http.Middleware {
 				slog.String("method", c.Req.Method),
 				slog.String("path", c.Req.URL.Path),
 			)
+
+			reqId := c.GetHeader(iconst.HeaderXRequestID).String()
+			if reqId == "" {
+				reqId = "x" + uuid.NewString()[1:]
+			}
+			c.Header(iconst.HeaderXRequestID, reqId)
+
+			attrs = append(attrs, slog.String("request-id", reqId))
+
+			ff := c.GetHeader(iconst.HeaderXForwardedFor).String()
+			if ff != "" {
+				ip := strings.Split(ff, ",")[0]
+				if ip != "" {
+					c.Req.RemoteAddr = ip
+				}
+			}
+
+			attrs = append(attrs, slog.String("ip", strings.Split(c.Req.RemoteAddr, ":")[0]))
+
+			ua := c.GetHeader(iconst.HeaderUserAgent).String()
+			attrs = append(attrs, slog.String("user-agent", ua))
 
 			claims, _ := jwt.FromContext(c)
 			if claims != nil {
