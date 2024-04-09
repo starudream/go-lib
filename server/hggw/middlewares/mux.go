@@ -31,6 +31,7 @@ func WithMarshalerOption() runtime.ServeMuxOption {
 			MarshalOptions: protojson.MarshalOptions{
 				UseEnumNumbers:  true,
 				EmitUnpopulated: true,
+				UseProtoNames:   false,
 			},
 			UnmarshalOptions: protojson.UnmarshalOptions{
 				DiscardUnknown: true,

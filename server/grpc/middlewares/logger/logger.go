@@ -21,6 +21,7 @@ import (
 var marshalOptions = protojson.MarshalOptions{
 	UseEnumNumbers:  true,
 	EmitUnpopulated: true,
+	UseProtoNames:   false,
 }
 
 func marshal(v any, paths []string) string {
