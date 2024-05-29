@@ -8,7 +8,7 @@ go 1.22
 //)
 
 require (
-	github.com/starudream/go-lib/core/v2 v2.0.23
+	github.com/starudream/go-lib/core/v2 v2.0.24
 	github.com/starudream/go-lib/resty/v2 v2.0.11
 )
 
