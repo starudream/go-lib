@@ -7,7 +7,7 @@ go 1.22
 require github.com/starudream/go-lib/core/v2 v2.0.25
 
 require (
-	github.com/spf13/cobra v1.8.0
+	github.com/spf13/cobra v1.8.1
 	github.com/spf13/pflag v1.0.5
 )
 
