@@ -9,15 +9,22 @@ LDFLAGS += -X "github.com/starudream/go-lib/core/v2/config/version.gitVersion=$(
 init:
 	git status -b -s
 
+.PHONY: tidy-all
+tidy-all: tidy-core tidy-tablew tidy-cobra tidy-cron tidy-resty tidy-ntfy tidy-selfupdate tidy-server tidy-service tidy-sqlite tidy-example
+
+.PHONY: tidy-%
+tidy-%:
+	cd $* && go mod tidy
+
 .PHONY: update-all
-update-all: update-core update-cobra update-cron update-resty update-ntfy update-selfupdate update-server update-service update-sqlite update-example
+update-all: update-core update-tablew update-cobra update-cron update-resty update-ntfy update-selfupdate update-server update-service update-sqlite update-example
 
 .PHONY: update-%
 update-%:
 	cd $* && go get -v -u ./... && go mod tidy
 
 .PHONY: test-all
-test-all: test-core test-cobra test-cron test-resty update-selfupdate test-server test-tablew
+test-all: test-core test-tablew test-cobra test-cron test-resty update-selfupdate test-server
 
 .PHONY: test-%
 test-%: init
