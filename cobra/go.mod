@@ -4,7 +4,7 @@ go 1.22
 
 //replace github.com/starudream/go-lib/core/v2 => ../core
 
-require github.com/starudream/go-lib/core/v2 v2.0.25
+require github.com/starudream/go-lib/core/v2 v2.0.26
 
 require (
 	github.com/spf13/cobra v1.8.1
@@ -27,9 +27,9 @@ require (
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
-	github.com/samber/lo v1.39.0 // indirect
+	github.com/samber/lo v1.44.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
-	golang.org/x/exp v0.0.0-20240604190554-fc45aab8b7f8 // indirect
 	golang.org/x/sys v0.21.0 // indirect
+	golang.org/x/text v0.16.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
 )

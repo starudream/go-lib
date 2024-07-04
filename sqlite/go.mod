@@ -4,7 +4,7 @@ go 1.22
 
 //replace github.com/starudream/go-lib/core/v2 => ../core
 
-require github.com/starudream/go-lib/core/v2 v2.0.25
+require github.com/starudream/go-lib/core/v2 v2.0.26
 
 require (
 	gorm.io/gorm v1.25.10
@@ -18,7 +18,6 @@ require (
 	github.com/go-viper/mapstructure/v2 v2.0.0 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
 	github.com/goccy/go-yaml v1.11.3 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
