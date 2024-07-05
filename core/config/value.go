@@ -32,41 +32,42 @@ func (v *value) Any() any {
 }
 
 func (v *value) Int64(def ...int64) int64 {
-	return iArr[int64](def).Cast(cast.ToInt64E(v.v))
+	return iCast(v.v, cast.ToInt64E, def...)
 }
 
 func (v *value) Int(def ...int) int {
-	return iArr[int](def).Cast(cast.ToIntE(v.v))
+	return iCast(v.v, cast.ToIntE, def...)
 }
 
 func (v *value) Float64(def ...float64) float64 {
-	return iArr[float64](def).Cast(cast.ToFloat64E(v.v))
+	return iCast(v.v, cast.ToFloat64E, def...)
 }
 
 func (v *value) Duration(def ...time.Duration) time.Duration {
-	return iArr[time.Duration](def).Cast(cast.ToDurationE(v.v))
+	return iCast(v.v, cast.ToDurationE, def...)
 }
 
 func (v *value) Time(def ...time.Time) time.Time {
-	return iArr[time.Time](def).Cast(cast.ToTimeE(v.v))
+	return iCast(v.v, cast.ToTimeE, def...)
 }
 
 func (v *value) String(def ...string) string {
-	return iArr[string](def).Cast(cast.ToStringE(v.v))
+	return iCast(v.v, cast.ToStringE, def...)
 }
 
 func (v *value) Bool(def ...bool) bool {
-	return iArr[bool](def).Cast(cast.ToBoolE(v.v))
+	return iCast(v.v, cast.ToBoolE, def...)
 }
 
-type iArr[T any] []T
-
-func (arr iArr[T]) Cast(v T, err error) (t T) {
-	if err == nil {
-		return v
+func iCast[T any](v any, fn func(i any) (T, error), def ...T) (t T) {
+	if v != nil {
+		x, e := fn(v)
+		if e == nil {
+			return x
+		}
 	}
-	if len(arr) > 0 {
-		return arr[0]
+	if len(def) > 0 {
+		return def[0]
 	}
 	return
 }
