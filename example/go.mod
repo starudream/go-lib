@@ -21,7 +21,7 @@ replace (
 
 require (
 	github.com/starudream/go-lib/cobra/v2 v2.0.10
-	github.com/starudream/go-lib/core/v2 v2.0.26
+	github.com/starudream/go-lib/core/v2 v2.0.28
 	github.com/starudream/go-lib/cron/v2 v2.0.9
 	github.com/starudream/go-lib/ntfy/v2 v2.0.11
 	github.com/starudream/go-lib/resty/v2 v2.0.12
@@ -36,7 +36,7 @@ require (
 	github.com/Masterminds/semver/v3 v3.2.1
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/samber/lo v1.44.0
-	golang.org/x/mod v0.18.0
+	golang.org/x/mod v0.19.0
 )
 
 require (
@@ -63,7 +63,7 @@ require (
 	github.com/knadh/koanf/v2 v2.1.1 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
-	github.com/lmittmann/tint v1.0.4 // indirect
+	github.com/lmittmann/tint v1.0.5 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
@@ -79,19 +79,19 @@ require (
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/spf13/cobra v1.8.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	golang.org/x/net v0.26.0 // indirect
+	golang.org/x/net v0.27.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.21.0 // indirect
+	golang.org/x/sys v0.22.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20240701130421-f6361c86f094 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240701130421-f6361c86f094 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20240711142825-46eb208f015d // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240711142825-46eb208f015d // indirect
 	google.golang.org/grpc v1.65.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
-	gorm.io/gorm v1.25.10 // indirect
+	gorm.io/gorm v1.25.11 // indirect
 	gorm.io/plugin/soft_delete v1.2.1 // indirect
 	modernc.org/gc/v3 v3.0.0-20240304020402-f0dba7c97c2b // indirect
-	modernc.org/libc v1.54.2 // indirect
+	modernc.org/libc v1.54.4 // indirect
 	modernc.org/mathutil v1.6.0 // indirect
 	modernc.org/memory v1.8.0 // indirect
 	modernc.org/sqlite v1.30.1 // indirect
