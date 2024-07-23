@@ -20,22 +20,22 @@ replace (
 )
 
 require (
-	github.com/starudream/go-lib/cobra/v2 v2.0.10
-	github.com/starudream/go-lib/core/v2 v2.0.28
-	github.com/starudream/go-lib/cron/v2 v2.0.9
-	github.com/starudream/go-lib/ntfy/v2 v2.0.11
-	github.com/starudream/go-lib/resty/v2 v2.0.12
-	github.com/starudream/go-lib/selfupdate/v2 v2.0.6
+	github.com/starudream/go-lib/cobra/v2 v2.0.11
+	github.com/starudream/go-lib/core/v2 v2.0.29
+	github.com/starudream/go-lib/cron/v2 v2.0.10
+	github.com/starudream/go-lib/ntfy/v2 v2.0.12
+	github.com/starudream/go-lib/resty/v2 v2.0.13
+	github.com/starudream/go-lib/selfupdate/v2 v2.0.7
 	github.com/starudream/go-lib/server/v2 v2.0.0-rc.4
-	github.com/starudream/go-lib/service/v2 v2.0.6
-	github.com/starudream/go-lib/sqlite/v2 v2.0.7
-	github.com/starudream/go-lib/tablew/v2 v2.0.6
+	github.com/starudream/go-lib/service/v2 v2.0.7
+	github.com/starudream/go-lib/sqlite/v2 v2.0.8
+	github.com/starudream/go-lib/tablew/v2 v2.0.7
 )
 
 require (
 	github.com/Masterminds/semver/v3 v3.2.1
 	github.com/oklog/ulid/v2 v2.1.0
-	github.com/samber/lo v1.44.0
+	github.com/samber/lo v1.46.0
 	golang.org/x/mod v0.19.0
 )
 
@@ -50,7 +50,7 @@ require (
 	github.com/go-resty/resty/v2 v2.13.1 // indirect
 	github.com/go-viper/mapstructure/v2 v2.0.0 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
-	github.com/goccy/go-yaml v1.11.3 // indirect
+	github.com/goccy/go-yaml v1.12.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.2.1 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.20.0 // indirect
@@ -66,7 +66,7 @@ require (
 	github.com/lmittmann/tint v1.0.5 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/ncruces/go-strftime v0.1.9 // indirect
@@ -83,18 +83,18 @@ require (
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.22.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
-	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20240711142825-46eb208f015d // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240711142825-46eb208f015d // indirect
+	golang.org/x/xerrors v0.0.0-20240716161551-93cc26a95ae9 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20240722135656-d784300faade // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240722135656-d784300faade // indirect
 	google.golang.org/grpc v1.65.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gorm.io/gorm v1.25.11 // indirect
 	gorm.io/plugin/soft_delete v1.2.1 // indirect
-	modernc.org/gc/v3 v3.0.0-20240304020402-f0dba7c97c2b // indirect
-	modernc.org/libc v1.54.4 // indirect
+	modernc.org/gc/v3 v3.0.0-20240722195230-4a140ff9c08e // indirect
+	modernc.org/libc v1.55.3 // indirect
 	modernc.org/mathutil v1.6.0 // indirect
 	modernc.org/memory v1.8.0 // indirect
-	modernc.org/sqlite v1.30.1 // indirect
+	modernc.org/sqlite v1.31.1 // indirect
 	modernc.org/strutil v1.2.0 // indirect
 	modernc.org/token v1.1.0 // indirect
 )
