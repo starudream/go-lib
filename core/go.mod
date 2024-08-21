@@ -11,20 +11,20 @@ require (
 	github.com/lmittmann/tint v1.0.5
 	github.com/mattn/go-colorable v0.1.13
 	github.com/mattn/go-isatty v0.0.20
-	github.com/samber/lo v1.46.0
-	github.com/spf13/cast v1.6.0
+	github.com/samber/lo v1.47.0
+	github.com/spf13/cast v1.7.0
 	github.com/spf13/pflag v1.0.5
-	golang.org/x/text v0.16.0
+	golang.org/x/text v0.17.0
 )
 
 require (
 	github.com/fatih/color v1.17.0 // indirect
-	github.com/go-viper/mapstructure/v2 v2.0.0 // indirect
+	github.com/go-viper/mapstructure/v2 v2.1.0 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
-	golang.org/x/sys v0.22.0 // indirect
+	golang.org/x/sys v0.24.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240716161551-93cc26a95ae9 // indirect
 )
