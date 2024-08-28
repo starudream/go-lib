@@ -3,6 +3,7 @@ module github.com/starudream/go-lib/core/v2
 go 1.22
 
 require (
+	github.com/go-viper/mapstructure/v2 v2.1.0
 	github.com/goccy/go-json v0.10.3
 	github.com/goccy/go-yaml v1.12.0
 	github.com/knadh/koanf/maps v0.1.1
@@ -19,7 +20,6 @@ require (
 
 require (
 	github.com/fatih/color v1.17.0 // indirect
-	github.com/go-viper/mapstructure/v2 v2.1.0 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect

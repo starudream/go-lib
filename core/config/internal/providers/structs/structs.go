@@ -5,9 +5,8 @@ package structs
 import (
 	"errors"
 
+	"github.com/go-viper/mapstructure/v2"
 	"github.com/knadh/koanf/maps"
-
-	"github.com/starudream/go-lib/core/v2/utils/structutil"
 )
 
 // Structs implements a structs provider.
@@ -36,10 +35,20 @@ func (s *Structs) ReadBytes() ([]byte, error) {
 
 // Read reads the struct and returns a nested config map.
 func (s *Structs) Read() (map[string]interface{}, error) {
-	ns := structutil.New(s.s)
-	ns.TagName = s.tag
-
-	out := ns.Map()
+	out := map[string]any{}
+	cfg := &mapstructure.DecoderConfig{
+		Squash:  true,
+		Result:  &out,
+		TagName: s.tag,
+	}
+	decoder, err := mapstructure.NewDecoder(cfg)
+	if err != nil {
+		return nil, err
+	}
+	err = decoder.Decode(s.s)
+	if err != nil {
+		return nil, err
+	}
 
 	if s.delim != "" {
 		out = maps.Unflatten(out, s.delim)

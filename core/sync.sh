@@ -22,11 +22,3 @@ wget -qO config/internal/providers/structs/structs.go https://raw.githubusercont
 wget -qO slog/filewriter/lumberjack.go https://raw.githubusercontent.com/natefinch/lumberjack/v2.0/lumberjack.go
 wget -qO slog/filewriter/chown.go https://github.com/natefinch/lumberjack/raw/v2.0/chown.go
 wget -qO slog/filewriter/chown_linux.go https://github.com/natefinch/lumberjack/raw/v2.0/chown_linux.go
-
-# struct
-
-## https://github.com/fatih/structs
-
-wget -qO utils/structutil/tags.go https://raw.githubusercontent.com/fatih/structs/master/tags.go
-wget -qO utils/structutil/field.go https://raw.githubusercontent.com/fatih/structs/master/field.go
-wget -qO utils/structutil/structs.go https://raw.githubusercontent.com/fatih/structs/master/structs.go
