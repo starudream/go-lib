@@ -9,7 +9,7 @@ go 1.22
 
 require (
 	github.com/starudream/go-lib/cobra/v2 v2.0.11
-	github.com/starudream/go-lib/core/v2 v2.0.29
+	github.com/starudream/go-lib/core/v2 v2.1.0
 )
 
 require (

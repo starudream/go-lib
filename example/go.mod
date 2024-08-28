@@ -21,7 +21,7 @@ replace (
 
 require (
 	github.com/starudream/go-lib/cobra/v2 v2.0.11
-	github.com/starudream/go-lib/core/v2 v2.0.29
+	github.com/starudream/go-lib/core/v2 v2.1.0
 	github.com/starudream/go-lib/cron/v2 v2.0.10
 	github.com/starudream/go-lib/ntfy/v2 v2.0.12
 	github.com/starudream/go-lib/resty/v2 v2.0.13
