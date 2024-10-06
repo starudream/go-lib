@@ -8,7 +8,7 @@ go 1.22.0
 //)
 
 require (
-	github.com/starudream/go-lib/cobra/v2 v2.0.13
+	github.com/starudream/go-lib/cobra/v2 v2.0.14
 	github.com/starudream/go-lib/core/v2 v2.1.1
 )
 
