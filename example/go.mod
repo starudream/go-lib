@@ -23,11 +23,11 @@ require (
 	github.com/starudream/go-lib/cobra/v2 v2.0.14
 	github.com/starudream/go-lib/core/v2 v2.1.1
 	github.com/starudream/go-lib/cron/v2 v2.0.13
-	github.com/starudream/go-lib/ntfy/v2 v2.0.13
+	github.com/starudream/go-lib/ntfy/v2 v2.0.14
 	github.com/starudream/go-lib/resty/v2 v2.0.16
-	github.com/starudream/go-lib/selfupdate/v2 v2.0.8
+	github.com/starudream/go-lib/selfupdate/v2 v2.0.9
 	github.com/starudream/go-lib/server/v2 v2.0.0-rc.4
-	github.com/starudream/go-lib/service/v2 v2.0.8
+	github.com/starudream/go-lib/service/v2 v2.0.9
 	github.com/starudream/go-lib/sqlite/v2 v2.0.11
 	github.com/starudream/go-lib/tablew/v2 v2.0.8
 )
