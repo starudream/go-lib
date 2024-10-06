@@ -4,7 +4,7 @@ go 1.22.0
 
 //replace github.com/starudream/go-lib/core/v2 => ../core
 
-require github.com/starudream/go-lib/core/v2 v2.1.0
+require github.com/starudream/go-lib/core/v2 v2.1.1
 
 require (
 	gorm.io/gorm v1.25.12
