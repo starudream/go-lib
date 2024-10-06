@@ -1,6 +1,6 @@
 module github.com/starudream/go-lib/cron/v2
 
-go 1.22
+go 1.22.0
 
 //replace github.com/starudream/go-lib/core/v2 => ../core
 
@@ -10,7 +10,7 @@ require github.com/robfig/cron/v3 v3.0.1
 
 require (
 	github.com/fatih/color v1.17.0 // indirect
-	github.com/go-viper/mapstructure/v2 v2.1.0 // indirect
+	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
 	github.com/goccy/go-yaml v1.12.0 // indirect
 	github.com/knadh/koanf/maps v0.1.1 // indirect
@@ -26,7 +26,7 @@ require (
 	github.com/samber/lo v1.47.0 // indirect
 	github.com/spf13/cast v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	golang.org/x/sys v0.24.0 // indirect
-	golang.org/x/text v0.17.0 // indirect
-	golang.org/x/xerrors v0.0.0-20240716161551-93cc26a95ae9 // indirect
+	golang.org/x/sys v0.26.0 // indirect
+	golang.org/x/text v0.19.0 // indirect
+	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 )

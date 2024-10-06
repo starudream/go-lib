@@ -1,6 +1,6 @@
 module github.com/starudream/go-lib/example/v2/api
 
-go 1.22
+go 1.22.0
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v1.1.0
