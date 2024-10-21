@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/golangci.jsonschema.json
+
+output:
+  sort-results: true
+  show-stats: true
+
+issues:
+  exclude-dirs:
+    - internal/driver
+
+linters-settings:
+  govet:
+    disable:
+      - printf

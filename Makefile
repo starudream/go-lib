@@ -49,8 +49,8 @@ lint-all: lint-core lint-cobra lint-cron lint-resty lint-ntfy lint-selfupdate li
 
 .PHONY: lint-sqlite
 lint-sqlite:
-	cd sqlite && golangci-lint run --sort-results --print-resources-usage --show-stats --exclude-dirs internal/driver
+	cd sqlite && golangci-lint run -c ../.golangci.yaml
 
 .PHONY: lint-%
 lint-%:
-	cd $* && golangci-lint run --sort-results --print-resources-usage --show-stats
+	cd $* && golangci-lint run -c ../.golangci.yaml
