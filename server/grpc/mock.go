@@ -23,7 +23,7 @@ func NewMock(s *Server) (*ClientConn, func(m interface{ Run() int })) {
 	}()
 
 	dialer := func(context.Context, string) (net.Conn, error) { return ln.Dial() }
-	conn, err := Dial("", grpc.WithContextDialer(dialer))
+	conn, err := Dial("passthrough://bufnet", grpc.WithContextDialer(dialer))
 	if err != nil {
 		osutil.PanicErr(err)
 	}

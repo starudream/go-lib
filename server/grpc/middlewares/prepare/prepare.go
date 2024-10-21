@@ -20,22 +20,27 @@ func Unary() grpc.UnaryServerInterceptor {
 
 		reqId := c.Get(iconst.HeaderXRequestID)
 		if reqId == "" {
-			reqId = "x" + uuid.NewString()[1:]
+			reqId = "x" + uuid.Must(uuid.NewV7()).String()[1:]
 		}
 		_ = grpc.SetHeader(ctx, metadata.Pairs(iconst.HeaderXRequestID, reqId))
 
-		attrs := []slog.Attr{slog.String("request-id", reqId)}
+		attrs := append(slog.GetAttrs(ctx), slog.String("x-request-id", reqId))
 
-		ff := c.Get(iconst.HeaderXForwardedFor)
-		if ff != "" {
-			ip := strings.TrimSpace(strings.Split(ff, ",")[0])
-			if ip != "" {
-				attrs = append(attrs, slog.String("ip", ip))
+		ip := c.Get(iconst.HeaderXRealIP)
+		if ip == "" {
+			ff := c.Get(iconst.HeaderXForwardedFor)
+			if ff != "" {
+				ip = strings.TrimSpace(strings.Split(ff, ",")[0])
 			}
+		}
+		if ip != "" {
+			attrs = append(attrs, slog.String("client-ip", ip))
 		}
 
 		ua := c.Get("V-"+iconst.HeaderUserAgent, iconst.HeaderUserAgent)
-		attrs = append(attrs, slog.String("user-agent", ua))
+		if ua != "" {
+			attrs = append(attrs, slog.String("user-agent", ua))
+		}
 
 		ctx = slog.WithAttrs(ctx, attrs...)
 

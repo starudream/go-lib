@@ -67,7 +67,6 @@ func (mask NestedMask) Prune(msg proto.Message) {
 							mp.Clear(mk)
 						}
 					}
-
 					return true
 				})
 			} else if fd.IsList() {

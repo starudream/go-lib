@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"fmt"
 	"net/textproto"
 	"strings"
 
@@ -39,7 +38,7 @@ func OutgoingHeaderMatcher(key string) (string, bool) {
 }
 
 func OutgoingTrailerMatcher(key string) (string, bool) {
-	return fmt.Sprintf("%s%s", "V-", key), true
+	return "V-" + key, true
 }
 
 func isForwardedHeader(hdr string) bool {

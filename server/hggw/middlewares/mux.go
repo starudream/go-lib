@@ -29,9 +29,7 @@ func WithMarshalerOption() runtime.ServeMuxOption {
 	opt := &runtime.HTTPBodyMarshaler{
 		Marshaler: &runtime.JSONPb{
 			MarshalOptions: protojson.MarshalOptions{
-				UseEnumNumbers:  true,
-				EmitUnpopulated: true,
-				UseProtoNames:   false,
+				UseEnumNumbers: true,
 			},
 			UnmarshalOptions: protojson.UnmarshalOptions{
 				DiscardUnknown: true,

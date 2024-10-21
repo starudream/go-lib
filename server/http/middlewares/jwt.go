@@ -12,13 +12,9 @@ import (
 func JWT() http.Middleware {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerCtx(func(c *http.Context) error {
-			claims, err := parse(c)
+			_, err := jwt.FromContext(c)
 			if err != nil {
 				return err
-			}
-
-			if claims != nil {
-				c.Req = c.Req.WithContext(claims.WithContext(c.Context()))
 			}
 
 			next.ServeHTTP(c.Res, c.Req)

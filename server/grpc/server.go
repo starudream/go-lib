@@ -39,10 +39,10 @@ func NewServer(options ...Option) *Server {
 		},
 		uInts: []grpc.UnaryServerInterceptor{
 			prepare.Unary(),
-			recovery.Unary(),
 			validator.Unary(),
 			auth.Unary(),
 			logger.Unary(),
+			recovery.Unary(),
 		},
 		reflection: true,
 	}, options...)

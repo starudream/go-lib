@@ -29,7 +29,7 @@ var _ Interface = (*claims)(nil)
 
 func New(issuer, subject, audience string, options ...Option) Interface {
 	return optionutil.Build(&claims{
-		Id:       uuid.NewString(),
+		Id:       uuid.Must(uuid.NewV7()).String(),
 		Issuer:   issuer,
 		Subject:  subject,
 		Audience: audience,

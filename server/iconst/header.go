@@ -20,6 +20,7 @@ const (
 	HeaderContentType    = "Content-Type"     // Requests, Responses
 	HeaderUserAgent      = "User-Agent"       // Requests
 	HeaderXRequestID     = "X-Request-Id"     // Requests
+	HeaderXRealIP        = "X-Real-Ip"        // Requests
 	HeaderXForwardedFor  = "X-Forwarded-For"  // Requests
 	HeaderXForwardedHost = "X-Forwarded-Host" // Requests
 )

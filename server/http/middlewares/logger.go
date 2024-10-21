@@ -12,7 +12,6 @@ import (
 	"github.com/starudream/go-lib/core/v2/utils/poolutil"
 	"github.com/starudream/go-lib/server/v2/http"
 	"github.com/starudream/go-lib/server/v2/iconst"
-	"github.com/starudream/go-lib/server/v2/jwt"
 )
 
 var loggerBuf = poolutil.NewBytesBuffer(1024)
@@ -20,41 +19,41 @@ var loggerBuf = poolutil.NewBytesBuffer(1024)
 func Logger() http.Middleware {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerCtx(func(c *http.Context) error {
-			attrs := slog.GetAttrs(c)
-
-			attrs = append(attrs,
+			attrs := append(slog.GetAttrs(c),
 				slog.String("method", c.Req.Method),
-				slog.String("path", c.Req.URL.Path),
+				slog.String("path", c.Req.URL.String()),
 			)
 
 			reqId := c.GetHeader(iconst.HeaderXRequestID).String()
 			if reqId == "" {
-				reqId = "x" + uuid.NewString()[1:]
+				reqId = "x" + uuid.Must(uuid.NewV7()).String()[1:]
 			}
 			c.Header(iconst.HeaderXRequestID, reqId)
 
-			attrs = append(attrs, slog.String("request-id", reqId))
+			attrs = append(attrs, slog.String("x-request-id", reqId))
 
 			ff := c.GetHeader(iconst.HeaderXForwardedFor).String()
 			if ff != "" {
-				ip := strings.Split(ff, ",")[0]
+				ip := strings.TrimSpace(strings.Split(ff, ",")[0])
 				if ip != "" {
 					c.Req.RemoteAddr = ip
+					attrs = append(attrs, slog.String("client-ip", ip))
 				}
 			}
 
-			attrs = append(attrs, slog.String("ip", strings.Split(c.Req.RemoteAddr, ":")[0]))
-
 			ua := c.GetHeader(iconst.HeaderUserAgent).String()
-			attrs = append(attrs, slog.String("user-agent", ua))
+			if ua != "" {
+				attrs = append(attrs, slog.String("user-agent", ua))
+			}
 
-			claims, _ := jwt.FromContext(c)
-			if claims != nil {
+			claims, err := parse(c)
+			if err == nil && claims != nil {
 				attrs = append(attrs,
 					slog.String("jwt-issuer", claims.ISS()),
 					slog.String("jwt-subject", claims.SUB()),
 					slog.String("jwt-audience", claims.AUD()),
 				)
+				c.Req = c.Req.WithContext(claims.WithContext(c.Context()))
 			}
 
 			loggerReq(c, attrs)
