@@ -8,8 +8,8 @@ go 1.22.0
 //)
 
 require (
-	github.com/starudream/go-lib/core/v2 v2.1.1
-	github.com/starudream/go-lib/resty/v2 v2.0.16
+	github.com/starudream/go-lib/core/v2 v2.1.2
+	github.com/starudream/go-lib/resty/v2 v2.0.17
 )
 
 require (
@@ -19,12 +19,12 @@ require (
 
 require (
 	github.com/VividCortex/ewma v1.2.0 // indirect
-	github.com/fatih/color v1.17.0 // indirect
+	github.com/fatih/color v1.18.0 // indirect
 	github.com/go-ping/ping v1.1.0 // indirect
 	github.com/go-resty/resty/v2 v2.15.3 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
-	github.com/goccy/go-yaml v1.12.0 // indirect
+	github.com/goccy/go-yaml v1.13.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/knadh/koanf/maps v0.1.1 // indirect
 	github.com/knadh/koanf/v2 v2.1.1 // indirect
@@ -45,5 +45,4 @@ require (
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/text v0.19.0 // indirect
-	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 )
