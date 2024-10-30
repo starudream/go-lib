@@ -20,15 +20,15 @@ replace (
 )
 
 require (
-	github.com/starudream/go-lib/cobra/v2 v2.0.14
-	github.com/starudream/go-lib/core/v2 v2.1.1
-	github.com/starudream/go-lib/cron/v2 v2.0.13
-	github.com/starudream/go-lib/ntfy/v2 v2.0.14
-	github.com/starudream/go-lib/resty/v2 v2.0.16
-	github.com/starudream/go-lib/selfupdate/v2 v2.0.9
-	github.com/starudream/go-lib/server/v2 v2.0.0-rc.4
-	github.com/starudream/go-lib/service/v2 v2.0.9
-	github.com/starudream/go-lib/sqlite/v2 v2.0.11
+	github.com/starudream/go-lib/cobra/v2 v2.0.15
+	github.com/starudream/go-lib/core/v2 v2.1.2
+	github.com/starudream/go-lib/cron/v2 v2.0.14
+	github.com/starudream/go-lib/ntfy/v2 v2.0.15
+	github.com/starudream/go-lib/resty/v2 v2.0.17
+	github.com/starudream/go-lib/selfupdate/v2 v2.0.10
+	github.com/starudream/go-lib/server/v2 v2.0.0
+	github.com/starudream/go-lib/service/v2 v2.0.10
+	github.com/starudream/go-lib/sqlite/v2 v2.0.12
 	github.com/starudream/go-lib/tablew/v2 v2.0.8
 )
 
@@ -44,13 +44,13 @@ require (
 	github.com/cheggaaa/pb/v3 v3.1.5 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/envoyproxy/protoc-gen-validate v1.1.0 // indirect
-	github.com/fatih/color v1.17.0 // indirect
+	github.com/fatih/color v1.18.0 // indirect
 	github.com/go-chi/chi/v5 v5.1.0 // indirect
 	github.com/go-ping/ping v1.1.0 // indirect
 	github.com/go-resty/resty/v2 v2.15.3 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
-	github.com/goccy/go-yaml v1.12.0 // indirect
+	github.com/goccy/go-yaml v1.13.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.2.1 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.22.0 // indirect
@@ -84,9 +84,8 @@ require (
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/text v0.19.0 // indirect
-	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20241015192408-796eee8c2d53 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20241015192408-796eee8c2d53 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20241021214115-324edc3d5d38 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20241021214115-324edc3d5d38 // indirect
 	google.golang.org/grpc v1.67.1 // indirect
 	google.golang.org/protobuf v1.35.1 // indirect
 	gorm.io/gorm v1.25.12 // indirect

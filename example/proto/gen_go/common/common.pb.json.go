@@ -12,7 +12,6 @@ func (msg *Id) MarshalJSON() ([]byte, error) {
 	return protojson.MarshalOptions{
 		UseEnumNumbers:  true,
 		EmitUnpopulated: true,
-		UseProtoNames:   false,
 	}.Marshal(msg)
 }
 
