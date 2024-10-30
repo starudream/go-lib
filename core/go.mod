@@ -5,7 +5,7 @@ go 1.22.0
 require (
 	github.com/go-viper/mapstructure/v2 v2.2.1
 	github.com/goccy/go-json v0.10.3
-	github.com/goccy/go-yaml v1.12.0
+	github.com/goccy/go-yaml v1.13.0
 	github.com/knadh/koanf/maps v0.1.1
 	github.com/knadh/koanf/v2 v2.1.1
 	github.com/kr/pretty v0.3.1
@@ -19,12 +19,10 @@ require (
 )
 
 require (
-	github.com/fatih/color v1.17.0 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
+	github.com/fatih/color v1.18.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
 	golang.org/x/sys v0.26.0 // indirect
-	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 )
