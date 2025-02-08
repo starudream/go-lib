@@ -1,0 +1,115 @@
+swagger: "2.0"
+info:
+  title: doc
+  description: for test
+  version: version not set
+tags:
+  - name: api.admin.AdminUserService
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /admin/user/_health:
+    get:
+      operationId: AdminUserService_Health
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            type: object
+      tags:
+        - 健康检查
+      security: []
+  /admin/user/add:
+    post:
+      summary: 创建用户
+      operationId: AdminUserService_AddUser
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/api.common.Id'
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/api.admin.user.AddUserReq'
+      tags:
+        - 用户|创建
+  /admin/user/get:
+    post:
+      summary: 获取用户
+      operationId: AdminUserService_GetUser
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/api.admin.user.User'
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/api.admin.user.GetUserReq'
+      tags:
+        - 用户|获取
+definitions:
+  api.admin.user.AddUserReq:
+    type: object
+    properties:
+      username:
+        type: string
+        title: 用户名
+      password:
+        type: string
+        title: 密码
+      displayName:
+        type: string
+        title: 显示名
+  api.admin.user.GetUserReq:
+    type: object
+    properties:
+      id:
+        type: string
+      username:
+        type: string
+        title: 用户名
+  api.admin.user.User:
+    type: object
+    properties:
+      id:
+        type: string
+      username:
+        type: string
+        title: 用户名
+      password:
+        type: string
+        title: 密码
+    title: 用户
+  api.common.Id:
+    type: object
+    properties:
+      id:
+        type: string
+  google.protobuf.NullValue:
+    type: integer
+    format: int32
+    enum:
+      - 0
+    default: 0
+    description: |-
+      `NullValue` is a singleton enumeration to represent the null value for the
+      `Value` type union.
+
+      The JSON representation for `NullValue` is JSON `null`.
+
+       - 0: Null value.
+securityDefinitions:
+  Authorization:
+    type: apiKey
+    name: Authorization
+    in: header

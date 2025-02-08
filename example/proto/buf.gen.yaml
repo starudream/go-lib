@@ -35,4 +35,5 @@ plugins:
       - use_go_templates=true
       - disable_default_errors=true
       - enums_as_ints=true
+      - output_format=yaml
       - preserve_rpc_order=true

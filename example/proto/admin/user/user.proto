@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package api.admin.user;
 
-option go_package = "github.com/starudream/go-lib/example/v2/api/admin/user";
-
 import "validate/validate.proto";
+
+option go_package = "github.com/starudream/go-lib/example/v2/api/admin/user";
 
 // 用户
 message User {
@@ -17,7 +17,7 @@ message User {
 
 message AddUserReq {
   // 用户名
-  string username = 2 [(validate.rules).string = { min_len: 1 }];
+  string username = 2 [(validate.rules).string = {min_len: 1}];
   // 密码
   string password = 3;
   // 显示名

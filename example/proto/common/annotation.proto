@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package api.common;
 
-option go_package = "github.com/starudream/go-lib/example/v2/api/common";
-
 import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/starudream/go-lib/example/v2/api/common";
 
 extend google.protobuf.MethodOptions {
   Options options = 202403216;
