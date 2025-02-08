@@ -1,21 +1,21 @@
 package ping
 
 import (
-	"github.com/go-ping/ping"
+	"github.com/prometheus-community/pro-bing"
 
 	"github.com/starudream/go-lib/core/v2/slog"
 	"github.com/starudream/go-lib/core/v2/utils/signalutil"
 )
 
 type (
-	Packet     = ping.Packet
-	Statistics = ping.Statistics
+	Packet     = probing.Packet
+	Statistics = probing.Statistics
 )
 
 func Ping(options ...Option) (*Statistics, error) {
 	opts := newOptions(options...)
 
-	pinger, err := ping.NewPinger(opts.addr)
+	pinger, err := probing.NewPinger(opts.addr)
 	if err != nil {
 		return nil, err
 	}
@@ -28,11 +28,11 @@ func Ping(options ...Option) (*Statistics, error) {
 
 	pinger.OnRecv = func(pkt *Packet) {
 		slog.Debug("%d bytes from %s: icmp_seq=%d time=%v ttl=%v",
-			pkt.Nbytes, pkt.IPAddr, pkt.Seq, pkt.Rtt, pkt.Ttl, slog.String("addr", pkt.Addr))
+			pkt.Nbytes, pkt.IPAddr, pkt.Seq, pkt.Rtt, pkt.TTL, slog.String("addr", pkt.Addr))
 	}
 	pinger.OnDuplicateRecv = func(pkt *Packet) {
 		slog.Debug("%d bytes from %s: icmp_seq=%d time=%v ttl=%v (DUP!)",
-			pkt.Nbytes, pkt.IPAddr, pkt.Seq, pkt.Rtt, pkt.Ttl, slog.String("addr", pkt.Addr))
+			pkt.Nbytes, pkt.IPAddr, pkt.Seq, pkt.Rtt, pkt.TTL, slog.String("addr", pkt.Addr))
 	}
 	pinger.OnFinish = func(stats *Statistics) {
 		slog.Debug("%d packets transmitted, %d packets received, %d duplicates, %v%% packet loss, min/avg/max/stddev = %v/%v/%v/%v",
