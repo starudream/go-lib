@@ -20,5 +20,6 @@ jobs:
         with:
           go-version: stable
           cache: false
+      - run: make tidy-all
       - run: make test-all
       - run: make bin-all
