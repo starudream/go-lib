@@ -53,7 +53,7 @@ func (l *logger) Log(level slog.Level, msg string, kvs ...any) {
 	record.Handle(
 		record.WithLevel(level),
 		record.WithSkip(1),
-		record.WithMsg(msg),
+		record.WithMsg("%s", msg),
 		record.WithAttrs(attrs...),
 	)
 }

@@ -34,7 +34,7 @@ func (l *logger) Log(level slog.Level, format string, args ...any) {
 		record.WithLevel(level),
 		record.WithSkip(1),
 		record.WithSkipNames("@"),
-		record.WithMsg(strings.TrimSuffix(fmt.Sprintf(format, args...), "\n")),
+		record.WithMsg("%s", strings.TrimSuffix(fmt.Sprintf(format, args...), "\n")),
 		record.WithAttrs(slog.String("module", "resty")),
 	)
 }
