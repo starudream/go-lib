@@ -28,9 +28,8 @@ test-all: test-core test-tablew test-cobra test-cron test-resty update-selfupdat
 
 .PHONY: test-%
 test-%: init
-	@CGO_ENABLED=0 go install github.com/kyoh86/richgo@latest
 	@mkdir -p cover
-	cd $* && go mod tidy && CGO_ENABLED=1 richgo test -race -count 1 -cover -failfast -coverprofile ../cover/$*.out -v ./...
+	cd $* && go mod tidy && CGO_ENABLED=1 go run gotest.tools/gotestsum@latest -- -race -count 1 -cover -failfast -coverprofile ../cover/$*.out -v ./...
 	cd $* && go tool cover -html ../cover/$*.out -o ../cover/$*.html
 
 .PHONY: bin-all
