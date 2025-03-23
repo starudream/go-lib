@@ -926,9 +926,9 @@ func (t *Table) printRow(columns [][]string, rowIdx int) {
 				}
 			}
 			if !t.noWhiteSpace {
-				fmt.Fprintf(t.out, SPACE)
+				fmt.Fprint(t.out, SPACE)
 			} else {
-				fmt.Fprintf(t.out, t.tablePadding)
+				fmt.Fprint(t.out, t.tablePadding)
 			}
 		}
 		// Check if border is set
