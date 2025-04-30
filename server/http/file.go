@@ -8,7 +8,7 @@ import (
 
 func FileServer(r Router, path string, fs fs.FS) {
 	if path != "/" && path[len(path)-1] != '/' {
-		r.Handle(path, http.RedirectHandler(path+"/", 301))
+		r.Handle(path, http.RedirectHandler(path+"/", http.StatusMovedPermanently))
 		path += "/"
 	}
 	path += "*"

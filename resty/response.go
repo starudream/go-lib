@@ -49,7 +49,7 @@ func (e *RespErr) String() string {
 	if e.err != nil {
 		e.esg = e.err.Error()
 	}
-	return fmt.Sprintf("response status: %s, error: %s", e.Response.Status(), e.esg)
+	return fmt.Sprintf("response status: %s, error: %s", e.Status(), e.esg)
 }
 
 func (e *RespErr) Error() string {
