@@ -29,8 +29,8 @@ var _c = Config{}
 func init() {
 	_ = config.Unmarshal("", &_c)
 
-	_ = config.Unmarshal("ntfy.webhook.extra", &_c.WebhookConfig.Extra)
-	_ = config.Unmarshal("ntfy.webhook.headers", &_c.WebhookConfig.Headers)
+	_ = config.Unmarshal("ntfy.webhook.extra", &_c.WebhookConfig.Extra)     //nolint:staticcheck
+	_ = config.Unmarshal("ntfy.webhook.headers", &_c.WebhookConfig.Headers) //nolint:staticcheck
 
 	if _c.Timeout <= 0 {
 		_c.Timeout = 10 * time.Second
@@ -59,7 +59,7 @@ func Notify(ctx context.Context, text string) (err error) {
 		c = _c.TelegramConfig
 	case _c.WeixinWorkConfig.Key != nil:
 		c = _c.WeixinWorkConfig
-	case _c.WebhookConfig.URL != nil:
+	case _c.WebhookConfig.URL != nil: //nolint:staticcheck
 		c = _c.WebhookConfig
 	}
 	if c != nil {

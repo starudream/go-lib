@@ -68,7 +68,7 @@ func Apply(update io.Reader, options ...Option) error {
 	if err != nil {
 		return err
 	}
-	defer newFile.Close()
+	defer func() { _ = newFile.Close() }()
 
 	_, err = io.Copy(newFile, bytes.NewReader(newBytes))
 	if err != nil {
@@ -77,7 +77,7 @@ func Apply(update io.Reader, options ...Option) error {
 
 	// if we don't call newFile.Close(), windows won't let us move the new executable
 	// because the file will still be "in use"
-	newFile.Close()
+	_ = newFile.Close()
 
 	// this is where we'll move the executable to so that we can swap in the updated replacement
 	oldPath := filepath.Join(updateDir, fmt.Sprintf(".%s.old", filename))

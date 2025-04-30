@@ -74,7 +74,7 @@ func (o *Options) CheckPermissions() error {
 	if err != nil {
 		return err
 	}
-	newFile.Close()
+	_ = newFile.Close()
 
 	_ = os.Remove(newPath)
 	return nil
