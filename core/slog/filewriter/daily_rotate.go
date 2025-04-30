@@ -30,7 +30,7 @@ func RotateDaily(logger *Logger) {
 		err = logger.Rotate()
 	}
 
-	//nolint:gosimple
+	//nolint:staticcheck
 	for {
 		now := time.Now()
 		tom := time.Date(now.Year(), now.Month(), now.Day()+1, 0, 0, 0, 0, now.Location())
