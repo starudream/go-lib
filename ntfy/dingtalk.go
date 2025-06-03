@@ -25,7 +25,7 @@ func (DingtalkConfig) Name() string {
 	return "dingtalk"
 }
 
-func (c DingtalkConfig) Notify(_ context.Context, text string) error {
+func (c DingtalkConfig) Notify(_ context.Context, text string, _ ...Option) error {
 	if c.Token == nil || *c.Token == "" {
 		return ErrNoConfig
 	}

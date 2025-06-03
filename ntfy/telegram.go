@@ -20,7 +20,7 @@ func (TelegramConfig) Name() string {
 	return "telegram"
 }
 
-func (c TelegramConfig) Notify(_ context.Context, text string) error {
+func (c TelegramConfig) Notify(_ context.Context, text string, _ ...Option) error {
 	if c.Token == nil || *c.Token == "" {
 		return ErrNoConfig
 	}

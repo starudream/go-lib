@@ -6,5 +6,5 @@ import (
 
 type Interface interface {
 	Name() string
-	Notify(ctx context.Context, text string) error
+	Notify(ctx context.Context, text string, options ...Option) error
 }

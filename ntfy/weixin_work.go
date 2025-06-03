@@ -19,7 +19,7 @@ func (WeixinWorkConfig) Name() string {
 	return "weixin_work"
 }
 
-func (c WeixinWorkConfig) Notify(_ context.Context, text string) error {
+func (c WeixinWorkConfig) Notify(_ context.Context, text string, _ ...Option) error {
 	if c.Key == nil || *c.Key == "" {
 		return ErrNoConfig
 	}

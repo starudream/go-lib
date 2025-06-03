@@ -7,5 +7,5 @@ import (
 )
 
 func TestWebhook(t *testing.T) {
-	testutil.Nil(t, _c.WebhookConfig.Notify(ctx, text))
+	testutil.Nil(t, _c.WebhookConfig.Notify(ctx, text, WithExtra(map[string]string{"topic": "test"})))
 }

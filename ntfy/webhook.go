@@ -58,7 +58,8 @@ func (c WebhookConfig) Name() string {
 	return "webhook"
 }
 
-func (c WebhookConfig) Notify(_ context.Context, text string) error {
+func (c WebhookConfig) Notify(_ context.Context, text string, options ...Option) error {
+	opts := newOptions(options...)
 	if c.URL == nil || *c.URL == "" {
 		return ErrNoConfig
 	}
@@ -69,6 +70,15 @@ func (c WebhookConfig) Notify(_ context.Context, text string) error {
 		c.Extra = map[string]string{}
 	}
 	c.Extra[c.Key] = text
+	for k, v := range opts.extra {
+		c.Extra[k] = v
+	}
+	if c.Headers == nil {
+		c.Headers = map[string]string{}
+	}
+	for k, v := range opts.headers {
+		c.Headers[k] = v
+	}
 	_, err := resty.ParseResp[*webhookResp, *webhookResp](
 		func() (*resty.Response, error) {
 			req := R().SetHeaders(c.Headers).SetError(&webhookResp{}).SetResult(&webhookResp{})
