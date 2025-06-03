@@ -11,7 +11,8 @@ type Options struct {
 
 func newOptions(options ...Option) *Options {
 	return optionutil.Build(&Options{
-		extra: map[string]string{},
+		extra:   map[string]string{},
+		headers: map[string]string{},
 	}, options...)
 }
 
