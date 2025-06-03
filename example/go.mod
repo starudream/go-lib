@@ -23,7 +23,7 @@ require (
 	github.com/starudream/go-lib/cobra/v2 v2.0.19
 	github.com/starudream/go-lib/core/v2 v2.1.9
 	github.com/starudream/go-lib/cron/v2 v2.0.18
-	github.com/starudream/go-lib/ntfy/v2 v2.0.19
+	github.com/starudream/go-lib/ntfy/v2 v2.0.20
 	github.com/starudream/go-lib/resty/v2 v2.0.21
 	github.com/starudream/go-lib/selfupdate/v2 v2.0.14
 	github.com/starudream/go-lib/server/v2 v2.0.4
