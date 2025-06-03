@@ -50,7 +50,7 @@ func C() Config {
 
 var ErrNoConfig = errors.New("no notify config")
 
-func Notify(ctx context.Context, text string) (err error) {
+func Notify(ctx context.Context, text string, options ...Option) (err error) {
 	var c Interface
 	switch {
 	case _c.DingtalkConfig.Token != nil:
@@ -63,7 +63,7 @@ func Notify(ctx context.Context, text string) (err error) {
 		c = _c.WebhookConfig
 	}
 	if c != nil {
-		return c.Notify(ctx, text)
+		return c.Notify(ctx, text, options...)
 	}
 	return ErrNoConfig
 }
