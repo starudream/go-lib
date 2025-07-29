@@ -3,7 +3,7 @@ module github.com/starudream/go-lib/core/v2
 go 1.24.0
 
 require (
-	github.com/go-viper/mapstructure/v2 v2.3.0
+	github.com/go-viper/mapstructure/v2 v2.4.0
 	github.com/goccy/go-json v0.10.5
 	github.com/goccy/go-yaml v1.18.0
 	github.com/knadh/koanf/maps v0.1.2
@@ -14,7 +14,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20
 	github.com/samber/lo v1.51.0
 	github.com/spf13/cast v1.9.2
-	github.com/spf13/pflag v1.0.6
+	github.com/spf13/pflag v1.0.7
 	golang.org/x/text v0.27.0
 )
 
